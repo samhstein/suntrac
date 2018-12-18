@@ -1,1 +1,1 @@
-{ "temp_1": 0, "temp_2": 0, "volt_3": 0, "volt_4": 0, "photo_diff": 0, "latitude": 0, "longitude": 0 }
+{ "temp_1_offset": 1, "temp_2_offset": 2, "light_1_offset": 3, "light_2_offset": 4, "latitude": 33, "longitude": -111, "temp_units": "F" }

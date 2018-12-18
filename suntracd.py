@@ -1,7 +1,8 @@
 import megaio
-import math, time, sys, json
+import math, time, sys, datetime, json
 from pymemcache.client.base import Client
 from pymemcache import serde
+from pysolar.solar import *
 
 THERMISTOR_TO =25
 THERMISTOR_RO = 860000
@@ -19,6 +20,11 @@ client = Client(('localhost', 11211),
     serializer=serde.python_memcache_serializer,
     deserializer=serde.python_memcache_deserializer)
 
+with open('suntrac.config') as json_data_file:
+    config = json.load(json_data_file)
+
+latitude = config.get('latitude')
+longitude = config.get('longitude')
 
 #megaio.set_relay(0, 2, 1)      #turn on relay 2 on stack level 0
 
@@ -46,10 +52,17 @@ while True:
 
     photo_diff = volt_3 - volt_4
 
+    # let get the sun
+    #date = datetime.datetime.utcnow()
+    date = datetime.datetime(2007, 2, 18, 15, 13, 1, 130320, tzinfo=datetime.timezone.utc)
+
+    sun_altitude = get_altitude(latitude, longitude, date)
+    sun_azimuth = get_azimuth(latitude, longitude, date)
+
 
     client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2,
         'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
-        'timestamp': time.time() })
+        'timestamp': time.time(), 'sun_altitude': sun_altitude, 'sun_azimuth': sun_azimuth })
 
     time.sleep(1)
 
