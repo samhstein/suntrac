@@ -1,4 +1,4 @@
-import megaio
+import megaio, pytz
 import math, time, sys, datetime, json
 from pymemcache.client.base import Client
 from pymemcache import serde
@@ -29,8 +29,6 @@ longitude = config.get('longitude')
 
 tf = TimezoneFinder()
 time_zone = tf.timezone_at(lng=longitude, lat=latitude)
-print(time_zone)
-
 
 #megaio.set_relay(0, 2, 1)      #turn on relay 2 on stack level 0
 
@@ -59,8 +57,7 @@ while True:
     photo_diff = volt_3 - volt_4
 
     # let get the sun
-    #date = datetime.datetime.utcnow()
-    date = datetime.datetime(2007, 2, 18, 15, 13, 1, 130320, tzinfo=datetime.timezone.utc)
+    date = datetime.datetime.now(pytz.timezone(time_zone))
 
     sun_altitude = get_altitude(latitude, longitude, date)
     sun_azimuth = get_azimuth(latitude, longitude, date)
