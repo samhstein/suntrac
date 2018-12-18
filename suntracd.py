@@ -62,6 +62,8 @@ while True:
     sun_altitude = get_altitude(latitude, longitude, date)
     sun_azimuth = get_azimuth(latitude, longitude, date)
 
+    print(temp_1)
+
 
     client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2,
         'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff, 'time_zone': time_zone,
