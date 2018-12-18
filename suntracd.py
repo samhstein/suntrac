@@ -3,6 +3,7 @@ import math, time, sys, datetime, json
 from pymemcache.client.base import Client
 from pymemcache import serde
 from pysolar.solar import *
+from timezonefinder import TimezoneFinder
 
 THERMISTOR_TO =25
 THERMISTOR_RO = 860000
@@ -25,6 +26,11 @@ with open('suntrac.config') as json_data_file:
 
 latitude = config.get('latitude')
 longitude = config.get('longitude')
+
+tf = TimezoneFinder()
+time_zone = tf.timezone_at(lng=longitude, lat=latitude)
+print(time_zone)
+
 
 #megaio.set_relay(0, 2, 1)      #turn on relay 2 on stack level 0
 
@@ -65,4 +71,3 @@ while True:
         'timestamp': time.time(), 'sun_altitude': sun_altitude, 'sun_azimuth': sun_azimuth })
 
     time.sleep(1)
-
