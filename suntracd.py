@@ -5,7 +5,7 @@ from pymemcache import serde
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 
-THERMISTOR_TO =25
+THERMISTOR_TO = 25
 THERMISTOR_RO = 860000
 THERMISTOR_BALANCE = 100000
 THERMISTOR_BETA = 4000
