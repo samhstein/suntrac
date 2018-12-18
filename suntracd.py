@@ -1,15 +1,20 @@
 import megaio, pytz
-import math, time, sys, datetime, json
+import time, sys, datetime, json
 from pymemcache.client.base import Client
 from pymemcache import serde
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
+import math
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 860000
 THERMISTOR_BALANCE = 100000
-THERMISTOR_BETA = 4000
-INPUT_VOLTS = 3.3
+THERMISTOR_BETA = 5000
+INPUT_VOLTS = 5.0
+TEMP_1_ADC = 5
+TEMP_2_ADC = 6
+LIGHT_1_ADC = 7
+LIGHT_2_ADC = 8
 
 def get_temp_c(r):
     steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
@@ -38,21 +43,21 @@ volt_3 = volt_4 = 0
 
 while True:
     try:
-        volt_1 = megaio.get_adc_volt(0, 5)
+        volt_1 = megaio.get_adc_volt(0, TEMP_1_ADC)
         ohms_1 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_1) - 1)
         temp_1 = get_temp_c(ohms_1)
     except Exception as e:
         print(e)
 
     try:
-        volt_2 = megaio.get_adc_volt(0, 6)
+        volt_2 = megaio.get_adc_volt(0, TEMP_2_ADC)
         ohms_2 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_2) - 1)
         temp_2 = get_temp_c(ohms_2)
     except Exception as e:
         print(e)
 
-    volt_3 = megaio.get_adc_volt(0, 7)
-    volt_4 = megaio.get_adc_volt(0, 8)
+    volt_3 = megaio.get_adc_volt(0, LIGHT_1_ADC)
+    volt_4 = megaio.get_adc_volt(0, LIGHT_2_ADC)
 
     photo_diff = volt_3 - volt_4
 
@@ -62,11 +67,10 @@ while True:
     sun_altitude = get_altitude(latitude, longitude, date)
     sun_azimuth = get_azimuth(latitude, longitude, date)
 
-    print(temp_1)
 
-
-    client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2,
-        'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff, 'time_zone': time_zone,
-        'timestamp': time.time(), 'sun_altitude': sun_altitude, 'sun_azimuth': sun_azimuth })
+    client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1, 
+        'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff, 
+        'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude, 
+        'sun_azimuth': sun_azimuth })
 
     time.sleep(1)
