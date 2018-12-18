@@ -64,7 +64,7 @@ while True:
 
 
     client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2,
-        'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
+        'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff, 'time_zone': time_zone,
         'timestamp': time.time(), 'sun_altitude': sun_altitude, 'sun_azimuth': sun_azimuth })
 
     time.sleep(1)
