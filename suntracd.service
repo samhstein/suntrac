@@ -1,0 +1,15 @@
+[Unit]
+Description=Suntrac Python daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+ExecStart=/usr/bin/python3 /home/pi/suntrac/suntracd.py
+WorkingDirectory=/home/pi/suntrac
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
