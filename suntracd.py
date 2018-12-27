@@ -18,6 +18,8 @@ LIGHT_2_ADC = 8
 DIFF_VOLTS = 0.2
 RELAY_1 = 1
 RELAY_2 = 2
+POLL_TIME = 0.5
+MOVE_TIME = 0.05
 
 def get_temp_c(r):
     steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
@@ -37,8 +39,6 @@ longitude = config.get('longitude')
 
 tf = TimezoneFinder()
 time_zone = tf.timezone_at(lng=longitude, lat=latitude)
-
-#megaio.set_relay(0, 2, 1)      #turn on relay 2 on stack level 0
 
 volt_1 = ohms_1 = temp_1 = 0
 volt_2 = ohms_2 = temp_2 = 0
@@ -66,16 +66,14 @@ while True:
 
     # if the diff is too big lets move it
     # lets keep it tight
-    print(abs(photo_diff))
     if abs(photo_diff) > DIFF_VOLTS:
         relay = RELAY_2 if photo_diff < 0 else RELAY_1
         moving_relay = relay
-        print('starting move')
         megaio.set_relay(0, relay, 1)
         while relay == moving_relay:
             moving_diff = megaio.get_adc_volt(0, LIGHT_1_ADC) - megaio.get_adc_volt(0, LIGHT_2_ADC)
             moving_relay = RELAY_2 if moving_diff < 0 else RELAY_1
-            time.sleep(.05)
+            time.sleep(MOVE_TIME)
 
         # turn it off
         megaio.set_relay(0, relay, 0)
@@ -92,4 +90,4 @@ while True:
         'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
         'sun_azimuth': sun_azimuth })
 
-    time.sleep(.5)
+    time.sleep(POLL_TIME)
