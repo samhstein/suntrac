@@ -67,14 +67,13 @@ while True:
     # if the diff is too big lets move it
     # lets keep it tight
     if abs(photo_diff) > DIFF_VOLTS:
-        relay = RELAY_1 if photo_diff < 0 else RELAY_2
+        relay = RELAY_2 if photo_diff < 0 else RELAY_1
         moving_relay = relay
         print('starting move')
         megaio.set_relay(0, relay, 1)
         while relay == moving_relay:
             moving_diff = megaio.get_adc_volt(0, LIGHT_1_ADC) - megaio.get_adc_volt(0, LIGHT_2_ADC)
-            moving_relay = RELAY_1 if moving_diff < 0 else RELAY_2
-            print('moving...')
+            moving_relay = RELAY_2 if moving_diff < 0 else RELAY_1
             print('moving: {}, {}, {}'.format(moving_diff, relay, moving_relay))
             time.sleep(.1)
 
