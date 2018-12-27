@@ -15,6 +15,9 @@ TEMP_1_ADC = 5
 TEMP_2_ADC = 6
 LIGHT_1_ADC = 7
 LIGHT_2_ADC = 8
+DIFF_VOLTS = 0.2
+RELAY_1 = 1
+RELAY_2 = 2
 
 def get_temp_c(r):
     steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
@@ -61,16 +64,34 @@ while True:
 
     photo_diff = volt_3 - volt_4
 
-    # let get the sun
+    # if the diff is too big lets move it
+    # lets keep it tight
+    if abs(photo_diff) > DIFF_VOLTS:
+        relay = RELAY_1 if photo_diff < 0 else RELAY_2
+        moving_relay = relay
+        print('starting move')
+        megaio.set_relay(0, relay, 1)
+        while relay == moving_relay:
+            moving_diff = megaio.get_adc_volt(0, LIGHT_1_ADC) - megaio.get_adc_volt(0, LIGHT_2_ADC)
+            moving_relay = RELAY_1 if moving_diff < 0 else RELAY_2
+            print('moving...')
+            print('moving: {}, {}, {}'.format(moving_diff, relay, moving_relay))
+            time.sleep(.1)
+
+        # turn it off
+        print('stoping move')
+        megaio.set_relay(0, relay, 0)
+
+    # lets get the sun
     date = datetime.datetime.now(pytz.timezone(time_zone))
 
     sun_altitude = get_altitude(latitude, longitude, date)
     sun_azimuth = get_azimuth(latitude, longitude, date)
 
 
-    client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1, 
-        'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff, 
-        'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude, 
+    client.set('suntrac_reading', { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
+        'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
+        'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
         'sun_azimuth': sun_azimuth })
 
-    time.sleep(1)
+    time.sleep(.5)
