@@ -101,7 +101,7 @@ while True:
         'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
         'sun_azimuth': sun_azimuth }
 
-    print(data)
+    print(reading)
 
     client.set('suntrac_reading', reading)
 
