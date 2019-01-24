@@ -60,16 +60,15 @@ while True:
         print(e)
 
     try:
-	volt_3 = megaio.get_adc_volt(0, LIGHT_1_ADC)
+        volt_3 = megaio.get_adc_volt(0, LIGHT_1_ADC)
     except Exception as e:
         print(e)
 
 
     try:
-	volt_4 = megaio.get_adc_volt(0, LIGHT_2_ADC)
+        volt_4 = megaio.get_adc_volt(0, LIGHT_2_ADC)
     except Exception as e:
         print(e)
-
 
     photo_diff = volt_3 - volt_4
 
