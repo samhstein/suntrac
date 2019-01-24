@@ -43,6 +43,7 @@ time_zone = tf.timezone_at(lng=longitude, lat=latitude)
 volt_1 = ohms_1 = temp_1 = 0
 volt_2 = ohms_2 = temp_2 = 0
 volt_3 = volt_4 = 0
+light_error = False
 
 while True:
     try:
@@ -57,24 +58,27 @@ while True:
         ohms_2 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_2) - 1)
         temp_2 = get_temp_c(ohms_2)
     except Exception as e:
+        light_error = True
         print(e)
 
     try:
         volt_3 = megaio.get_adc_volt(0, LIGHT_1_ADC)
     except Exception as e:
+        light_error = True
         print(e)
 
 
     try:
         volt_4 = megaio.get_adc_volt(0, LIGHT_2_ADC)
     except Exception as e:
+        light_error = True
         print(e)
 
     photo_diff = volt_3 - volt_4
 
     # if the diff is too big lets move it
     # lets keep it tight
-    if abs(photo_diff) > DIFF_VOLTS:
+    if abs(photo_diff) > DIFF_VOLTS and light_error != True:
         relay = RELAY_2 if photo_diff < 0 else RELAY_1
         moving_relay = relay
         megaio.set_relay(0, relay, 1)
