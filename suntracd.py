@@ -1,4 +1,4 @@
-import megaio, pytz
+import megaiosun, pytz
 import time, sys, datetime, json
 from pymemcache.client.base import Client
 from pymemcache import serde
@@ -7,14 +7,14 @@ from timezonefinder import TimezoneFinder
 import math
 
 THERMISTOR_TO = 25
-THERMISTOR_RO = 860000
+THERMISTOR_RO = 86000
 THERMISTOR_BALANCE = 100000
 THERMISTOR_BETA = 5000
 INPUT_VOLTS = 5.0
-TEMP_1_ADC = 5
-TEMP_2_ADC = 6
-LIGHT_1_ADC = 7
-LIGHT_2_ADC = 8
+TEMP_1_ADC = 1
+TEMP_2_ADC = 2
+LIGHT_1_ADC = 3
+LIGHT_2_ADC = 4
 DIFF_VOLTS = 0.2
 RELAY_1 = 1
 RELAY_2 = 2
@@ -47,31 +47,34 @@ light_error = False
 
 while True:
     try:
-        volt_1 = megaio.get_adc_volt(0, TEMP_1_ADC)
+        volt_1 = megaiosun.get_adc_volt(TEMP_1_ADC)
         ohms_1 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_1) - 1)
         temp_1 = get_temp_c(ohms_1)
     except Exception as e:
+        print('v1 error')
         print(e)
 
     try:
-        volt_2 = megaio.get_adc_volt(0, TEMP_2_ADC)
+        volt_2 = megaiosun.get_adc_volt(TEMP_2_ADC)
         ohms_2 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_2) - 1)
         temp_2 = get_temp_c(ohms_2)
     except Exception as e:
-        light_error = True
+        print('v2 error')
         print(e)
 
     try:
-        volt_3 = megaio.get_adc_volt(0, LIGHT_1_ADC)
+        volt_3 = megaiosun.get_adc_volt(LIGHT_1_ADC)
     except Exception as e:
         light_error = True
+        print('v3 error')
         print(e)
 
 
     try:
-        volt_4 = megaio.get_adc_volt(0, LIGHT_2_ADC)
+        volt_4 = megaiosun.get_adc_volt(LIGHT_2_ADC)
     except Exception as e:
         light_error = True
+        print('v4 error')
         print(e)
 
     photo_diff = volt_3 - volt_4
@@ -81,14 +84,14 @@ while True:
     if abs(photo_diff) > DIFF_VOLTS and light_error != True:
         relay = RELAY_2 if photo_diff < 0 else RELAY_1
         moving_relay = relay
-        megaio.set_relay(0, relay, 1)
+        megaiosun.set_motor(relay, 1)
         while relay == moving_relay:
-            moving_diff = megaio.get_adc_volt(0, LIGHT_1_ADC) - megaio.get_adc_volt(0, LIGHT_2_ADC)
+            moving_diff = megaiosun.get_adc_volt(LIGHT_1_ADC) - megaiosun.get_adc_volt(LIGHT_2_ADC)
             moving_relay = RELAY_2 if moving_diff < 0 else RELAY_1
             time.sleep(MOVE_TIME)
 
         # turn it off
-        megaio.set_relay(0, relay, 0)
+        megaiosun.set_motor(relay, 0)
 
     # lets get the sun
     date = datetime.datetime.now(pytz.timezone(time_zone))
