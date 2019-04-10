@@ -9,3 +9,7 @@ sudo apt-get upgrade
 sudo apt-get install git-core
 cd
 git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+  gpio -v
+  gpio readall
