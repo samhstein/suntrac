@@ -1,0 +1,28 @@
+friday with aws
+
+freeRtos
+  bootloader
+  c based
+  lib support for connectivity, security, messaging
+
+Pi
+  looks the same to aws
+  may be good enough, idustrial versions available
+
+Security
+  validate endpoint
+  validate client creds x509
+  just in time registration or put into at manufacturing for cert
+
+Connectivity
+  SIM868
+  PPP
+  IOT core
+  push: connect to net, connect to aws, publish to topic, ack, disconnect
+  rules engine: listens on topic, takes action, lambda
+  mqtt: quality of service if 1, good to proceed
+  state, shadow state
+
+OTA updates
+  device management
+  jobs published on topics

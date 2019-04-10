@@ -1,0 +1,11 @@
+format sd card
+flash using berrylan image
+login to pi: pi / raspberry
+change password: 123st321
+use berrylan to connect to local wifi, note ip address
+ssh to pi
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install git-core
+cd
+git clone git://git.drogon.net/wiringPi
