@@ -29,3 +29,10 @@ cd /home/pi/megaiosun-rpi/python/megaiosun/
 sudo python3 setup.py install
 cd
 cd suntrac/test
+
+cd /home/pi/megaiosun-rpi
+sequent/megaiosun-rpi/update
+./update
+
+suntrac
+ssh pi@184.186.223.251
