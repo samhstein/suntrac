@@ -3,6 +3,7 @@ import time, sys, datetime, json
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math
+from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
@@ -18,6 +19,8 @@ RELAY_1 = 1
 RELAY_2 = 2
 POLL_TIME = 0.5
 MOVE_TIME = 0.05
+
+IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-west-2.amazonaws.com'
 
 def get_temp_c(r):
     steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
@@ -38,6 +41,16 @@ volt_1 = ohms_1 = temp_1 = 0
 volt_2 = ohms_2 = temp_2 = 0
 volt_3 = volt_4 = 0
 light_error = False
+
+proc_id = megaiosun.get_proc_id()
+
+myMQTTClient = AWSIoTMQTTClient(proc_id)
+myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
+myMQTTClient.configureCredentials("YOUR/ROOT/CA/PATH", "PRIVATE/KEY/PATH", "CERTIFICATE/PATH")
+myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
+myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
+myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
+myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
 while True:
     try:
