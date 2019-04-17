@@ -22,6 +22,14 @@ MOVE_TIME = 0.05
 
 IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-west-2.amazonaws.com'
 
+# Custom MQTT message callback
+def customCallback(client, userdata, message):
+    print("Received a new message: ")
+    print(message.payload)
+    print("from topic: ")
+    print(message.topic)
+    print("--------------\n\n")
+
 def get_temp_c(r):
     steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
     steinhart += 1.0 / (THERMISTOR_TO + 273.15)
@@ -56,6 +64,12 @@ myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish que
 myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
 myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+
+myMQTTClient.connect()
+myMQTTClient.publish("helo", {'proc_id:' proc_id}, 0)
+myMQTTClient.subscribe("helo", 1, customCallback)
+myMQTTClient.unsubscribe("helo")
+myMQTTClient.disconnect()
 
 while True:
     try:
@@ -112,7 +126,7 @@ while True:
     sun_azimuth = get_azimuth(latitude, longitude, date)
 
     reading = { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
-        'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
+        'volt_2': volt_2, 'light_1': volt_3, 'light_2': volt_4, 'photo_diff': photo_diff,
         'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
         'sun_azimuth': sun_azimuth }
 
