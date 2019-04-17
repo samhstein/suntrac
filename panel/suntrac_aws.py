@@ -57,8 +57,8 @@ myMQTTClient = AWSIoTMQTTClient(proc_id)
 myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
 myMQTTClient.configureCredentials(
     "/home/pi/suntrac/certs/root/AmazonRootCA1.pem",
-    "/home/pi/suntrac/certs/devices/9fdaf26892-private.pem.key",
-    "/home/pi/suntrac/certs/devices/9fdaf26892-certificate.pem.crt"
+    "/home/pi/suntrac/certs/devices/90c9b2ae5d-private.pem.key",
+    "/home/pi/suntrac/certs/devices/90c9b2ae5d-certificate.pem.crt"
     )
 myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
 myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
