@@ -43,10 +43,15 @@ volt_3 = volt_4 = 0
 light_error = False
 
 proc_id = megaiosun.get_proc_id()
+print(proc_id)
 
 myMQTTClient = AWSIoTMQTTClient(proc_id)
 myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
-myMQTTClient.configureCredentials("YOUR/ROOT/CA/PATH", "PRIVATE/KEY/PATH", "CERTIFICATE/PATH")
+myMQTTClient.configureCredentials(
+    "/home/pi/suntrac/certs/root/AmazonRootCA1.pem",
+    "/home/pi/suntrac/certs/devices/9fdaf26892-private.pem.key",
+    "/home/pi/suntrac/certs/devices/9fdaf26892-certificate.pem.crt"
+    )
 myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
 myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
 myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
