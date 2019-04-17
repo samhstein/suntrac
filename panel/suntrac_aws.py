@@ -1,7 +1,5 @@
 import megaiosun, pytz
 import time, sys, datetime, json
-from pymemcache.client.base import Client
-from pymemcache import serde
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math
@@ -26,10 +24,6 @@ def get_temp_c(r):
     steinhart += 1.0 / (THERMISTOR_TO + 273.15)
     steinhart = (1.0 / steinhart) - 273.15
     return steinhart
-
-client = Client(('localhost', 11211),
-    serializer=serde.python_memcache_serializer,
-    deserializer=serde.python_memcache_deserializer)
 
 with open('suntrac.config') as json_data_file:
     config = json.load(json_data_file)
@@ -105,7 +99,5 @@ while True:
         'sun_azimuth': sun_azimuth }
 
     print(reading)
-
-    client.set('suntrac_reading', reading)
 
     time.sleep(POLL_TIME)
