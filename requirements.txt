@@ -2,3 +2,4 @@ RPi.GPIO
 pytz
 pysolar
 numpy
+AWSIoTPythonSDK
