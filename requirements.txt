@@ -3,3 +3,4 @@ pytz
 pysolar
 numpy
 AWSIoTPythonSDK
+timezonefinder
