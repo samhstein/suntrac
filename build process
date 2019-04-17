@@ -6,10 +6,13 @@ use berrylan to connect to local wifi, note ip address
 ssh to pi
 sudo apt-get update
 sudo apt-get upgrade
-sudo reboot
-ssh to pi
 raspi-config
   turn i2c on
+  turn off serial remote
+  turn on serial port
+  it will reboot on finish
+
+ssh to pi
 sudo apt-get install build-essential python3-pip python3-dev python3-smbus git-core
 cd
 git clone git://git.drogon.net/wiringPi
@@ -24,8 +27,7 @@ cd suntrac
 pip3 install -r requirements.txt -U
 cd sequent
 unzip megaiosun.zip
-cd megaiosun-rpi/python
-cd /home/pi/megaiosun-rpi/python/megaiosun/
+cd megaiosun-rpi/python/megaiosun
 sudo python3 setup.py install
 cd
 cd suntrac/test
@@ -36,3 +38,9 @@ sequent/megaiosun-rpi/update
 
 suntrac
 ssh pi@184.186.223.251
+
+clone
+  cd ???
+  sudo dd if=/dev/rdiskN of=suntrac_clone.dmg bs=4194304
+  diskutil unmountDisk diskN
+  sudo dd of=/dev/rdiskN if=suntrac_clone.dmg bs=4194304
