@@ -21,7 +21,7 @@ def customCallback(client, userdata, message):
     print("--------------\n\n")
 
 
-myMQTTClient = AWSIoTMQTTClient('beta')
+myMQTTClient = AWSIoTMQTTClient('beta-1')
 myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
 myMQTTClient.configureCredentials(
     "/home/pi/suntrac/certs/root/AmazonRootCA1.pem",
