@@ -37,7 +37,7 @@ myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
 myMQTTClient.connect()
-myMQTTClient.publish("iot/helo", {'proc_id': 'beta-1'}, 0)
+myMQTTClient.publish("iot/helo", "{proc_id: 'beta-1'}", 0)
 myMQTTClient.subscribe("iot/helo", 1, customCallback)
 myMQTTClient.unsubscribe("iot/helo")
 myMQTTClient.disconnect()
