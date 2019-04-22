@@ -1,5 +1,5 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import logging
+import logging, time
 
 # Configure logging
 logger = logging.getLogger("AWSIoTPythonSDK.core")
@@ -42,4 +42,4 @@ myMQTTClient.subscribe("iot/helo", 1, customCallback)
 myMQTTClient.unsubscribe("iot/helo")
 myMQTTClient.disconnect()
 
-sleep(30)
+time.sleep(30)
