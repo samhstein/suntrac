@@ -41,3 +41,5 @@ myMQTTClient.publish("iot/helo", '{proc_id: "beta-1"}', 0)
 myMQTTClient.subscribe("iot/helo", 1, customCallback)
 myMQTTClient.unsubscribe("iot/helo")
 myMQTTClient.disconnect()
+
+sleep(30)
