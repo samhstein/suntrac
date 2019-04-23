@@ -32,6 +32,10 @@ sudo python3 setup.py install
 cd
 cd suntrac/test
 
+cd
+cd suntrac/panel
+sudo cp suntracd.service /etc/systemd/system/suntracd.service
+
 cd /home/pi/megaiosun-rpi
 sequent/megaiosun-rpi/update
 ./update

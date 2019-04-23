@@ -6,8 +6,8 @@ After=multi-user.target
 Type=simple
 User=pi
 Group=pi
-ExecStart=/usr/bin/python3 /home/pi/suntrac/suntracd.py
-WorkingDirectory=/home/pi/suntrac
+ExecStart=/usr/bin/python3 /home/pi/suntrac/panel/suntracd.py
+WorkingDirectory=/home/pi/suntrac/panel
 Restart=always
 RestartSec=2
 
