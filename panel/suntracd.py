@@ -47,6 +47,7 @@ light_error = False
 count = 0
 
 while True:
+    print(count)
     try:
         volt_1 = megaiosun.get_adc_volt(TEMP_1_ADC)
         ohms_1 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_1) - 1)
@@ -108,7 +109,6 @@ while True:
     client.set('suntrac_reading', reading)
 
     # just print every x for now, need a timer
-    print(count)
     if count * POLL_TIME == 60:
         print(reading)
         count = 0
