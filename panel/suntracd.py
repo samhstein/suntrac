@@ -108,7 +108,8 @@ while True:
     client.set('suntrac_reading', reading)
 
     # just print every x for now, need a timer
-    if count * POLL_TIME == 120:
+    print(count)
+    if count * POLL_TIME == 60:
         print(reading)
         count = 0
 
