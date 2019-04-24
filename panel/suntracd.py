@@ -106,6 +106,8 @@ while True:
         'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
         'sun_azimuth': sun_azimuth }
 
+    print(reading)
+
     client.set('suntrac_reading', reading)
 
     # just print every x for now, need a timer
