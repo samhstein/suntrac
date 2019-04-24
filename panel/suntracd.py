@@ -44,6 +44,7 @@ volt_1 = ohms_1 = temp_1 = 0
 volt_2 = ohms_2 = temp_2 = 0
 volt_3 = volt_4 = 0
 light_error = False
+count = 0
 
 while True:
     try:
@@ -105,5 +106,10 @@ while True:
         'sun_azimuth': sun_azimuth }
 
     client.set('suntrac_reading', reading)
+
+    # just print every x for now, need a timer
+    if count * POLL_TIME == 120:
+        print(reading)
+        count = 0
 
     time.sleep(POLL_TIME)

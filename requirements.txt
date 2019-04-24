@@ -4,3 +4,4 @@ pysolar
 numpy
 AWSIoTPythonSDK
 timezonefinder
+pymemcache
