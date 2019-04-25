@@ -138,7 +138,7 @@ def light():
     v3 = m.get_adc_volt(3)
     v4 = m.get_adc_volt(4)
     print('light 1 (v3)', v3)
-    print('light 2 (v4)', v4
+    print('light 2 (v4)', v4)
     print('diff', v3 - v4)
 
 def motor():
