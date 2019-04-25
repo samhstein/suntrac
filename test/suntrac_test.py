@@ -146,17 +146,17 @@ def light():
 
 def motor():
     print('turning off both motors...')
-    m.set_motors(0)
+    m.set_motor(1, 0)
+    m.set_motor(2, 0)
     time.sleep(0.2)
     print('turning on motor 1')
-    m.set_motors(1)	# turn motor 1 on and motor 2 off
+    m.set_motor(1, 1)
     time.sleep(10)
+    m.set_motor(1, 0)
     print('turning on motor 2')
-    m.set_motors(2)	# turn motor 1 on and motor 2 off
+    m.set_motor(2, 1)	# turn motor 1 on and motor 2 off
     time.sleep(10)
-    print('turning off both motors...')
-    m.set_motors(0) 	# turn off all motors
-
+    m.set_motor(2, 0)	# turn motor 1 on and motor 2 off
 
 
 print("Positioning board Testing...")
