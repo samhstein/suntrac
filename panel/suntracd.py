@@ -127,4 +127,5 @@ while True:
         client.set('suntrac_reading', reading)
         count = 0
 
+    count += 1
     time.sleep(POLL_TIME)
