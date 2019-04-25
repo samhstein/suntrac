@@ -154,7 +154,7 @@ def motor():
     time.sleep(20)
     print('turning off motor 2')
     m.set_motors(0)	# turn motor 1 on and motor 2 off
-    time.sleep.(1)
+    time.sleep(1)
     print('turning on motor 1')
     m.set_motor(1, 1)
     time.sleep(20)
