@@ -59,7 +59,7 @@ def acc():
     except Exception as e:
         print ("Fail to read Magnetometer! read: " + str(e))
 
-    if ret == 0 :
+    if ret == 0:
         print("LSM303 tested OK")
     else:
         print("LSM303 test FAIL!")
@@ -91,8 +91,7 @@ def led():
                 loop = False
                 break
 
-            bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, 0xff)
-
+    bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, 0xff)
     return ret
 
 def gsm():
