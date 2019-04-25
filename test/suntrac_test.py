@@ -146,18 +146,25 @@ def light():
 
 def motor():
     print('turning off both motors...')
-    set_motors(0) 	# turn off all motors
+    set_motor(1,0)
+    set_motor(2,0)
     sleep(.2)
     print('turning on motor 1')
-    set_motors(1)	# turn motor 1 on and motor 2 off
+    set_motor(1, 1)	# turn motor 1 on and motor 2 off
     sleep(2)
+    print('turning off motor 1')
+    set_motor(1, 0)	# turn motor 1 on and motor 2 off
     print('turning on motor 2')
-    set_motors(2)	# turn motor 1 on and motor 2 off
+    set_motors(2, 1)	# turn motor 1 on and motor 2 off
     sleep(2)
-    print('turning off both motors...')
-    set_motors(0) 	# turn off all motors
+    print('turning off motor 2')
+    set_motor(2, 0)	# turn motor 1 on and motor 2 off
 
 
+print('proc_id', m.get_proc_id())
+print('temp', m.get_temp())
+print('24v', m.get_24V())
+print('5v', m.get_5V())
 
 print("Positioning board Testing...")
 acc()
