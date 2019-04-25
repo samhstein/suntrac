@@ -8,6 +8,19 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+THERMISTOR_TO = 25
+THERMISTOR_RO = 86000
+THERMISTOR_BALANCE = 100000
+THERMISTOR_BETA = 5000
+INPUT_VOLTS = 5.0
+
+def get_temp_c(volts):
+    ohms = THERMISTOR_BALANCE * ((INPUT_VOLTS / volts) - 1)
+    steinhart = math.log(ohms / THERMISTOR_RO) / THERMISTOR_BETA
+    steinhart += 1.0 / (THERMISTOR_TO + 273.15)
+    steinhart = (1.0 / steinhart) - 273.15
+    return steinhart
+
 def waitPush():
   while(GPIO.input(27) == 1):
     time.sleep(0.1)
@@ -116,37 +129,32 @@ def gsm():
   return ret
 
 def term():
-  print(m.get_adc_volt(1))
-  print(m.get_adc_volt(2))
+    v1 = m.get_adc_volt(1)
+    v2 = m.get_adc_volt(2)
+    print('temp 1', v1, get_temp_c(v1))
+    print('temp 2', v2, get_temp_c(v2))
 
-def mot_light():
-  print("Expose to light fotodiodes and check the corresponding motor then press the push button to exit")
-  waitRelease()
-  loop = True
-  while loop:
-    led1 = m.get_adc_volt(3)
-    time.sleep(0.1)
-    led2 = m.get_adc_volt(4)
-    time.sleep(0.1)
+def light():
+    v3 = m.get_adc_volt(3)
+    v4 = m.get_adc_volt(4)
+    print('light 1 (v3)', v3)
+    print('light 2 (v4)', v4
+    print('diff', v3 - v4)
 
-    if led1 > led2 and led1 > 0.2:
-      m.set_motor(2,0)
-      time.sleep(0.1)
-      m.set_motor(1,1)
-      time.sleep(0.1)
-    if led2 > led1 and led2 > 0.2:
-      m.set_motor(1,0)
-      time.sleep(0.1)
-      m.set_motor(2,1)
-      time.sleep(0.1)
-    if led1 <= 0.2 and led2 <= 0.2:
-      m.set_motor(1,0)
-      time.sleep(0.1)
-      m.set_motor(2,0)
-      time.sleep(0.1)
+def motor():
+    print('turning off both motors...')
+    set_motors(0) 	# turn off all motors
+    sleep(.2)
+    print('turning on motor 1')
+	set_motors(1)	# turn motor 1 on and motor 2 off
+    sleep(2)
+    print('turning on motor 2')
+	set_motors(2)	# turn motor 1 on and motor 2 off
+    sleep(2)
+    print('turning off both motors...')
+    set_motors(0) 	# turn off all motors
 
-    if checkPush() :
-      loop = False
+
 
 print("Positioning board Testing...")
 acc()
@@ -155,5 +163,7 @@ print("Gsm/GPS SIM868 module Testing...")
 gsm()
 print("Temperature sensors Testing...")
 term()
-print("AC motors and light sensor testing...")
-mot_light()
+print("Light sensor testing...")
+light()
+print("Motor testing...")
+motor()
