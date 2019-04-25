@@ -46,8 +46,13 @@ volt_3 = volt_4 = 0
 light_error = False
 count = 0
 
+# lets get the sun
+date = datetime.datetime.now(pytz.timezone(time_zone))
+sun_altitude = get_altitude(latitude, longitude, date)
+sun_azimuth = get_azimuth(latitude, longitude, date)
+
 while True:
-    print(count)
+    print('top of loop: ', count)
     try:
         volt_1 = megaiosun.get_adc_volt(TEMP_1_ADC)
         ohms_1 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_1) - 1)
@@ -55,6 +60,8 @@ while True:
     except Exception as e:
         print('v1 error')
         print(e)
+
+    print('after v1...')
 
     try:
         volt_2 = megaiosun.get_adc_volt(TEMP_2_ADC)
@@ -64,6 +71,8 @@ while True:
         print('v2 error')
         print(e)
 
+    print('after v2...')
+
     try:
         volt_3 = megaiosun.get_adc_volt(LIGHT_1_ADC)
     except Exception as e:
@@ -71,6 +80,7 @@ while True:
         print('v3 error')
         print(e)
 
+    print('after v3...')
 
     try:
         volt_4 = megaiosun.get_adc_volt(LIGHT_2_ADC)
@@ -79,7 +89,11 @@ while True:
         print('v4 error')
         print(e)
 
+    print('after v4...')
+
     photo_diff = volt_3 - volt_4
+
+    print('after diff...')
 
     # if the diff is too big lets move it
     # lets keep it tight
@@ -87,32 +101,30 @@ while True:
         relay = RELAY_2 if photo_diff < 0 else RELAY_1
         moving_relay = relay
         megaiosun.set_motor(relay, 1)
+        print('start moving...')
         while relay == moving_relay:
             moving_diff = megaiosun.get_adc_volt(LIGHT_1_ADC) - megaiosun.get_adc_volt(LIGHT_2_ADC)
             moving_relay = RELAY_2 if moving_diff < 0 else RELAY_1
             time.sleep(MOVE_TIME)
 
         # turn it off
+        print('stop moving...')
         megaiosun.set_motor(relay, 0)
 
-    # lets get the sun
-    date = datetime.datetime.now(pytz.timezone(time_zone))
 
-    sun_altitude = get_altitude(latitude, longitude, date)
-    sun_azimuth = get_azimuth(latitude, longitude, date)
-
-    reading = { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
-        'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
-        'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
-        'sun_azimuth': sun_azimuth }
-
-    print(reading)
-
-    client.set('suntrac_reading', reading)
 
     # just print every x for now, need a timer
     if count * POLL_TIME == 60:
+        print('in save to memcached')
+        date = datetime.datetime.now(pytz.timezone(time_zone))
+        sun_altitude = get_altitude(latitude, longitude, date)
+        sun_azimuth = get_azimuth(latitude, longitude, date)
+        reading = { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
+            'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
+            'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
+            'sun_azimuth': sun_azimuth }
         print(reading)
+        client.set('suntrac_reading', reading)
         count = 0
 
     time.sleep(POLL_TIME)
