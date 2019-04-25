@@ -1,8 +1,6 @@
-import smbus
 import RPi.GPIO as GPIO
 import megaiosun as m
-import time
-import serial
+import smbus, time, serial, math
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
