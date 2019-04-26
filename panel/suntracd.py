@@ -64,8 +64,6 @@ while True:
         print('v1 error')
         print(e)
 
-    print('after v1...')
-
     try:
         volt_2 = megaiosun.get_adc_volt(TEMP_2_ADC)
         ohms_2 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_2) - 1)
@@ -74,16 +72,12 @@ while True:
         print('v2 error')
         print(e)
 
-    print('after v2...')
-
     try:
         volt_3 = megaiosun.get_adc_volt(LIGHT_1_ADC)
     except Exception as e:
         light_error = True
         print('v3 error')
         print(e)
-
-    print('after v3...')
 
     try:
         volt_4 = megaiosun.get_adc_volt(LIGHT_2_ADC)
@@ -92,11 +86,9 @@ while True:
         print('v4 error')
         print(e)
 
-    print('after v4...')
-
     photo_diff = volt_3 - volt_4
 
-    print('after diff...')
+    print(volt_1, volt_2, volt_3, volt_4, photo_diff, light_error)
 
     # if the diff is too big lets move it
     # lets keep it tight
