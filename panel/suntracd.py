@@ -11,8 +11,8 @@ THERMISTOR_RO = 86000
 THERMISTOR_BALANCE = 100000
 THERMISTOR_BETA = 5000
 INPUT_VOLTS = 5.0
-TEMP_1_ADC = 1
-TEMP_2_ADC = 2
+TEMP_OUTLET = 1
+TEMP_INLET = 2
 LIGHT_EAST = 3
 LIGHT_WEST = 4
 DIFF_VOLTS = 0.2
@@ -40,8 +40,8 @@ longitude = config.get('longitude')
 tf = TimezoneFinder()
 time_zone = tf.timezone_at(lng=longitude, lat=latitude)
 
-volt_1 = ohms_1 = temp_1 = 0
-volt_2 = ohms_2 = temp_2 = 0
+volt_outlet = ohms_outlet = temp_outlet = 0
+volt_inlet = ohms_inlet = temp_inlet = 0
 light_east = light_west = 0
 light_error = False
 count = 0
@@ -57,17 +57,17 @@ megaiosun.set_motors(0)
 while True:
     print('top of loop: ', count)
     try:
-        volt_1 = megaiosun.get_adc_volt(TEMP_1_ADC)
-        ohms_1 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_1) - 1)
-        temp_1 = get_temp_c(ohms_1)
+        volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
+        ohms_outlet = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_outlet) - 1)
+        temp_outlet = get_temp_c(ohms_outlet)
     except Exception as e:
         print('v1 error')
         print(e)
 
     try:
-        volt_2 = megaiosun.get_adc_volt(TEMP_2_ADC)
-        ohms_2 = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_2) - 1)
-        temp_2 = get_temp_c(ohms_2)
+        volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
+        ohms_inlet = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_inlet) - 1)
+        temp_inlet = get_temp_c(ohms_inlet)
     except Exception as e:
         print('v2 error')
         print(e)
@@ -88,7 +88,7 @@ while True:
 
     photo_diff = light_east - light_west
 
-    print(volt_1, temp_1, volt_2, temp_2, light_east, light_west, photo_diff, light_error)
+    print(volt_outlet, temp_outlet, volt_inlet, temp_inlet, light_east, light_west, photo_diff, light_error)
 
     # if the diff is too big lets move it
     # lets keep it tight
@@ -114,8 +114,8 @@ while True:
         date = datetime.datetime.now(pytz.timezone(time_zone))
         sun_altitude = get_altitude(latitude, longitude, date)
         sun_azimuth = get_azimuth(latitude, longitude, date)
-        reading = { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
-            'volt_2': volt_2, 'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
+        reading = { 'temp_outlet': temp_outlet, 'temp_inlet': temp_inlet, 'volt_outlet': volt_outlet,
+            'volt_inlet': volt_inlet, 'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
             'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
             'sun_azimuth': sun_azimuth }
         print(reading)
