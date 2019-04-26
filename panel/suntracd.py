@@ -13,8 +13,8 @@ THERMISTOR_BETA = 5000
 INPUT_VOLTS = 5.0
 TEMP_1_ADC = 1
 TEMP_2_ADC = 2
-LIGHT_EAST_ADC = 3
-LIGHT_WEST_ADC = 4
+LIGHT_EAST = 3
+LIGHT_WEST = 4
 DIFF_VOLTS = 0.2
 RELAY_EAST = 1
 RELAY_WEST = 2
@@ -98,7 +98,7 @@ while True:
         megaiosun.set_motor(relay, 1)
         print('start moving... ', relay, moving_relay)
         while relay == moving_relay:
-            moving_diff = megaiosun.get_adc_volt(LIGHT_1_ADC) - megaiosun.get_adc_volt(LIGHT_2_ADC)
+            moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
             moving_relay = RELAY_WEST if moving_diff < 0 else RELAY_EAST
             time.sleep(MOVE_TIME)
 
