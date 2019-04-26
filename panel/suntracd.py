@@ -51,6 +51,9 @@ date = datetime.datetime.now(pytz.timezone(time_zone))
 sun_altitude = get_altitude(latitude, longitude, date)
 sun_azimuth = get_azimuth(latitude, longitude, date)
 
+# stop the motors if they are moving
+m.set_motors(0)
+
 while True:
     print('top of loop: ', count)
     try:
@@ -129,3 +132,6 @@ while True:
 
     count += 1
     time.sleep(POLL_TIME)
+
+# stop the motors if they are moving
+m.set_motors(0)

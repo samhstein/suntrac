@@ -24,19 +24,22 @@ cd wiringPi
 cd
 git clone https://github.com/samhstein/suntrac.git
 cd suntrac
-pip3 install -r requirements.txt -U
+pip3 install -r requirements.txt
+
 cd sequent
 unzip megaiosun.zip
 cd megaiosun-rpi/python/megaiosun
 sudo python3 setup.py install
 cd
 cd suntrac/test
+python3 suntrac_test.py
 
 cd
 cd suntrac/panel
 sudo cp suntracd.service /etc/systemd/system/suntracd.service
 sudo systemctl enable suntracd.service
 
+### to flash board
 cd /home/pi/megaiosun-rpi
 sequent/megaiosun-rpi/update
 ./update
@@ -44,6 +47,7 @@ sequent/megaiosun-rpi/update
 suntrac
 ssh pi@184.186.223.251
 
+### to clone disk
 clone
   cd ???
   sudo dd if=/dev/rdiskN of=suntrac_clone.dmg bs=4194304
