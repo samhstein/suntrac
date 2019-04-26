@@ -149,16 +149,16 @@ def motor():
     m.set_motor(1, 0)
     m.set_motor(2, 0)
     time.sleep(0.2)
-    print('turning on motor 2')
+    print('turning on west motor 2')
     m.set_motor(2, 1)	# turn motor 1 on and motor 2 off
     time.sleep(20)
-    print('turning off motor 2')
+    print('turning on west motor')
     m.set_motors(0)	# turn motor 1 on and motor 2 off
     time.sleep(1)
-    print('turning on motor 1')
+    print('turning on  east motor')
     m.set_motor(1, 1)
     time.sleep(20)
-    print('turning off motor 1')
+    print('turning off east')
     m.set_motors(0)	# turn motor 1 on and motor 2 off
 
 print("id: ", m.get_proc_id())

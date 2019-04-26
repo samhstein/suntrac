@@ -13,11 +13,11 @@ THERMISTOR_BETA = 5000
 INPUT_VOLTS = 5.0
 TEMP_1_ADC = 1
 TEMP_2_ADC = 2
-LIGHT_1_ADC = 3
-LIGHT_2_ADC = 4
+LIGHT_EAST_ADC = 3
+LIGHT_WEST_ADC = 4
 DIFF_VOLTS = 0.2
-RELAY_1 = 1
-RELAY_2 = 2
+RELAY_EAST = 1
+RELAY_WEST = 2
 POLL_TIME = 0.5
 MOVE_TIME = 0.05
 
@@ -42,7 +42,7 @@ time_zone = tf.timezone_at(lng=longitude, lat=latitude)
 
 volt_1 = ohms_1 = temp_1 = 0
 volt_2 = ohms_2 = temp_2 = 0
-volt_3 = volt_4 = 0
+light_east = light_west = 0
 light_error = False
 count = 0
 
@@ -73,33 +73,33 @@ while True:
         print(e)
 
     try:
-        volt_3 = megaiosun.get_adc_volt(LIGHT_1_ADC)
+        light_east = megaiosun.get_adc_volt(LIGHT_EAST)
     except Exception as e:
         light_error = True
         print('v3 error')
         print(e)
 
     try:
-        volt_4 = megaiosun.get_adc_volt(LIGHT_2_ADC)
+        light_west = megaiosun.get_adc_volt(LIGHT_WEST)
     except Exception as e:
         light_error = True
         print('v4 error')
         print(e)
 
-    photo_diff = volt_3 - volt_4
+    photo_diff = light_east - light_west
 
-    print(volt_1, volt_2, volt_3, volt_4, photo_diff, light_error)
+    print(volt_1, temp_1, volt_2, temp_2, light_east, light_west, photo_diff, light_error)
 
     # if the diff is too big lets move it
     # lets keep it tight
     if abs(photo_diff) > DIFF_VOLTS and light_error != True:
-        relay = RELAY_2 if photo_diff < 0 else RELAY_1
+        relay = RELAY_WEST if photo_diff < 0 else RELAY_EAST
         moving_relay = relay
         megaiosun.set_motor(relay, 1)
-        print('start moving...')
+        print('start moving... ', relay, moving_relay)
         while relay == moving_relay:
             moving_diff = megaiosun.get_adc_volt(LIGHT_1_ADC) - megaiosun.get_adc_volt(LIGHT_2_ADC)
-            moving_relay = RELAY_2 if moving_diff < 0 else RELAY_1
+            moving_relay = RELAY_WEST if moving_diff < 0 else RELAY_EAST
             time.sleep(MOVE_TIME)
 
         # turn it off
@@ -115,7 +115,7 @@ while True:
         sun_altitude = get_altitude(latitude, longitude, date)
         sun_azimuth = get_azimuth(latitude, longitude, date)
         reading = { 'temp_1': temp_1, 'temp_2': temp_2, 'volt_1': volt_1,
-            'volt_2': volt_2, 'volt_3': volt_3, 'volt_4': volt_4, 'photo_diff': photo_diff,
+            'volt_2': volt_2, 'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
             'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
             'sun_azimuth': sun_azimuth }
         print(reading)
