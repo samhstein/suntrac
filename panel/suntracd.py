@@ -52,7 +52,7 @@ sun_altitude = get_altitude(latitude, longitude, date)
 sun_azimuth = get_azimuth(latitude, longitude, date)
 
 # stop the motors if they are moving
-m.set_motors(0)
+megaiosun.set_motors(0)
 
 while True:
     print('top of loop: ', count)
@@ -134,4 +134,4 @@ while True:
     time.sleep(POLL_TIME)
 
 # stop the motors if they are moving
-m.set_motors(0)
+megaiosun.set_motors(0)
