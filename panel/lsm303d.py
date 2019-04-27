@@ -21,14 +21,13 @@ import math
 bus = smbus.SMBus(1)
 
 class lsm303d:
-	# LSM303 Address definitions
 #	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
-	LSM303D_ADDR	= 0x1D  # assuming SA0 grounded
-	ACC_ADDR	= 0x1D  # assuming SA0 grounded
-	MAG_ADDR	= 0x1E  # assuming SA0 grounded
+    LSM303D_ADDR	= 0x1D  # assuming SA0 grounded
+    ACC_ADDR	= 0x1D  # assuming SA0 grounded
+    MAG_ADDR	= 0x1E  # assuming SA0 grounded
 
 	# LSM303 Register definitions
-	TEMP_OUT_L		= 0x05
+    TEMP_OUT_L		= 0x05
 	TEMP_OUT_H		= 0x06
 	STATUS_REG_M	= 0x07
 	OUT_X_L_M 		= 0x08
@@ -92,20 +91,20 @@ class lsm303d:
 
 	ACCELE_SCALE 	= 2
 
-	X 				= 0
+    X 				= 0
 	Y 				= 1
 	Z 				= 2
 
-	# Set up the sensor
-	def __init__(self,):
-		self.write_reg(0x57, self.CTRL_REG1)				# 0x57 = ODR=50hz, all accel axes on
-		self.write_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
-		self.write_reg(0x00, self.CTRL_REG3)  			# no interrupt
-		self.write_reg(0x00, self.CTRL_REG4)  			# no interrupt
-		self.write_reg((4<<2), self.CTRL_REG5)  			# 0x10 = mag 50Hz output rate
-		self.write_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale = +/-1.3Gauss
-		self.write_reg(0x00, self.CTRL_REG7)  			# 0x00 = continouous conversion mode
-		time.sleep(.005)
+    # Set up the sensor
+    def __init__(self,):
+        self.write_reg(0x57, self.CTRL_REG1)				# 0x57 = ODR=50hz, all accel axes on
+        self.write_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
+        self.write_reg(0x00, self.CTRL_REG3)  			# no interrupt
+        self.write_reg(0x00, self.CTRL_REG4)  			# no interrupt
+        self.write_reg((4<<2), self.CTRL_REG5)  			# 0x10 = mag 50Hz output rate
+        self.write_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale = +/-1.3Gauss
+        self.write_reg(0x00, self.CTRL_REG7)  			# 0x00 = continouous conversion mode
+        time.sleep(.005)
 
 	# get the status of the sensor
     def status(self):
@@ -116,8 +115,8 @@ class lsm303d:
         return 1
 
 	# Write data to a reg on the I2C device
-	def write_reg(self,data,reg):
-		bus.write_byte_data(self.LSM303D_ADDR, reg, data)
+    def write_reg(self,data,reg):
+        bus.write_byte_data(self.LSM303D_ADDR, reg, data)
 
 	# Read data from the sensor
 	def read_reg(self,reg):
