@@ -24,8 +24,8 @@ class lsm303d:
 	# LSM303 Address definitions
 #	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
 	LSM303D_ADDR	= 0x1D  # assuming SA0 grounded
-    ACC_ADDR        = 0x1D
-    MAG_ADDR        = 0x1E
+	ACC_ADDR	= 0x1D  # assuming SA0 grounded
+	MAG_ADDR	= 0x1E  # assuming SA0 grounded
 
 	# LSM303 Register definitions
 	TEMP_OUT_L		= 0x05
