@@ -18,15 +18,12 @@ import smbus
 import math
 
 # use the bus that matches your raspi version
-rev = GPIO.RPI_REVISION
-if rev == 2 or rev == 3:
-    bus = smbus.SMBus(1)
-else:
-    bus = smbus.SMBus(0)
+bus = smbus.SMBus(1)
 
 class lsm303d:
 	# LSM303 Address definitions
-	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
+#	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
+	LSM303D_ADDR	= 0x1D  # assuming SA0 grounded    
 
 	# LSM303 Register definitions
 	TEMP_OUT_L		= 0x05
@@ -209,4 +206,3 @@ if __name__ == "__main__":
 
 		# Do not use, math error
 		# print acc_mag.getTiltHeading()
- 
