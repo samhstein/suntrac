@@ -43,6 +43,7 @@ def acc():
 
     try:
         me = bus.read_byte_data( ACC_ADDRESS, WHO_AM_I)
+        print('acc: ', me)
         if me != 0x41:
             print ("Fail to read Accelerometer! read: " + str(me))
             ret+= 1
@@ -51,6 +52,7 @@ def acc():
         ret+=1
     try:
         me = bus.read_byte_data( MAG_ADDRESS, WHO_AM_I)
+        print('acc: ', me)        
         if me != 0x3d:
             print ("Fail to read Magnetometer! read: " + str(me))
             ret+=1
