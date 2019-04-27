@@ -23,7 +23,9 @@ bus = smbus.SMBus(1)
 class lsm303d:
 	# LSM303 Address definitions
 #	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
-	LSM303D_ADDR	= 0x1D  # assuming SA0 grounded    
+	LSM303D_ADDR	= 0x1D  # assuming SA0 grounded
+    ACC_ADDR        = 0x1D
+    MAG_ADDR        = 0x1E
 
 	# LSM303 Register definitions
 	TEMP_OUT_L		= 0x05
@@ -107,7 +109,9 @@ class lsm303d:
 
 	# get the status of the sensor
 	def status(self):
-		if self.read_reg(self.WHO_AM_I) !=73:
+		if self.read_acc_reg(self.WHO_AM_I) != 0x41:
+			return -1
+        if self.read_mag_reg(self.WHO_AM_I) != 0x3D:
 			return -1
 		return 1
 
@@ -119,18 +123,24 @@ class lsm303d:
 	def read_reg(self,reg):
 		return bus.read_byte_data(self.LSM303D_ADDR, reg)
 
+    def read_acc_reg(self,reg):
+		return bus.read_byte_data(self.ACC_ADDR, reg)
+
+    def read_mag_reg(self,reg):
+		return bus.read_byte_data(self.MAG_ADDR, reg)
+
 	# Check if compass is ready
 	def isMagReady(self):
-		if self.read_reg(self.STATUS_REG_M)&0x03!=0:
+		if self.read_mag_reg(self.STATUS_REG_M)&0x03!=0:
 			return 1
 		return 0
 
 	# Get raw accelerometer values
 	def getAccel(self):
 		raw_accel=[0,0,0]
-		raw_accel[0]=((self.read_reg(self.OUT_X_H_A)<<8)|self.read_reg(self.OUT_X_L_A))
-		raw_accel[1]=((self.read_reg(self.OUT_Y_H_A)<<8)|self.read_reg(self.OUT_Y_L_A))
-		raw_accel[2]=((self.read_reg(self.OUT_Z_H_A)<<8)|self.read_reg(self.OUT_Z_L_A))
+		raw_accel[0]=((self.read_acc_reg(self.OUT_X_H_A)<<8)|self.read_acc_reg(self.OUT_X_L_A))
+		raw_accel[1]=((self.read_acc_reg(self.OUT_Y_H_A)<<8)|self.read_acc_reg(self.OUT_Y_L_A))
+		raw_accel[2]=((self.read_acc_reg(self.OUT_Z_H_A)<<8)|self.read_acc_reg(self.OUT_Z_L_A))
 
 		#2's compiment
 		for i in range(3):
@@ -150,9 +160,9 @@ class lsm303d:
 	# Get compass raw values
 	def getMag(self):
 		raw_mag=[0,0,0]
-		raw_mag[0]=(self.read_reg(self.OUT_X_H_M)<<8)|self.read_reg(self.OUT_X_L_M)
-		raw_mag[1]=(self.read_reg(self.OUT_Y_H_M)<<8)|self.read_reg(self.OUT_Y_L_M)
-		raw_mag[2]=(self.read_reg(self.OUT_Z_H_M)<<8)|self.read_reg(self.OUT_Z_L_M)
+		raw_mag[0]=(self.read_mag_reg(self.OUT_X_H_M)<<8)|self.read_mag_reg(self.OUT_X_L_M)
+		raw_mag[1]=(self.read_mag_reg(self.OUT_Y_H_M)<<8)|self.read_mag_reg(self.OUT_Y_L_M)
+		raw_mag[2]=(self.read_mag_reg(self.OUT_Z_H_M)<<8)|self.read_mag_reg(self.OUT_Z_L_M)
 
 		#2's compiment
 		for i in range(3):
