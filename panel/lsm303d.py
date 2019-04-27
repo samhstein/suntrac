@@ -22,18 +22,18 @@ bus = smbus.SMBus(1)
 
 class lsm303d:
 #	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
-    LSM303D_ADDR	= 0x1D  # assuming SA0 grounded
-    ACC_ADDR	= 0x1D  # assuming SA0 grounded
-    MAG_ADDR	= 0x1E  # assuming SA0 grounded
+    LSM303D_ADDR    = 0x1D  # assuming SA0 grounded
+    ACC_ADDR        = 0x1D  # assuming SA0 grounded
+    MAG_ADDR        = 0x1E  # assuming SA0 grounded
 
 	# LSM303 Register definitions
-    TEMP_OUT_L		= 0x05
-	TEMP_OUT_H		= 0x06
-	STATUS_REG_M	= 0x07
-	OUT_X_L_M 		= 0x08
-	OUT_X_H_M 		= 0x09
-	OUT_Y_L_M 		= 0x0A
-	OUT_Y_H_M 		= 0x0B
+    TEMP_OUT_L     = 0x05
+	TEMP_OUT_H     = 0x06
+	STATUS_REG_M   = 0x07
+	OUT_X_L_M      = 0x08
+	OUT_X_H_M      = 0x09
+	OUT_Y_L_M      = 0x0A
+	OUT_Y_H_M      = 0x0B
 	OUT_Z_L_M 		= 0x0C
 	OUT_Z_H_M 		= 0x0D
 	WHO_AM_I		= 0x0F
