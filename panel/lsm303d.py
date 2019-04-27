@@ -108,7 +108,7 @@ class lsm303d:
 		time.sleep(.005)
 
 	# get the status of the sensor
-	def status(self):
+    def status(self):
         if self.read_acc_reg(self.WHO_AM_I) != 0x41:
             return -1
         if self.read_mag_reg(self.WHO_AM_I) != 0x3D:
