@@ -109,11 +109,11 @@ class lsm303d:
 
 	# get the status of the sensor
 	def status(self):
-		if self.read_acc_reg(self.WHO_AM_I) != 0x41:
-			return -1
+        if self.read_acc_reg(self.WHO_AM_I) != 0x41:
+            return -1
         if self.read_mag_reg(self.WHO_AM_I) != 0x3D:
-			return -1
-		return 1
+            return -1
+        return 1
 
 	# Write data to a reg on the I2C device
 	def write_reg(self,data,reg):
