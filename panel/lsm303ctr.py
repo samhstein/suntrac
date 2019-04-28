@@ -1,24 +1,14 @@
-#!/usr/bin/env python
-#
-# GrovePi Library for using the Grove - 6-Axis Accelerometer&Compass v2.0(http://www.seeedstudio.com/depot/Grove-6Axis-AccelerometerCompass-v20-p-2476.html)
-#
-# This sensor uses LSM303D chip and the library works in Python for the Raspberry Pi
-#
-# The GrovePi connects the Raspberry Pi and Grove sensors.  You can learn more about GrovePi here:  http://www.dexterindustries.com/GrovePi
-#
-# Have a question about this library?  Ask on the forums here:  http://forum.dexterindustries.com/c/grovepi
-#
 
-# Released under the MIT license (http://choosealicense.com/licenses/mit/).
-# For more information see https://github.com/DexterInd/GrovePi/blob/master/LICENSE
+#
+#  LSM303ctr, based on https://github.com/sparkfun/SparkFun_LSM303C_6_DOF_IMU_Breakout_Arduino_Library
+#
 
 import time,sys
-import RPi.GPIO as GPIO
 import smbus
 import math
 
 # use the bus that matches your raspi version
-bus =smbus.SMBus(1)
+bus = smbus.SMBus(1)
 
 class lsm303ctr:
     ACC_ADDR        = 0x1D
