@@ -135,83 +135,85 @@ class lsm303d:
         return 0
 
 	# Get raw accelerometer values
-	def getAccel(self):
-		raw_accel=[0,0,0]
-		raw_accel[0]=((self.read_acc_reg(self.OUT_X_H_A)<<8)|self.read_acc_reg(self.OUT_X_L_A))
-		raw_accel[1]=((self.read_acc_reg(self.OUT_Y_H_A)<<8)|self.read_acc_reg(self.OUT_Y_L_A))
-		raw_accel[2]=((self.read_acc_reg(self.OUT_Z_H_A)<<8)|self.read_acc_reg(self.OUT_Z_L_A))
+    def getAccel(self):
+        raw_accel=[0,0,0]
+        raw_accel[0]=((self.read_acc_reg(self.OUT_X_H_A)<<8)|self.read_acc_reg(self.OUT_X_L_A))
+        raw_accel[1]=((self.read_acc_reg(self.OUT_Y_H_A)<<8)|self.read_acc_reg(self.OUT_Y_L_A))
+        raw_accel[2]=((self.read_acc_reg(self.OUT_Z_H_A)<<8)|self.read_acc_reg(self.OUT_Z_L_A))
 
 		#2's compiment
-		for i in range(3):
-			if raw_accel[i]>32767:
-				raw_accel[i]=raw_accel[i]-65536
+        for i in range(3):
+            if raw_accel[i]>32767:
+                raw_accel[i]=raw_accel[i]-65536
 
-		return raw_accel
+        return raw_accel
 
 	# Get accelerometer values in g
-	def getRealAccel(self):
-		realAccel=[0.0,0.0,0.0]
-		accel=self.getAccel()
-		for i in range(3):
-			realAccel[i] =round(accel[i] / math.pow(2, 15) * self.ACCELE_SCALE,3)
-		return realAccel
+    def getRealAccel(self):
+        realAccel=[0.0,0.0,0.0]
+        accel=self.getAccel()
+        for i in range(3):
+            realAccel[i] =round(accel[i] / math.pow(2, 15) * self.ACCELE_SCALE,3)
+        return realAccel
 
 	# Get compass raw values
-	def getMag(self):
-		raw_mag=[0,0,0]
-		raw_mag[0]=(self.read_mag_reg(self.OUT_X_H_M)<<8)|self.read_mag_reg(self.OUT_X_L_M)
-		raw_mag[1]=(self.read_mag_reg(self.OUT_Y_H_M)<<8)|self.read_mag_reg(self.OUT_Y_L_M)
-		raw_mag[2]=(self.read_mag_reg(self.OUT_Z_H_M)<<8)|self.read_mag_reg(self.OUT_Z_L_M)
+    def getMag(self):
+        raw_mag=[0,0,0]
+        raw_mag[0]=(self.read_mag_reg(self.OUT_X_H_M)<<8)|self.read_mag_reg(self.OUT_X_L_M)
+        raw_mag[1]=(self.read_mag_reg(self.OUT_Y_H_M)<<8)|self.read_mag_reg(self.OUT_Y_L_M)
+        raw_mag[2]=(self.read_mag_reg(self.OUT_Z_H_M)<<8)|self.read_mag_reg(self.OUT_Z_L_M)
 
 		#2's compiment
-		for i in range(3):
-			if raw_mag[i]>32767:
-				raw_mag[i]=raw_mag[i]-65536
+        for i in range(3):
+            if raw_mag[i]>32767:
+                raw_mag[i]=raw_mag[i]-65536
 
-		return raw_mag
+        return raw_mag
 
 	# Get heading from the compass
-	def getHeading(self):
-		magValue=self.getMag()
-		heading =180*math.atan2(magValue[self.Y], magValue[self.X])/math.pi#  // assume pitch, roll are 0
+    def getHeading(self):
+        magValue = self.getMag()
+        heading = 180*math.atan2(magValue[self.Y], magValue[self.X])/math.pi#  // assume pitch, roll are 0
 
-		if (heading <0):
-			heading += 360
+        if (heading <0):
+            heading += 360
 
-		return round(heading,3)
+        return round(heading,3)
 
-	def getTiltHeading(self):
-		magValue=self.getMag()
-		accelValue=self.getRealAccel()
 
-		X=self.X
-		Y=self.Y
-		Z=self.Z
+    def getTiltHeading(self):
+        magValue = self.getMag()
+        accelValue = self.getRealAccel()
 
-		pitch =math.asin(-accelValue[X])
+        X = self.X
+        Y = self.Y
+        Z = self.Z
 
-		print(accelValue[Y],pitch,math.cos(pitch),accelValue[Y]/math.cos(pitch),math.asin(accelValue[Y]/math.cos(pitch)))
-		roll =math.asin(accelValue[Y]/math.cos(pitch))
+        pitch = math.asin(-accelValue[X])
 
-		xh =magValue[X] * math.cos(pitch) + magValue[Z] * math.sin(pitch)
-		yh =magValue[X] * math.sin(roll) * math.sin(pitch) + magValue[Y] * math.cos(roll) - magValue[Z] * math.sin(roll) * math.cos(pitch)
-		zh =-magValue[X] * (roll) * math.sin(pitch) + magValue[Y] * math.sin(roll) + magValue[Z] * math.cos(roll) * math.cos(pitch)
-		heading =180 * math.atan2(yh, xh)/math.pi
+        print(accelValue[Y],pitch,math.cos(pitch),accelValue[Y]/math.cos(pitch),math.asin(accelValue[Y]/math.cos(pitch)))
+        roll = math.asin(accelValue[Y]/math.cos(pitch))
 
-		if (yh >= 0):
-			return heading
-		else:
-			return (360 + heading)
+        xh = magValue[X] * math.cos(pitch) + magValue[Z] * math.sin(pitch)
+        yh = magValue[X] * math.sin(roll) * math.sin(pitch) + magValue[Y] * math.cos(roll) - magValue[Z] * math.sin(roll) * math.cos(pitch)
+        zh = -magValue[X] * (roll) * math.sin(pitch) + magValue[Y] * math.sin(roll) + magValue[Z] * math.cos(roll) * math.cos(pitch)
+        heading = 180 * math.atan2(yh, xh)/math.pi
+
+        if (yh >= 0):
+            return heading
+        else:
+            return (360 + heading)
+
 
 if __name__ == "__main__":
-	acc_mag=lsm303d()
-	while True:
-		print(acc_mag.getRealAccel())
+    acc_mag=lsm303d()
+    while True:
+        print(acc_mag.getRealAccel())
 
-		while True:
-			if acc_mag.isMagReady():
-				break
-		print(acc_mag.getHeading())
+        while True:
+            if acc_mag.isMagReady():
+                break
+            print(acc_mag.getHeading())
 
 		# Do not use, math error
 		# print acc_mag.getTiltHeading()
