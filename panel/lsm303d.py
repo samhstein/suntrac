@@ -63,7 +63,7 @@ class lsm303d:
     ACC_ZL_REFERENCE = 0x3E
     ACC_ZH_REFERENCE = 0x3F
 
-	MAG_WHO_AM_I   = 0x0F
+    MAG_WHO_AM_I   = 0x0F
     MAG_CTRL_REG1  = 0x20
     MAG_CTRL_REG2  = 0x21
     MAG_CTRL_REG3  = 0x22
