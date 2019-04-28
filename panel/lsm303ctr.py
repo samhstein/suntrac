@@ -20,7 +20,7 @@ import math
 # use the bus that matches your raspi version
 bus =smbus.SMBus(1)
 
-class lsm303d:
+class lsm303ctr:
     ACC_ADDR        = 0x1D
     MAG_ADDR        = 0x1E
 
@@ -203,17 +203,3 @@ class lsm303d:
             return heading
         else:
             return (360 + heading)
-
-
-if __name__ == "__main__":
-    acc_mag=lsm303d()
-    while True:
-        print(acc_mag.getRealAccel())
-
-        while True:
-            if acc_mag.isMagReady():
-                break
-            print(acc_mag.getHeading())
-
-		# Do not use, math error
-		# print acc_mag.getTiltHeading()
