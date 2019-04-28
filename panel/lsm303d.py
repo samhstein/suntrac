@@ -98,7 +98,7 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        self.write_acc_reg(self.ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
+        #self.write_acc_reg(self.ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
         time.sleep(.005)
 
 	# get the status of the sensor
@@ -131,9 +131,7 @@ class lsm303d:
 
 	# Check if compass is ready
     def isMagReady(self):
-        if self.read_mag_reg(self.STATUS_REG_M)&0x03!=0:
-            return 1
-        return 0
+        return self.read_mag_reg(self.MAG_STATUS_REG)
 
 	# Get raw accelerometer values
     def getAccel(self):
