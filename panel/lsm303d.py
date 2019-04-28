@@ -106,8 +106,8 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        self.write_acc_reg(ACC_50_ON, self.ACC_CTRL1)	# turn it on and set the speed
-        self.write_mag_reg(MAG_FS_16_Ga, self.MAG_CTRL_REG2)
+        self.write_acc_reg(self.ACC_50_ON, self.ACC_CTRL1)	# turn it on and set the speed
+        self.write_mag_reg(self.MAG_FS_16_Ga, self.MAG_CTRL_REG2)
         time.sleep(.005)
 
 	# get the status of the sensor
