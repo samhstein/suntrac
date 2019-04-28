@@ -25,7 +25,7 @@ class leds:
         self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, data)
 
     def light_on(self, data):
-        self.write_data(self.ledList[data])
+        self.write_data(~self.ledList[data])
 
     def lights_off(self):
         self.write_data(0xff)
