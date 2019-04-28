@@ -99,7 +99,8 @@ class lsm303d:
     def __init__(self,):
         self.write_acc_reg(0x57, self.CTRL_REG1)				# 0x57 =ODR=50hz, all accel axes on
         self.write_acc_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
-        self.write_acc_reg(data, reg)reg(0x00, self.CTRL_REG3)  			# no interrupt
+        self.write_acc_reg(data, reg)
+        self.write_acc.reg(0x00, self.CTRL_REG3)  			# no interrupt
         self.write_acc_reg(0x00, self.CTRL_REG4)  			# no interrupt
         self.write_mag_reg((4<<2), self.CTRL_REG5)  			# 0x10 =mag 50Hz output rate
         self.write_mag_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale =+/-1.3Gauss
