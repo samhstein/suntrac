@@ -98,7 +98,7 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        self.write_acc_reg(ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
+        self.write_acc_reg(self.ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
         time.sleep(.005)
 
 	# get the status of the sensor
