@@ -116,7 +116,7 @@ class lsm303d:
 
 	# Write data to a reg on the I2C device
     def write_reg(self,data,reg):
-bus.write_byte_data(self.LSM303D_ADDR, reg, data)
+        bus.write_byte_data(self.LSM303D_ADDR, reg, data)
 
 	# Read data from the sensor
 	def read_reg(self,reg):
