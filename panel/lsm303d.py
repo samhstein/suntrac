@@ -119,20 +119,20 @@ class lsm303d:
         bus.write_byte_data(self.LSM303D_ADDR, reg, data)
 
 	# Read data from the sensor
-	def read_reg(self,reg):
-		return bus.read_byte_data(self.LSM303D_ADDR, reg)
+    def read_reg(self,reg):
+        return bus.read_byte_data(self.LSM303D_ADDR, reg)
 
     def read_acc_reg(self,reg):
-		return bus.read_byte_data(self.ACC_ADDR, reg)
+        return bus.read_byte_data(self.ACC_ADDR, reg)
 
     def read_mag_reg(self,reg):
-		return bus.read_byte_data(self.MAG_ADDR, reg)
+        return bus.read_byte_data(self.MAG_ADDR, reg)
 
 	# Check if compass is ready
-	def isMagReady(self):
-		if self.read_mag_reg(self.STATUS_REG_M)&0x03!=0:
-			return 1
-		return 0
+    def isMagReady(self):
+        if self.read_mag_reg(self.STATUS_REG_M)&0x03!=0:
+            return 1
+        return 0
 
 	# Get raw accelerometer values
 	def getAccel(self):
