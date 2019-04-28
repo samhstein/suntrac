@@ -70,12 +70,12 @@ class lsm303d:
     MAG_CTRL_REG4  = 0x23
     MAG_CTRL_REG5  = 0x24
     MAG_STATUS_REG = 0x27
-    MAG_OUTX_L     = 0x28
-    MAG_OUTX_H     = 0x29
-    MAG_OUTY_L     = 0x2A
-    MAG_OUTY_H     = 0x2B
-    MAG_OUTZ_L     = 0x2C
-    MAG_OUTZ_H     = 0x2D
+    MAG_OUT_X_L    = 0x28
+    MAG_OUT_X_H    = 0x29
+    MAG_OUT_Y_L    = 0x2A
+    MAG_OUT_Y_H    = 0x2B
+    MAG_OUT_Z_L    = 0x2C
+    MAG_OUT_Z_H    = 0x2D
     MAG_TEMP_OUT_L = 0x2E
     MAG_TEMP_OUT_H = 0x2F
     MAG_INT_CFG    = 0x30
@@ -138,9 +138,9 @@ class lsm303d:
 	# Get raw accelerometer values
     def getAccel(self):
         raw_accel=[0,0,0]
-        raw_accel[0]=((self.read_acc_reg(self.OUT_X_H_A)<<8)|self.read_acc_reg(self.OUT_X_L_A))
-        raw_accel[1]=((self.read_acc_reg(self.OUT_Y_H_A)<<8)|self.read_acc_reg(self.OUT_Y_L_A))
-        raw_accel[2]=((self.read_acc_reg(self.OUT_Z_H_A)<<8)|self.read_acc_reg(self.OUT_Z_L_A))
+        raw_accel[0]=(self.read_acc_reg(self.ACC_OUT_X_H)<<8)|self.read_acc_reg(self.ACC_OUT_X_L)
+        raw_accel[1]=(self.read_acc_reg(self.ACC_OUT_Y_H)<<8)|self.read_acc_reg(self.ACC_OUT_Y_L)
+        raw_accel[2]=(self.read_acc_reg(self.ACC_OUT_Z_H)<<8)|self.read_acc_reg(self.ACC_OUT_Z_L)
 
 		#2's compiment
         for i in range(3):
@@ -160,9 +160,9 @@ class lsm303d:
 	# Get compass raw values
     def getMag(self):
         raw_mag=[0,0,0]
-        raw_mag[0]=(self.read_mag_reg(self.OUT_X_H_M)<<8)|self.read_mag_reg(self.OUT_X_L_M)
-        raw_mag[1]=(self.read_mag_reg(self.OUT_Y_H_M)<<8)|self.read_mag_reg(self.OUT_Y_L_M)
-        raw_mag[2]=(self.read_mag_reg(self.OUT_Z_H_M)<<8)|self.read_mag_reg(self.OUT_Z_L_M)
+        raw_mag[0]=(self.read_mag_reg(self.MAG_OUT_X_H)<<8)|self.read_mag_reg(self.MAG_OUT_X_L)
+        raw_mag[1]=(self.read_mag_reg(self.MAG_OUT_Y_H)<<8)|self.read_mag_reg(self.MAG_OUT_Y_L)
+        raw_mag[2]=(self.read_mag_reg(self.MAG_OUT_Z_H)<<8)|self.read_mag_reg(self.MAG_OUT_Z_L)
 
 		#2's compiment
         for i in range(3):
