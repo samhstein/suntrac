@@ -65,10 +65,10 @@ class lsm303d:
     OUT_Y_H_A       = 0x2B
     OUT_Z_L_A       = 0x2C
     OUT_Z_H_A       = 0x2D
-    FIFO_CTRL=0x2E
-    FIFO_SRC=0x2F
-    IG_CFG1=0x30
-    IG_SRC1=0x31
+    FIFO_CTRL       = 0x2E
+    FIFO_SRC        = 0x2F
+    IG_CFG1         = 0x30
+    IG_SRC1         = 0x31
     IG_THS1=0x32
     IG_DUR1=0x33
     IG_CFG2=0x34
@@ -97,13 +97,13 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        self.write_reg(0x57, self.CTRL_REG1)				# 0x57 =ODR=50hz, all accel axes on
-        self.write_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
-        self.write_reg(0x00, self.CTRL_REG3)  			# no interrupt
-        self.write_reg(0x00, self.CTRL_REG4)  			# no interrupt
-        self.write_reg((4<<2), self.CTRL_REG5)  			# 0x10 =mag 50Hz output rate
-        self.write_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale =+/-1.3Gauss
-        self.write_reg(0x00, self.CTRL_REG7)  			# 0x00 =continouous conversion mode
+        self.write_acc_reg(0x57, self.CTRL_REG1)				# 0x57 =ODR=50hz, all accel axes on
+        self.write_acc_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
+        self.write_acc_reg(data, reg)reg(0x00, self.CTRL_REG3)  			# no interrupt
+        self.write_acc_reg(0x00, self.CTRL_REG4)  			# no interrupt
+        self.write_mag_reg((4<<2), self.CTRL_REG5)  			# 0x10 =mag 50Hz output rate
+        self.write_mag_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale =+/-1.3Gauss
+        self.write_mag_reg(0x00, self.CTRL_REG7)  			# 0x00 =continouous conversion mode
         time.sleep(.005)
 
 	# get the status of the sensor
@@ -117,6 +117,12 @@ class lsm303d:
 	# Write data to a reg on the I2C device
     def write_reg(self,data,reg):
         bus.write_byte_data(self.LSM303D_ADDR, reg, data)
+
+    def write_acc_reg(self,data,reg):
+        bus.write_byte_data(self.ACC_ADDR, reg, data)
+
+    def write_mag_reg(self,data,reg):
+        bus.write_byte_data(self.MAG_ADDR, reg, data)
 
 	# Read data from the sensor
     def read_reg(self,reg):
