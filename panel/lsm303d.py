@@ -90,7 +90,20 @@ class lsm303d:
 
     ACCELE_SCALE=2
 
-    ACC_ODR_50_Hz       = 0x20
+
+    MAG_DO_5_Hz       = 0x0C
+    MAG_FS_16_Ga      = 0x60
+    MAG_BDU_ENABLE    = 0x40
+    MAG_OMXY_HIGH_PERFORMANCE       = 0x40
+    MAG_OMZ_HIGH_PERFORMANCE        = 0x08
+    MAG_MD_CONTINUOUS   = 0x00
+
+    ACC_FS_2g       = 0x00
+    ACC_BDU_ENABLE  = 0x08
+    ACC_X_ENABLE    = 0x01
+    ACC_Y_ENABLE    = 0x02
+    ACC_Z_ENABLE    = 0x04
+    ACC_ODR_50_Hz   = 0x20
 
     X=0
     Y=1
@@ -98,7 +111,7 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        #self.write_acc_reg(self.ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
+        self.write_acc_reg(0x57, self.ACC_CTRL1)	# turn it on and set the speed
         time.sleep(.005)
 
 	# get the status of the sensor
