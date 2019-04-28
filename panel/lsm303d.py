@@ -31,7 +31,7 @@ class lsm303d:
     TEMP_OUT_H = 0x06
     STATUS_REG_M = 0x07
     OUT_X_L_M = 0x08
-	OUT_X_H_M = 0x09
+    OUT_X_H_M = 0x09
 	OUT_Y_L_M = 0x0A
 	OUT_Y_H_M = 0x0B
 	OUT_Z_L_M = 0x0C
