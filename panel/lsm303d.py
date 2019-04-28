@@ -21,68 +21,67 @@ import math
 bus =smbus.SMBus(1)
 
 class lsm303d:
-#	LSM303D_ADDR	= 0x1E  # assuming SA0 grounded
-    LSM303D_ADDR    = 0x1D  # assuming SA0 grounded
-    ACC_ADDR        = 0x1D  # assuming SA0 grounded
-    MAG_ADDR        = 0x1E  # assuming SA0 grounded
+    ACC_ADDR        = 0x1D
+    MAG_ADDR        = 0x1E
 
-	# LSM303 Register definitions
-    TEMP_OUT_L      = 0x05
-    TEMP_OUT_H      = 0x06
-    STATUS_REG_M    = 0x07
-    OUT_X_L_M       = 0x08
-    OUT_X_H_M       = 0x09
-    OUT_Y_L_M       = 0x0A
-    OUT_Y_H_M       = 0x0B
-    OUT_Z_L_M       = 0x0C
-    OUT_Z_H_M       = 0x0D
-    WHO_AM_I        = 0x0F
-    INT_CTRL_M      = 0x12
-    INT_SRC_M       = 0x13
-    INT_THS_L_M     = 0x14
-    INT_THS_H_M     = 0x15
-    OFFSET_X_L_M    = 0x16
-    OFFSET_X_H_M    = 0x17
-    OFFSET_Y_L_M    = 0x18
-    OFFSET_Y_H_M    = 0x19
-    OFFSET_Z_L_M    = 0x1A
-    OFFSET_Z_H_M    = 0x1B
-    REFERENCE_X     = 0x1C
-    REFERENCE_Y     = 0x1D
-    REFERENCE_Z     = 0x1E
-    CTRL_REG0       = 0x1F
-    CTRL_REG1       = 0x20
-    CTRL_REG2       = 0x21
-    CTRL_REG3       = 0x22
-    CTRL_REG4       = 0x23
-    CTRL_REG5       = 0x24
-    CTRL_REG6       = 0x25
-    CTRL_REG7       = 0x26
-    STATUS_REG_A    = 0x27
-    OUT_X_L_A       = 0x28
-    OUT_X_H_A       = 0x29
-    OUT_Y_L_A       = 0x2A
-    OUT_Y_H_A       = 0x2B
-    OUT_Z_L_A       = 0x2C
-    OUT_Z_H_A       = 0x2D
-    FIFO_CTRL       = 0x2E
-    FIFO_SRC        = 0x2F
-    IG_CFG1         = 0x30
-    IG_SRC1         = 0x31
-    IG_THS1=0x32
-    IG_DUR1=0x33
-    IG_CFG2=0x34
-    IG_SRC2=0x35
-    IG_THS2=0x36
-    IG_DUR2=0x37
-    CLICK_CFG=0x38
-    CLICK_SRC=0x39
-    CLICK_THS=0x3A
-    TIME_LIMIT=0x3B
-    TIME_LATENCY=0x3C
-    TIME_WINDOW=0x3D
-    ACT_THS=0x3E
-    ACT_DUR=0x3F
+    # accel registers
+    ACC_TEMP_L       = 0x0B
+    ACC_TEMP_H       = 0x0C
+    ACC_ACT_TSH      = 0x1E
+    ACC_ACT_DUR      = 0x1F
+    ACC_WHO_AM_I     = 0x0F
+    ACC_CTRL1        = 0x20
+    ACC_CTRL2        = 0x21
+    ACC_CTRL3        = 0x22
+    ACC_CTRL4        = 0x23
+    ACC_CTRL5        = 0x24
+    ACC_CTRL6        = 0x25
+    ACC_CTRL7        = 0x26
+    ACC_STATUS       = 0x27
+    ACC_OUT_X_L      = 0x28
+    ACC_OUT_X_H      = 0x29
+    ACC_OUT_Y_L      = 0x2A
+    ACC_OUT_Y_H      = 0x2B
+    ACC_OUT_Z_L      = 0x2C
+    ACC_OUT_Z_H      = 0x2D
+    ACC_FIFO_CTRL    = 0x2E
+    ACC_FIFO_SRC     = 0x2F
+    ACC_IG_CFG1      = 0x30
+    ACC_IG_SRC1      = 0x31
+    ACC_IG_THS_X1    = 0x32
+    ACC_IG_THS_Y1    = 0x33
+    ACC_IG_THS_Z1    = 0x34
+    ACC_IG_DUR1      = 0x35
+    ACC_IG_CFG2      = 0x36
+    ACC_IG_SRC2      = 0x37
+    ACC_IG_THS2      = 0x38
+    ACC_IG_DUR2      = 0x39
+    ACC_XL_REFERENCE = 0x3A
+    ACC_XH_REFERENCE = 0x3B
+    ACC_YL_REFERENCE = 0x3C
+    ACC_YH_REFERENCE = 0x3D
+    ACC_ZL_REFERENCE = 0x3E
+    ACC_ZH_REFERENCE = 0x3F
+
+	MAG_WHO_AM_I   = 0x0F
+    MAG_CTRL_REG1  = 0x20
+    MAG_CTRL_REG2  = 0x21
+    MAG_CTRL_REG3  = 0x22
+    MAG_CTRL_REG4  = 0x23
+    MAG_CTRL_REG5  = 0x24
+    MAG_STATUS_REG = 0x27
+    MAG_OUTX_L     = 0x28
+    MAG_OUTX_H     = 0x29
+    MAG_OUTY_L     = 0x2A
+    MAG_OUTY_H     = 0x2B
+    MAG_OUTZ_L     = 0x2C
+    MAG_OUTZ_H     = 0x2D
+    MAG_TEMP_OUT_L = 0x2E
+    MAG_TEMP_OUT_H = 0x2F
+    MAG_INT_CFG    = 0x30
+    MAG_INT_SRC    = 0x31
+    MAG_INT_THS_L  = 0x32
+    MAG_INT_THS_H  = 0x33
 
     MAG_SCALE_2=0x00 #full-scale is +/-2Gauss
     MAG_SCALE_4=0x20 #+/-4Gauss
@@ -91,19 +90,15 @@ class lsm303d:
 
     ACCELE_SCALE=2
 
+    ACC_ODR_50_Hz       = 0x20
+
     X=0
     Y=1
     Z=2
 
     # Set up the sensor
     def __init__(self,):
-        self.write_acc_reg(0x57, self.CTRL_REG1)				# 0x57 =ODR=50hz, all accel axes on
-        self.write_acc_reg((3<<6)|(0<<3), self.CTRL_REG2)  	# set full-scale
-        self.write_acc_reg(0x00, self.CTRL_REG3)  			# no interrupt
-        self.write_acc_reg(0x00, self.CTRL_REG4)  			# no interrupt
-        self.write_mag_reg((4<<2), self.CTRL_REG5)  			# 0x10 =mag 50Hz output rate
-        self.write_mag_reg(self.MAG_SCALE_2, self.CTRL_REG6)		# magnetic scale =+/-1.3Gauss
-        self.write_mag_reg(0x00, self.CTRL_REG7)  			# 0x00 =continouous conversion mode
+        self.write_acc_reg(ACC_ODR_50_Hz, self.ACC_CTRL1)	# turn it on and set the speed
         time.sleep(.005)
 
 	# get the status of the sensor
