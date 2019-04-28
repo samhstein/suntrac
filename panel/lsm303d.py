@@ -106,9 +106,8 @@ class lsm303d:
 
     # Set up the sensor
     def __init__(self,):
-        self.write_acc_reg(self.ACC_50_ON, self.ACC_CTRL1)	# turn it on and set the speed
-#        self.write_mag_reg(self.MAG_FS_16_Ga, self.MAG_CTRL_REG2)
-        self.write_mag_reg(self.MAG_MD_CONTINUOUS, self.MAG_CTRL_REG3)
+        self.write_acc_reg(self.ACC_50_ON, self.ACC_CTRL1)	            # turn it on and set the speed
+        self.write_mag_reg(self.MAG_MD_CONTINUOUS, self.MAG_CTRL_REG3)  # have it update
         time.sleep(.005)
 
 	# get the status of the sensor
@@ -119,19 +118,11 @@ class lsm303d:
             return -1
         return 1
 
-	# Write data to a reg on the I2C device
-    def write_reg(self,data,reg):
-        bus.write_byte_data(self.LSM303D_ADDR, reg, data)
-
     def write_acc_reg(self,data,reg):
         bus.write_byte_data(self.ACC_ADDR, reg, data)
 
     def write_mag_reg(self,data,reg):
         bus.write_byte_data(self.MAG_ADDR, reg, data)
-
-	# Read data from the sensor
-    def read_reg(self,reg):
-        return bus.read_byte_data(self.LSM303D_ADDR, reg)
 
     def read_acc_reg(self,reg):
         return bus.read_byte_data(self.ACC_ADDR, reg)
@@ -162,15 +153,15 @@ class lsm303d:
         realAccel=[0.0,0.0,0.0]
         accel=self.getAccel()
         for i in range(3):
-            realAccel[i] =round(accel[i] / math.pow(2, 15) * self.ACCELE_SCALE,3)
+            realAccel[i] = round(accel[i] / math.pow(2, 15) * self.ACCELE_SCALE,3)
         return realAccel
 
 	# Get compass raw values
     def getMag(self):
         raw_mag=[0,0,0]
-        raw_mag[0]=(self.read_mag_reg(self.MAG_OUT_X_H)<<8)|self.read_mag_reg(self.MAG_OUT_X_L)
-        raw_mag[1]=(self.read_mag_reg(self.MAG_OUT_Y_H)<<8)|self.read_mag_reg(self.MAG_OUT_Y_L)
-        raw_mag[2]=(self.read_mag_reg(self.MAG_OUT_Z_H)<<8)|self.read_mag_reg(self.MAG_OUT_Z_L)
+        raw_mag[0] = (self.read_mag_reg(self.MAG_OUT_X_H)<<8)|self.read_mag_reg(self.MAG_OUT_X_L)
+        raw_mag[1] = (self.read_mag_reg(self.MAG_OUT_Y_H)<<8)|self.read_mag_reg(self.MAG_OUT_Y_L)
+        raw_mag[2] = (self.read_mag_reg(self.MAG_OUT_Z_H)<<8)|self.read_mag_reg(self.MAG_OUT_Z_L)
 
 		#2's compiment
         for i in range(3):
