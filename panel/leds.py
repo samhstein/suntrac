@@ -13,6 +13,7 @@ class leds:
 
     ledList = [0, 0x12, 0x24, 0x48, 0x7e, 0x10, 0x20, 0x40, 0x02, 0x04, 0x08, 0x00]
     bus = smbus.SMBus(1)
+    loop = False
 
     # Set up the lights
     def __init__(self,):
@@ -29,3 +30,15 @@ class leds:
 
     def lights_off(self):
         self.write_data(0xff)
+
+    def test(self):
+        self.loop = True
+        while loop:
+            for i in self.ledList:
+                time.sleep(0.5)
+                self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, ~i) #set output
+
+        self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, 0xff)
+
+    def stop_test(self):
+        self.loop = False
