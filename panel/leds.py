@@ -28,7 +28,12 @@ class leds:
     LED_BLUE_BLUE  = 0x48
     LED_WHITE_WHITE  = 0x7e
 
-    ledList = [0, 0x12, 0x24, 0x48, 0x7e, 0x10, 0x20, 0x40, 0x70, 0x02, 0x04, 0x08, 0x0e, 0x00]
+    ledList = [
+        LED_OFF_OFF,
+        LED_RED_OFF, LED_GREEN_OFF, LED_BLUE_OFF, LED_WHITE_OFF,
+        LED_OFF_RED, LED_OFF_GREEN, LED_OFF_BLUE, LED_OFF_WHITE,
+        LED_RED_RED, LED_GREEN_GREEN, LED_BLUE_BLUE, LED_WHITE_WHITE
+    ]
     bus = smbus.SMBus(1)
     loop = False
 
@@ -51,15 +56,10 @@ class leds:
     def test(self):
         self.loop = True
         while self.loop:
-            print('top...')
             for l in self.ledList:
                 time.sleep(1)
                 print(l)
                 self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~l) #set output
-            time.sleep(5)
-            print('bottom...')
-
-        self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, 0xff)
 
     def stop_test(self):
         self.loop = False
