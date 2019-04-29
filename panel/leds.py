@@ -39,9 +39,11 @@ class leds:
     def test(self):
         self.loop = True
         while self.loop:
-            for i in self.ledList:
+            for l in self.ledList:
                 time.sleep(0.5)
-                self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~self.ledList[i]) #set output
+                print(l)
+                print(~l)
+                self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~l) #set output
 
         self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_OUT, 0xff)
 
