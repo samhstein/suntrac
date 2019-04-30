@@ -88,7 +88,11 @@ while True:
 
     photo_diff = light_east - light_west
 
-    print(volt_outlet, temp_outlet, volt_inlet, temp_inlet, light_east, light_west, photo_diff, light_error)
+    print(
+        'vto: ', volt_outlet, temp_outlet, ohms_outlet,
+        'vti: ', volt_inlet, temp_inlet, ohms_inlet,
+        'lewde: ', light_east, light_west, photo_diff, light_error
+    )
 
     # if the diff is too big lets move it
     # lets keep it tight
