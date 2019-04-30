@@ -51,7 +51,7 @@ class leds:
         self.write_data(0xff)
 
     def blink_function(self, light, freq):
-        both = port | starboard
+        both = self.port | self.starboard
         while True:
             if light == 'port':
                 self.write_data(~(self.LED_PORT_MASK | self.startboard))
