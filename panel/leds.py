@@ -4,7 +4,7 @@
 #
 #
 
-import time,sys
+import time, sys, threading
 import smbus
 
 class leds:
@@ -36,6 +36,8 @@ class leds:
         LED_RED_RED, LED_GREEN_GREEN, LED_BLUE_BLUE, LED_WHITE_WHITE
     ]
     bus = smbus.SMBus(1)
+    port = 0x00
+    startboard = 0x00
     loop = False
 
     # Set up the lights
@@ -48,8 +50,11 @@ class leds:
     def write_data(self, data):
         self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, data)
 
-    def lights_on(self, lights):
-        self.write_data(~lights)
+    def lights_on(self, port, starboard):
+        self.port = port
+        self.starboard = starboard
+        both = port | starboard
+        self.write_data(~both)
 
     def lights_off(self):
         self.write_data(0xff)
