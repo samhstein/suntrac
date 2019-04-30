@@ -30,6 +30,7 @@ class leds:
     bus = smbus.SMBus(1)
     port = 0x00
     startboard = 0x00
+    blinking = False
 
     # Set up the lights
     def __init__(self,):
@@ -52,15 +53,17 @@ class leds:
 
     def blink_function(self, light, freq):
         both = self.port | self.starboard
-        while True:
-            if light == 'port':
-                self.write_data(~(self.LED_PORT_MASK | self.startboard))
-            else:
-                self.write_data(~(self.LED_STARBOARD_MASK | self.port))
+        while self.blinking:
+            self.write_data(0x00)
             time.sleep(freq)
-            # turn them both back on
             self.write_data(~both)
+
+        self.write_data(~both)
+
 
     def blink(self, light, freq):
         t = threading.Thread(target=self.blink_function, args=(light, freq))
         t.start()
+
+    def stop_blinking(self):
+        self.blinking = False
