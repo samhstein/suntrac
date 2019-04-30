@@ -53,8 +53,14 @@ class leds:
 
     def blink_function(self, light, freq):
         both = self.port | self.starboard
+        flash = 0x00
         while self.blinking:
-            self.write_data(0x00)
+            if light == 'port':
+                flash = 0x00 | self.starboard
+            else:
+                flash = self.port | 0x00
+
+            self.write_data(~flash)
             time.sleep(freq)
             self.write_data(~both)
 
