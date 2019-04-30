@@ -89,8 +89,8 @@ while True:
     photo_diff = light_east - light_west
 
     print(
-        'vto: ', volt_outlet, temp_outlet
-        'vti: ', volt_inlet, temp_inlet
+        'vto: ', volt_outlet, temp_outlet,
+        'vti: ', volt_inlet, temp_inlet,
         'lewde: ', light_east, light_west, photo_diff, light_error
     )
 
