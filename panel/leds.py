@@ -68,6 +68,7 @@ class leds:
 
 
     def blink(self, light, freq):
+        self.blinking = True
         t = threading.Thread(target=self.blink_function, args=(light, freq))
         t.start()
 
