@@ -61,7 +61,8 @@ class leds:
         else:
             flash = self.port | 0x00
         while self.blinking:
-            self.write_data(flash)            
+            self.write_data(flash)
+            time.sleep(0.1)
             self.write_data(self.both)
             time.sleep(freq)
 
