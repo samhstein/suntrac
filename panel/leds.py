@@ -40,6 +40,7 @@ class leds:
             print("Failed to communicate with I/O expander! " + str(e))
 
     def write_data(self, data):
+        print('wd: ', data)
         self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~data)
 
     def lights_on(self, port, starboard):
@@ -47,7 +48,7 @@ class leds:
         self.starboard = starboard
         self.both = port | starboard
         print('lo: ', self.both)
-        self.write_data(both)
+        self.write_data(self.both)
 
     def lights_off(self):
         self.write_data(0xff)
