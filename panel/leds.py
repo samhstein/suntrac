@@ -62,5 +62,5 @@ class leds:
             self.write_data(~both)
 
     def blink(self, light, freq):
-        t = threading.Thread(target=blink_function, args=(light, freq))
+        t = threading.Thread(target=self.blink_function, args=(light, freq))
         t.start()
