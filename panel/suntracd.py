@@ -22,7 +22,7 @@ POLL_TIME = 1.0
 MOVE_TIME = 0.1
 
 def get_temp_c(v):
-    ohms = (THERMISTOR_BALANCE / (INPUT_VOLTS / volt_outlet - 1)) / 1000
+    ohms = THERMISTOR_BALANCE / (INPUT_VOLTS / volt_outlet - 1)
     print('ohms', ohms)
     steinhart = math.log(ohms / THERMISTOR_RO) / THERMISTOR_BETA
     steinhart += 1.0 / (THERMISTOR_TO + 273.15)
