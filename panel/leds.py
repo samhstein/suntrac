@@ -13,32 +13,23 @@ class leds:
     IO_EXP_OUT = 0x01
 
     LED_OFF_OFF  = 0xff
+    LED_PORT_MASK = 0x0f
+    LED_STARBOARD_MASK = 0xf0
 
+    # port
+    LED_RED_OFF = 0x02
+    LED_GREEN_OFF = 0x04
+    LED_BLUE_OFF = 0x08
+    LED_WHITE_OFF = 0x0e
+    # starboard
     LED_OFF_RED  = 0x10
     LED_OFF_GREEN  = 0x20
     LED_OFF_BLUE  = 0x40
     LED_OFF_WHITE  = 0x70
 
-    LED_RED_OFF = 0x02
-    LED_GREEN_OFF = 0x04
-    LED_BLUE_OFF = 0x08
-    LED_WHITE_OFF = 0x0e
-
-    LED_RED_RED  = 0x12
-    LED_GREEN_GREEN = 0x24
-    LED_BLUE_BLUE  = 0x48
-    LED_WHITE_WHITE  = 0x7e
-
-    ledList = [
-        LED_OFF_OFF,
-        LED_RED_OFF, LED_GREEN_OFF, LED_BLUE_OFF, LED_WHITE_OFF,
-        LED_OFF_RED, LED_OFF_GREEN, LED_OFF_BLUE, LED_OFF_WHITE,
-        LED_RED_RED, LED_GREEN_GREEN, LED_BLUE_BLUE, LED_WHITE_WHITE
-    ]
     bus = smbus.SMBus(1)
     port = 0x00
     startboard = 0x00
-    loop = False
 
     # Set up the lights
     def __init__(self,):
@@ -59,13 +50,17 @@ class leds:
     def lights_off(self):
         self.write_data(0xff)
 
-    def test(self):
-        self.loop = True
-        while self.loop:
-            for l in self.ledList:
-                time.sleep(1)
-                print(l)
-                self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~l) #set output
+    def blink_function(self, light, freq):
+        both = port | starboard
+        while True:
+            if light == 'port':
+                self.write_data(~(self.LED_PORT_MASK | self.startboard))
+            else:
+                self.write_data(~(self.LED_STARBOARD_MASK | self.port))
+            time.sleep(freq)
+            # turn them both back on
+            self.write_data(~both)
 
-    def stop_test(self):
-        self.loop = False
+    def blink(light, freq):
+        t = threading.Thread(target=blink_function, args=(light, freq))
+        t.start()
