@@ -62,7 +62,7 @@ class leds:
             else:
                 flash = self.port | 0x00
 
-            self.write_data(~flash)
+            self.write_data(flash)
             time.sleep(freq)
             self.write_data(self.both)
 
