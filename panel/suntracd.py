@@ -8,7 +8,7 @@ import math
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
-THERMISTOR_BALANCE = 1000
+THERMISTOR_BALANCE = 100000
 THERMISTOR_BETA = 5000
 INPUT_VOLTS = 5.0
 TEMP_INLET = 1      # adc 1
@@ -21,8 +21,10 @@ DIFF_VOLTS = 0.2
 POLL_TIME = 1.0
 MOVE_TIME = 0.1
 
-def get_temp_c(r):
-    steinhart = math.log(r / THERMISTOR_RO) / THERMISTOR_BETA
+def get_temp_c(v):
+    ohms = (THERMISTOR_BALANCE / (INPUT_VOLTS / volt_outlet)) / 1000
+    print('ohms')
+    steinhart = math.log(ohms / THERMISTOR_RO) / THERMISTOR_BETA
     steinhart += 1.0 / (THERMISTOR_TO + 273.15)
     steinhart = (1.0 / steinhart) - 273.15
     return steinhart
@@ -58,16 +60,14 @@ while True:
     print('top of loop: ', count)
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
-        ohms_outlet = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_outlet) - 1)
-        temp_outlet = get_temp_c(ohms_outlet)
+        temp_outlet = get_temp_c(volt_outlet)
     except Exception as e:
         print('v1 error')
         print(e)
 
     try:
         volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
-        ohms_inlet = THERMISTOR_BALANCE * ((INPUT_VOLTS / volt_inlet) - 1)
-        temp_inlet = get_temp_c(ohms_inlet)
+        temp_inlet = get_temp_c(volt_inlet)
     except Exception as e:
         print('v2 error')
         print(e)
@@ -89,8 +89,8 @@ while True:
     photo_diff = light_east - light_west
 
     print(
-        'vto: ', volt_outlet, temp_outlet, ohms_outlet,
-        'vti: ', volt_inlet, temp_inlet, ohms_inlet,
+        'vto: ', volt_outlet, temp_outlet
+        'vti: ', volt_inlet, temp_inlet
         'lewde: ', light_east, light_west, photo_diff, light_error
     )
 
