@@ -19,7 +19,7 @@ RELAY_WEST = 1      # motor 1
 RELAY_EAST = 2      # motor 2
 DIFF_VOLTS = 1
 POLL_TIME = 1.0
-MOVE_TIME = 0.5
+MOVE_TIME = 0.05
 
 def get_temp_c(v):
     ohms = THERMISTOR_BALANCE / (INPUT_VOLTS / v - 1)
