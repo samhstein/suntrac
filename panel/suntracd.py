@@ -17,7 +17,7 @@ LIGHT_EAST = 3      # adc 3
 LIGHT_WEST = 4      # adc 4
 RELAY_WEST = 1      # motor 1
 RELAY_EAST = 2      # motor 2
-DIFF_VOLTS = 0.5
+DIFF_VOLTS = 1
 POLL_TIME = 1.0
 MOVE_TIME = 0.1
 
