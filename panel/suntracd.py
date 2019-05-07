@@ -117,7 +117,7 @@ while True:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
             moving_relay = RELAY_WEST if moving_diff < 0 else RELAY_EAST
             time.sleep(MOVE_TIME / move_count)
-            move_count = move_count * 2
+            move_count = move_count + 1
 
         # turn it off
         print('stop moving...')
