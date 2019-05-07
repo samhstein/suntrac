@@ -120,7 +120,7 @@ while True:
         print('stop moving...')
         leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
         megaiosun.set_motor(relay, 0)
-        time.sleep(.5)
+        time.sleep(.1)
 
 
     # just print every x for now, need a timer
