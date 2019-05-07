@@ -112,7 +112,7 @@ while True:
         moving_diff = photo_diff
         megaiosun.set_motor(relay, 1)
         print('start moving... ', relay)
-        while abs(moving_diff) > .02:
+        while abs(moving_diff) > .05:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
             time.sleep(MOVE_TIME)
 
