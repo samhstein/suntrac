@@ -35,7 +35,7 @@ class leds:
     # Set up the lights
     def __init__(self,):
         try:
-            self.write_data(0x00)
+            self.write_data(0xff)
         except Exception as e:
             print("Failed to communicate with I/O expander! " + str(e))
 
