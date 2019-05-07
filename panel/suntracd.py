@@ -104,10 +104,10 @@ while True:
     if abs(photo_diff) > DIFF_VOLTS and light_error != True:
         if photo_diff < 0:
             relay = RELAY_WEST
-            led.lights_on(LED_GREEN_OFF | led.LED_OFF_GREEN)
+            leds.lights_on(leds.LED_GREEN_OFF | leds.LED_OFF_GREEN)
         else:
             relay = RELAY_EAST
-            led.lights_on(LED_GREEN_OFF | led.LED_OFF_RED)
+            leds.lights_on(leds.LED_GREEN_OFF | leds.LED_OFF_RED)
 
         moving_relay = relay
         megaiosun.set_motor(relay, 1)
