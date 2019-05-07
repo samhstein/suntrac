@@ -58,9 +58,11 @@ megaiosun.set_motors(0)
 
 # get the lights
 leds=leds.leds()
+leds.lights_on(leds.LED_GREEN_ON, leds.LED_OFF_OFF)
 
 while True:
     print('top of loop: ', count)
+
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
         temp_outlet = get_temp_c(volt_outlet)
@@ -86,7 +88,7 @@ while True:
         light_west = megaiosun.get_adc_volt(LIGHT_WEST)
     except Exception as e:
         light_error = True
-        leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_GREEN) 
+        leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_GREEN)
         print('v4 error: ', e)
 
     photo_diff = light_east - light_west
