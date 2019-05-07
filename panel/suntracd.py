@@ -103,7 +103,13 @@ while True:
     # if the diff is too big lets move it
     # lets keep it tight
     if abs(photo_diff) > DIFF_VOLTS and light_error != True:
-        relay = RELAY_WEST if photo_diff < 0 else RELAY_EAST
+        if photo_diff < 0:
+            relay = RELAY_WEST
+            led.lights_on(LED_GREEN_OFF | led.LED_OFF_GREEN)
+        else:
+            relay = RELAY_EAST
+            led.lights_on(LED_GREEN_OFF | led.LED_OFF_RED)            
+
         moving_relay = relay
         megaiosun.set_motor(relay, 1)
         print('start moving... ', relay, moving_relay)
@@ -114,8 +120,8 @@ while True:
 
         # turn it off
         print('stop moving...')
+        leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
         megaiosun.set_motor(relay, 0)
-
 
 
     # just print every x for now, need a timer
