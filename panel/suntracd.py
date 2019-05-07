@@ -18,9 +18,9 @@ LIGHT_EAST = 3      # adc 3
 LIGHT_WEST = 4      # adc 4
 RELAY_WEST = 1      # motor 1
 RELAY_EAST = 2      # motor 2
-DIFF_VOLTS = 0.25
+DIFF_VOLTS = 0.35
 POLL_TIME = 1.0
-MOVE_TIME = 0.001
+MOVE_TIME = 0.0005
 
 def get_temp_c(v):
     ohms = THERMISTOR_BALANCE / (INPUT_VOLTS / v - 1)
@@ -114,7 +114,6 @@ while True:
         print('start moving... ', relay)
         while abs(moving_diff) > .02:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
-            print('moving diff: ', moving_diff)
             time.sleep(MOVE_TIME)
 
         # turn it off
