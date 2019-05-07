@@ -62,7 +62,6 @@ leds.lights_off()
 leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
 while True:
-    print('top of loop: ', count)
 
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
@@ -108,7 +107,7 @@ while True:
             led.lights_on(LED_GREEN_OFF | led.LED_OFF_GREEN)
         else:
             relay = RELAY_EAST
-            led.lights_on(LED_GREEN_OFF | led.LED_OFF_RED)            
+            led.lights_on(LED_GREEN_OFF | led.LED_OFF_RED)
 
         moving_relay = relay
         megaiosun.set_motor(relay, 1)
