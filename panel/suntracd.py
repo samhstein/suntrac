@@ -114,7 +114,7 @@ while True:
         print('start moving... ', relay)
         while abs(moving_diff) > .02:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
-           print('moving diff: ', moving_diff)
+            print('moving diff: ', moving_diff)
             time.sleep(MOVE_TIME)
 
         # turn it off
