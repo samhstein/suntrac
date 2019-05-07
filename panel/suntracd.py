@@ -18,7 +18,7 @@ LIGHT_EAST = 3      # adc 3
 LIGHT_WEST = 4      # adc 4
 RELAY_WEST = 1      # motor 1
 RELAY_EAST = 2      # motor 2
-DIFF_VOLTS = 0.35
+DIFF_VOLTS = 0.25
 POLL_TIME = 1.0
 MOVE_TIME = 0.0005
 
@@ -112,7 +112,7 @@ while True:
         moving_diff = photo_diff
         megaiosun.set_motor(relay, 1)
         print('start moving... ', relay)
-        while abs(moving_diff) > .02:
+        while abs(moving_diff) > .03:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
             time.sleep(MOVE_TIME)
 
