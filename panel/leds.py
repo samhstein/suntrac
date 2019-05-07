@@ -13,8 +13,7 @@ class leds:
     IO_EXP_OUT = 0x01
 
     LED_OFF_OFF  = 0xff
-    LED_PORT_MASK = 0x0f
-    LED_STARBOARD_MASK = 0xf0
+    LED_MASK = 0x00
 
     # port
     LED_RED_OFF = 0x02
@@ -29,7 +28,7 @@ class leds:
 
     bus = smbus.SMBus(1)
     port = 0x00
-    startboard = 0x00
+    starboard = 0x00
     blinking = False
 
     # Set up the lights
@@ -51,15 +50,15 @@ class leds:
         self.write_data(self.both)
 
     def lights_off(self):
-        self.write_data(0xff)
+        self.write_data(self.LED_OFF_OFF)
 
     def blink_function(self, light, freq):
         print('bb: ', self.both)
-        flash = 0x00
+        flash = self.LED_MASK
         if light == 'port':
-            flash = 0x00 | self.starboard
+            flash = self.LED_MASK | self.starboard
         else:
-            flash = self.port | 0x00
+            flash = self.port | self.LED_MASK
         while self.blinking:
             self.write_data(flash)
             time.sleep(0.1)

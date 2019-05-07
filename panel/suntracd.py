@@ -59,7 +59,7 @@ megaiosun.set_motors(0)
 # get the lights
 leds=leds.leds()
 leds.lights_off()
-leds.lights_on(leds.LED_GREEN_OFF, leds.LED_OFF_GREEN)
+leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
 while True:
     print('top of loop: ', count)
@@ -136,4 +136,5 @@ while True:
     time.sleep(POLL_TIME)
 
 # stop the motors if they are moving
+leds.lights_off()
 megaiosun.set_motors(0)
