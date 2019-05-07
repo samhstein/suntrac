@@ -5,6 +5,7 @@ from pymemcache import serde
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math
+import leds
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
@@ -55,35 +56,38 @@ sun_azimuth = get_azimuth(latitude, longitude, date)
 # stop the motors if they are moving
 megaiosun.set_motors(0)
 
+# get the lights
+leds=leds.leds()
+
 while True:
     print('top of loop: ', count)
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
         temp_outlet = get_temp_c(volt_outlet)
     except Exception as e:
-        print('v1 error')
-        print(e)
+        leds.lights_on(leds.LED_RED_OFF, leds.LED_OFF_GREEN)
+        print('v1 error: ', e)
 
     try:
         volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
         temp_inlet = get_temp_c(volt_inlet)
     except Exception as e:
-        print('v2 error')
-        print(e)
+        leds.lights_on(leds.LED_RED_OFF, leds.LED_OFF_RED)
+        print('v2 error: ', e)
 
     try:
         light_east = megaiosun.get_adc_volt(LIGHT_EAST)
     except Exception as e:
         light_error = True
-        print('v3 error')
-        print(e)
+        leds.lights_on(leds.LED_WHITE_OFF, leds.LED_RED_OFF)
+        print('v3 error: ', e)
 
     try:
         light_west = megaiosun.get_adc_volt(LIGHT_WEST)
     except Exception as e:
         light_error = True
-        print('v4 error')
-        print(e)
+        leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_GREEN) 
+        print('v4 error: ', e)
 
     photo_diff = light_east - light_west
 
