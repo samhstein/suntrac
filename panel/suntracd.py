@@ -112,7 +112,7 @@ while True:
         moving_diff = photo_diff
         megaiosun.set_motor(relay, 1)
         print('start moving... ', relay)
-        while abs(moving_diff) > 0:
+        while abs(moving_diff) > .02:
             moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
             time.sleep(MOVE_TIME)
 
@@ -120,7 +120,7 @@ while True:
         print('stop moving...')
         leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
         megaiosun.set_motor(relay, 0)
-        time.sleep(1)
+        time.sleep(.5)
 
 
     # just print every x for now, need a timer
