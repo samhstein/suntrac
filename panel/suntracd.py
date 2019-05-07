@@ -58,7 +58,7 @@ megaiosun.set_motors(0)
 
 # get the lights
 leds=leds.leds()
-leds.lights_on(leds.LED_GREEN_ON, leds.LED_OFF_OFF)
+leds.lights_on(leds.LED_GREEN_OFF, leds.LED_OFF_OFF)
 
 while True:
     print('top of loop: ', count)
