@@ -58,8 +58,7 @@ megaiosun.set_motors(0)
 
 # get the lights
 leds=leds.leds()
-leds.lights_off()
-leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+leds.test()
 
 while True:
 

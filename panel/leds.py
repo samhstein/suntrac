@@ -34,26 +34,23 @@ class leds:
     # Set up the lights
     def __init__(self,):
         try:
-            self.write_data(0xff)
+            self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_DIR, 0x00) #set output
         except Exception as e:
             print("Failed to communicate with I/O expander! " + str(e))
 
     def write_data(self, data):
-        print('wd: ', data)
         self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_OUT, ~data)
 
     def lights_on(self, port, starboard):
         self.port = port
         self.starboard = starboard
         self.both = port | starboard
-        print('lo: ', self.both)
         self.write_data(self.both)
 
     def lights_off(self):
         self.write_data(self.LED_OFF_OFF)
 
     def blink_function(self, light, freq):
-        print('bb: ', self.both)
         flash = self.LED_MASK
         if light == 'port':
             flash = self.LED_MASK | self.starboard
@@ -76,3 +73,12 @@ class leds:
 
     def stop_blinking(self):
         self.blinking = False
+
+    def test(self):
+        self.lights_off()
+        self.lights_on(self.LED_RED_OFF, self.LED_OFF_RED)
+        time.sleep(1)
+        self.lights_on(self.LED_WHITE_OFF, self.LED_OFF_WHITE)
+        time.sleep(1)
+        self.lights_on(self.LED_BLUE_OFF, self.LED_OFF_BLUE)
+        time.sleep(1)

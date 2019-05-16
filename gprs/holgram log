@@ -1,0 +1,80 @@
+May 16 22:44:59 raspberrypi pppd[1306]: pppd 2.4.7 started by root, uid 0
+May 16 22:45:00 raspberrypi chat[1308]: abort on (BUSY)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (VOICE)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (NO CARRIER)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (NO DIALTONE)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (NO DIAL TONE)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (NO ANSWER)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (DELAYED)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (ERROR)
+May 16 22:45:00 raspberrypi chat[1308]: abort on (+CGATT: 0)
+May 16 22:45:00 raspberrypi chat[1308]: send (AT^M)
+May 16 22:45:00 raspberrypi chat[1308]: timeout set to 12 seconds
+May 16 22:45:00 raspberrypi chat[1308]: expect (OK)
+May 16 22:45:00 raspberrypi chat[1308]: AT^M^M
+May 16 22:45:00 raspberrypi chat[1308]: OK
+May 16 22:45:00 raspberrypi chat[1308]:  -- got it
+May 16 22:45:00 raspberrypi chat[1308]: send (ATH^M)
+May 16 22:45:00 raspberrypi chat[1308]: expect (OK)
+May 16 22:45:00 raspberrypi chat[1308]: ^M
+May 16 22:45:00 raspberrypi chat[1308]: ATH^M^M
+May 16 22:45:00 raspberrypi chat[1308]: OK
+May 16 22:45:00 raspberrypi chat[1308]:  -- got it
+May 16 22:45:00 raspberrypi chat[1308]: send (ATE1^M)
+May 16 22:45:00 raspberrypi chat[1308]: expect (OK)
+May 16 22:45:00 raspberrypi chat[1308]: ^M
+May 16 22:45:00 raspberrypi chat[1308]: ATE1^M^M
+May 16 22:45:00 raspberrypi chat[1308]: OK
+May 16 22:45:00 raspberrypi chat[1308]:  -- got it
+May 16 22:45:00 raspberrypi chat[1308]: send (AT+CGDCONT=1,"IP","hologram","",0,0^M)
+May 16 22:45:00 raspberrypi chat[1308]: expect (OK)
+May 16 22:45:00 raspberrypi chat[1308]: ^M
+May 16 22:45:00 raspberrypi chat[1308]: AT+CGDCONT=1,"IP","hologram","",0,0^M^M
+May 16 22:45:00 raspberrypi chat[1308]: OK
+May 16 22:45:00 raspberrypi chat[1308]:  -- got it
+May 16 22:45:00 raspberrypi chat[1308]: send (ATD*99#^M)
+May 16 22:45:00 raspberrypi chat[1308]: timeout set to 22 seconds
+May 16 22:45:00 raspberrypi chat[1308]: expect (CONNECT)
+May 16 22:45:00 raspberrypi chat[1308]: ^M
+May 16 22:45:00 raspberrypi chat[1308]: ATD*99#^M^M
+May 16 22:45:00 raspberrypi chat[1308]: CONNECT
+May 16 22:45:00 raspberrypi chat[1308]:  -- got it
+May 16 22:45:00 raspberrypi chat[1308]: send (^M)
+May 16 22:45:00 raspberrypi pppd[1306]: Script /usr/sbin/chat -v -f /etc/chatscripts/gprs -T hologram finished (pid 1307), status = 0x0
+May 16 22:45:00 raspberrypi pppd[1306]: Serial connection established.
+May 16 22:45:01 raspberrypi pppd[1306]: using channel 3
+May 16 22:45:01 raspberrypi pppd[1306]: Using interface ppp0
+May 16 22:45:01 raspberrypi pppd[1306]: Connect: ppp0 <--> /dev/ttyS0
+May 16 22:45:01 raspberrypi NetworkManager[247]: <info>  [1558046701.0385] manager: (ppp0): new Generic device (/org/freedesktop/NetworkManager/Devices/5)
+May 16 22:45:01 raspberrypi NetworkManager[247]: <info>  [1558046701.3054] devices added (path: /sys/devices/virtual/net/ppp0, iface: ppp0)
+May 16 22:45:01 raspberrypi NetworkManager[247]: <info>  [1558046701.3218] device added (path: /sys/devices/virtual/net/ppp0, iface: ppp0): no ifupdown configuration found.
+May 16 22:45:01 raspberrypi nymea-networkmanager[313]:  I | NetworkManager: [+] NetworkDevice("ppp0" - "Generic", "NetworkDeviceStateUnmanaged")
+May 16 22:45:01 raspberrypi pppd[1306]: rcvd [LCP ConfReq id=0x1 <asyncmap 0xa0000> <auth pap> <pcomp> <accomp>]
+May 16 22:45:01 raspberrypi pppd[1306]: sent [LCP ConfReq id=0x1 <asyncmap 0x0> <magic 0xa4b57dfb> <pcomp> <accomp>]
+May 16 22:45:01 raspberrypi pppd[1306]: sent [LCP ConfAck id=0x1 <asyncmap 0xa0000> <auth pap> <pcomp> <accomp>]
+May 16 22:45:01 raspberrypi pppd[1306]: rcvd [LCP ConfNak id=0x1 <asyncmap 0xa0000>]
+May 16 22:45:01 raspberrypi pppd[1306]: sent [LCP ConfReq id=0x2 <asyncmap 0xa0000> <magic 0xa4b57dfb> <pcomp> <accomp>]
+May 16 22:45:01 raspberrypi pppd[1306]: rcvd [LCP ConfAck id=0x2 <asyncmap 0xa0000> <magic 0xa4b57dfb> <pcomp> <accomp>]
+May 16 22:45:01 raspberrypi pppd[1306]: sent [LCP EchoReq id=0x0 magic=0xa4b57dfb]
+May 16 22:45:01 raspberrypi pppd[1306]: sent [PAP AuthReq id=0x1 user="" password=<hidden>]
+May 16 22:45:01 raspberrypi pppd[1306]: rcvd [LCP EchoRep id=0x0 magic=0x0]
+May 16 22:45:01 raspberrypi pppd[1306]: rcvd [PAP AuthAck id=0x1 ""]
+May 16 22:45:01 raspberrypi pppd[1306]: PAP authentication succeeded
+May 16 22:45:02 raspberrypi pppd[1306]: sent [CCP ConfReq id=0x1 <deflate 15> <deflate(old#) 15> <bsd v1 15>]
+May 16 22:45:02 raspberrypi pppd[1306]: sent [IPCP ConfReq id=0x1 <compress VJ 0f 01> <addr 0.0.0.0> <ms-dns1 0.0.0.0> <ms-dns2 0.0.0.0>]
+May 16 22:45:02 raspberrypi pppd[1306]: rcvd [IPCP ConfReq id=0x1 <addr 192.168.254.254>]
+May 16 22:45:02 raspberrypi pppd[1306]: sent [IPCP ConfAck id=0x1 <addr 192.168.254.254>]
+May 16 22:45:02 raspberrypi pppd[1306]: rcvd [LCP ProtRej id=0x0 80 fd 01 01 00 0f 1a 04 78 00 18 04 78 00 15 03 2f]
+May 16 22:45:02 raspberrypi pppd[1306]: Protocol-Reject for 'Compression Control Protocol' (0x80fd) received
+May 16 22:45:02 raspberrypi pppd[1306]: rcvd [IPCP ConfRej id=0x1 <compress VJ 0f 01>]
+May 16 22:45:02 raspberrypi pppd[1306]: sent [IPCP ConfReq id=0x2 <addr 0.0.0.0> <ms-dns1 0.0.0.0> <ms-dns2 0.0.0.0>]
+May 16 22:45:02 raspberrypi pppd[1306]: rcvd [IPCP ConfNak id=0x2 <addr 22.1.49.127> <ms-dns1 10.177.0.34> <ms-dns2 10.177.0.210>]
+May 16 22:45:02 raspberrypi pppd[1306]: sent [IPCP ConfReq id=0x3 <addr 22.1.49.127> <ms-dns1 10.177.0.34> <ms-dns2 10.177.0.210>]
+May 16 22:45:02 raspberrypi pppd[1306]: rcvd [IPCP ConfAck id=0x3 <addr 22.1.49.127> <ms-dns1 10.177.0.34> <ms-dns2 10.177.0.210>]
+May 16 22:45:02 raspberrypi pppd[1306]: replacing old default route to wlan0 [10.0.1.1]
+May 16 22:45:02 raspberrypi pppd[1306]: local  IP address 22.1.49.127
+May 16 22:45:02 raspberrypi pppd[1306]: remote IP address 192.168.254.254
+May 16 22:45:02 raspberrypi pppd[1306]: primary   DNS address 10.177.0.34
+May 16 22:45:02 raspberrypi pppd[1306]: secondary DNS address 10.177.0.210
+May 16 22:45:02 raspberrypi pppd[1306]: Script /etc/ppp/ip-up started (pid 1315)
+May 16 22:45:03 raspberrypi pppd[1306]: Script /etc/ppp/ip-up finished (pid 1315), status = 0x0
