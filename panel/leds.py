@@ -34,7 +34,7 @@ class leds:
     # Set up the lights
     def __init__(self,):
         try:
-            self.bus.write_byte_data(IO_EXP_ADD, IO_EXP_DIR, 0x00) #set output
+            self.bus.write_byte_data(self.IO_EXP_ADD, self.IO_EXP_DIR, 0x00) #set output
         except Exception as e:
             print("Failed to communicate with I/O expander! " + str(e))
 
