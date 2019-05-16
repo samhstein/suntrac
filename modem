@@ -22,3 +22,8 @@ test 3
 
 apn
   hologram
+
+ATH
+ATE1
+AT+CGDCONT=1,"IP","JTM2M","0.0.0.0",0,0
+ATD*99#

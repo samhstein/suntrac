@@ -40,6 +40,7 @@ sudo cp suntracd.service /etc/systemd/system/suntracd.service
 sudo systemctl enable suntracd.service
 
 ### to flash board
+sudo systemctl stop suntracd.service
 cd /home/pi/megaiosun-rpi
 sequent/megaiosun-rpi/update
 ./update
