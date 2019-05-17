@@ -60,6 +60,7 @@ megaiosun.set_motors(0)
 leds=leds.leds()
 leds.test()
 leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+time.sleep(5)
 
 while True:
 
