@@ -43,7 +43,7 @@ def handle_over_temp(temp_inlet, temp_outlet, max_temp, leds):
         leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_RED)
 
     megaiosun.set_motor(RELAY_EAST, 1)
-    time.sleep(30)
+    time.sleep(20)
     megaiosun.set_motor(RELAY_EAST, 0)
     _temp_inlet = temp_inlet
     _temp_outlet = temp_outlet
