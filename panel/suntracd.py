@@ -157,11 +157,11 @@ while True:
         reading = { 'temp_outlet': temp_outlet, 'temp_inlet': temp_inlet, 'volt_outlet': volt_outlet,
             'volt_inlet': volt_inlet, 'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
             'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
-            'sun_azimuth': sun_azimuth, 'last_moved': date - last_moved }
+            'sun_azimuth': sun_azimuth, 'last_moved': (date - last_moved).total_seconds() }
         print(reading)
         client.set('suntrac_reading', reading)
         count = 0
-        if date - last_moved > THREE_HOURS:
+        if (date - last_moved).total_seconds() > THREE_HOURS:
             megaiosun.set_motor(RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(RELAY_EAST, 0)
