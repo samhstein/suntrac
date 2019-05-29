@@ -29,6 +29,25 @@ def get_temp_c(v):
     steinhart = (1.0 / steinhart) - 273.15
     return steinhart
 
+def handle_over_temp():
+    if temp_inlet > max_temp:
+        leds.lights_on(leds.LED_YELLOW_OFF, leds.LED_OFF_YELLOW)
+    elif temp_outlet > max_temp:
+        leds.lights_on(leds.LED_YELLOW_OFF, leds.LED_OFF_RED)
+
+    megaiosun.set_motor(RELAY_EAST, 1)
+    time.sleep(10)
+    megaiosun.set_motor(RELAY_EAST, 0)
+    while temp_inlet > max_temp or temp_outlet > max_temp:
+        volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
+        temp_inlet = get_temp_c(volt_inlet)
+        volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
+        temp_outlet = get_temp_c(volt_outlet)
+        sleep(10)
+
+    leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+
+
 client = Client(('localhost', 11211),
     serializer=serde.python_memcache_serializer,
     deserializer=serde.python_memcache_deserializer)
@@ -38,6 +57,7 @@ with open('suntrac.config') as json_data_file:
 
 latitude = config.get('latitude')
 longitude = config.get('longitude')
+max_temp = config.get('max_temp')
 
 tf = TimezoneFinder()
 time_zone = tf.timezone_at(lng=longitude, lat=latitude)
@@ -47,6 +67,7 @@ volt_inlet = ohms_inlet = temp_inlet = 0
 light_east = light_west = 0
 light_error = False
 count = 0
+over_temp = False
 
 # lets get the sun
 date = datetime.datetime.now(pytz.timezone(time_zone))
@@ -76,6 +97,8 @@ while True:
     except Exception as e:
         leds.lights_on(leds.LED_RED_OFF, leds.LED_OFF_RED)
         print('v2 error: ', e)
+
+    handle_over_temp()
 
     try:
         light_east = megaiosun.get_adc_volt(LIGHT_EAST)

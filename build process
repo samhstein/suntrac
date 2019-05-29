@@ -51,6 +51,6 @@ ssh pi@184.186.223.251
 ### to clone disk
 clone
   cd ???
-  sudo dd if=/dev/rdiskN of=suntrac_clone.dmg bs=4194304
-  diskutil unmountDisk diskN
-  sudo dd of=/dev/rdiskN if=suntrac_clone.dmg bs=4194304
+  sudo dd if=/dev/rdisk2 of=suntrac_clone.dmg bs=4194304
+  diskutil unmountDisk disk2
+  sudo dd of=/dev/rdisk2 if=suntrac_clone.dmg bs=4194304
