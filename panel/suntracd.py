@@ -21,6 +21,7 @@ RELAY_EAST = 2      # motor 2
 DIFF_VOLTS = 0.25
 POLL_TIME = 1.0
 MOVE_TIME = 0.0005
+THREE_HOURS = 3 * 60 * 60
 
 def get_temp_c(v):
     ohms = THERMISTOR_BALANCE / (INPUT_VOLTS / v - 1)
@@ -30,16 +31,12 @@ def get_temp_c(v):
     return steinhart
 
 def handle_over_temp(temp_inlet, temp_outlet, max_temp, leds):
-    print('hot: ', temp_inlet, temp_outlet, max_temp)
     if temp_inlet < max_temp and temp_outlet < max_temp:
         return
 
-    print('hot hot: ', temp_inlet, temp_outlet, max_temp)
     if temp_inlet > max_temp:
-        print('inlet too hot: ', temp_inlet)
         leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_GREEN)
     elif temp_outlet > max_temp:
-        print('outlet too hot: ', temp_outlet)
         leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_RED)
 
     megaiosun.set_motor(RELAY_EAST, 1)
@@ -82,6 +79,8 @@ over_temp = False
 date = datetime.datetime.now(pytz.timezone(time_zone))
 sun_altitude = get_altitude(latitude, longitude, date)
 sun_azimuth = get_azimuth(latitude, longitude, date)
+
+last_moved = date
 
 # stop the motors if they are moving
 megaiosun.set_motors(0)
@@ -146,22 +145,26 @@ while True:
         print('stop moving...')
         leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
         megaiosun.set_motor(relay, 0)
+        last_moved = datetime.datetime.now(pytz.timezone(time_zone))
         time.sleep(.1)
 
 
-    # just print every x for now, need a timer
+    # just print every x for now, need a timer, check to make sure its not dark
     if count * POLL_TIME == 60:
-        print('in save to memcached')
         date = datetime.datetime.now(pytz.timezone(time_zone))
         sun_altitude = get_altitude(latitude, longitude, date)
         sun_azimuth = get_azimuth(latitude, longitude, date)
         reading = { 'temp_outlet': temp_outlet, 'temp_inlet': temp_inlet, 'volt_outlet': volt_outlet,
             'volt_inlet': volt_inlet, 'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
             'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
-            'sun_azimuth': sun_azimuth }
+            'sun_azimuth': sun_azimuth, 'last_moved': date - last_moved }
         print(reading)
         client.set('suntrac_reading', reading)
         count = 0
+        if date - last_moved > THREE_HOURS:
+            megaiosun.set_motor(RELAY_EAST, 1)
+            time.sleep(30)
+            megaiosun.set_motor(RELAY_EAST, 0)
 
     count += 1
     time.sleep(POLL_TIME)
