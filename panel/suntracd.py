@@ -29,7 +29,7 @@ def get_temp_c(v):
     steinhart = (1.0 / steinhart) - 273.15
     return steinhart
 
-def handle_over_temp(temp_inlet, temp_outlet, max_temp):
+def handle_over_temp(temp_inlet, temp_outlet, max_temp, leds):
     print('hot: ', temp_inlet, temp_outlet, max_temp)
     if temp_inlet < max_temp and temp_outlet < max_temp:
         return
@@ -107,7 +107,7 @@ while True:
         leds.lights_on(leds.LED_RED_OFF, leds.LED_OFF_RED)
         print('v2 error: ', e)
 
-    handle_over_temp(temp_inlet, temp_outlet, max_temp)
+    handle_over_temp(temp_inlet, temp_outlet, max_temp, leds)
 
     try:
         light_east = megaiosun.get_adc_volt(LIGHT_EAST)
