@@ -31,6 +31,10 @@ def get_temp_c(v):
 
 def handle_over_temp(temp_inlet, temp_outlet, max_temp):
     print('hot: ', temp_inlet, temp_outlet, max_temp)
+    if temp_inlet < max_temp and temp_outlet < max_temp:
+        return
+
+    print('hot hot: ', temp_inlet, temp_outlet, max_temp)
     if temp_inlet > max_temp:
         print('inlet too hot: ', temp_inlet)
         leds.lights_on(leds.LED_YELLOW_OFF, leds.LED_OFF_YELLOW)
