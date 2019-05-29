@@ -31,8 +31,10 @@ def get_temp_c(v):
 
 def handle_over_temp(temp_inlet, temp_outlet):
     if temp_inlet > max_temp:
+        print('inlet too hot: ', temp_inlet)
         leds.lights_on(leds.LED_YELLOW_OFF, leds.LED_OFF_YELLOW)
     elif temp_outlet > max_temp:
+        print('outlet too hot: ', temp_inlet)
         leds.lights_on(leds.LED_YELLOW_OFF, leds.LED_OFF_RED)
 
     megaiosun.set_motor(RELAY_EAST, 1)
