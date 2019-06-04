@@ -197,7 +197,7 @@ class lsm303ctr:
         X = self.X
 
         pitch = math.asin(-accelValue[X])
-        return(math.degress(pitch))
+        return(math.degrees(pitch))
 
 
     def getRoll(self):
@@ -207,4 +207,4 @@ class lsm303ctr:
 
         pitch = math.asin(-accelValue[X])
         roll = math.asin(accelValue[Y]/math.cos(pitch))
-        return(math.degress(roll))
+        return(math.degrees(roll))
