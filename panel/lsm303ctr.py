@@ -201,6 +201,7 @@ class lsm303ctr:
 
 
     def getRoll(self):
+        accelValue = self.getRealAccel()
         X = self.X
         Y = self.Y
 
