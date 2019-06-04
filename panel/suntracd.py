@@ -5,7 +5,7 @@ from pymemcache import serde
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math
-import leds
+import leds, lsm303ctr
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
@@ -86,9 +86,17 @@ last_moved = date
 megaiosun.set_motors(0)
 
 # get the lights
-leds=leds.leds()
+leds = leds.leds()
 leds.test()
 leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+
+# get the accel
+acc_mag = lsm303ctr.lsm303ctr()
+initial_real_acc = acc_mag.getRealAccel()
+initial_acc = acc_mag.getAccel()
+mag_ready = acc_mag.isMagReady()
+initial_heading = acc_mag.getHeading()
+initial_tilt_heading = acc_mag.getTiltHeading()
 
 while True:
 
@@ -147,6 +155,10 @@ while True:
         megaiosun.set_motor(relay, 0)
         last_moved = datetime.datetime.now(pytz.timezone(time_zone))
         time.sleep(.1)
+
+    # print the accel
+    print('accel: ', acc_mag.getAccel())
+    print('mag: ', acc_mag.getTiltHeading())
 
 
     # just print every x for now, need a timer, check to make sure its not dark
