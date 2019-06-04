@@ -92,8 +92,8 @@ leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
 # get the accel
 acc_mag = lsm303ctr.lsm303ctr()
-initial_real_acc = acc_mag.getRealAccel()
-initial_acc = acc_mag.getAccel()
+initial_pitch = acc_mag.getPitch()
+initial_roll = acc_mag.getRoll()
 mag_ready = acc_mag.isMagReady()
 initial_heading = acc_mag.getHeading()
 initial_tilt_heading = acc_mag.getTiltHeading()
@@ -157,9 +157,9 @@ while True:
         time.sleep(.1)
 
     # print the accel
-    print('accel: ', acc_mag.getAccel())
+    print('pitch: ', acc_mag.getPitch())
+    print('roll: ', acc_mag.getRoll())
     print('mag: ', acc_mag.getTiltHeading())
-
 
     # just print every x for now, need a timer, check to make sure its not dark
     if count * POLL_TIME == 60:

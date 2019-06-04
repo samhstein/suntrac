@@ -180,8 +180,6 @@ class lsm303ctr:
         Z = self.Z
 
         pitch = math.asin(-accelValue[X])
-
-        print(accelValue[Y],pitch,math.cos(pitch),accelValue[Y]/math.cos(pitch),math.asin(accelValue[Y]/math.cos(pitch)))
         roll = math.asin(accelValue[Y]/math.cos(pitch))
 
         xh = magValue[X] * math.cos(pitch) + magValue[Z] * math.sin(pitch)
@@ -193,3 +191,19 @@ class lsm303ctr:
             return heading
         else:
             return (360 + heading)
+
+    def getPitch(self):
+        accelValue = self.getRealAccel()
+        X = self.X
+
+        pitch = math.asin(-accelValue[X])
+        return(pitch)
+
+
+    def getRoll(self):
+        X = self.X
+        Y = self.Y
+
+        pitch = math.asin(-accelValue[X])
+        roll = math.asin(accelValue[Y]/math.cos(pitch))
+        return(roll)
