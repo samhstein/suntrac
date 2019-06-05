@@ -157,7 +157,7 @@ while True:
         time.sleep(.1)
 
     # print the accel
-    print('pitch: ', acc_mag.getPitch())
+    print('pitch: ', -acc_mag.getPitch())
     print('roll: ', acc_mag.getRoll())
     print('mag: ', acc_mag.getTiltHeading())
 
