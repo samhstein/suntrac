@@ -159,7 +159,8 @@ while True:
     # print the accel
     print('pitch: ', -acc_mag.getPitch())
     print('roll: ', acc_mag.getRoll())
-    print('mag: ', acc_mag.getTiltHeading())
+    print('heading: ', acc_mag.getHeading())
+    print('tilt heading: ', acc_mag.getTiltHeading())
 
     # just print every x for now, need a timer, check to make sure its not dark
     if count * POLL_TIME == 60:
