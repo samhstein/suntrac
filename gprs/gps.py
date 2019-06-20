@@ -8,9 +8,7 @@ ser.write(b'ATZ\r\n')
 
 print('reading')
 s = ser.readline()
-
-
-#print('got: ', s)
+print('got: ', s)
 
 #ser.write(b'AT+CGATT=1')
 
