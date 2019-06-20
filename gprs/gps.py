@@ -1,7 +1,7 @@
 import serial
 
 def send_command(command):
-    with_return = command + '\r\n'
+    with_return = str(command) + '\r\n'
     send_command(with_return.encode('utf-8'))
 
 
