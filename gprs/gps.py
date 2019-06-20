@@ -1,7 +1,8 @@
 import serial
 
 def send_command(command):
-    send_command((command + '\r\n').encode('utf-8'))
+    with_return = command + '\r\n'
+    send_command(with_return.encode('utf-8'))
 
 
 ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
