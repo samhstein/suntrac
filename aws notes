@@ -26,3 +26,9 @@ Connectivity
 OTA updates
   device management
   jobs published on topics
+
+IOT
+  create CA with openssl
+  template with that CA
+  cvm for certs
+  jobs with groups docs / on the shelf, deployed
