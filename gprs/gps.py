@@ -1,6 +1,6 @@
 import serial
 
-ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
+ser = serial.Serial('/dev/ttyS0', 115200, timeout=2)
 print(ser)
 
 ser.write(b'ATZ\r\n')
