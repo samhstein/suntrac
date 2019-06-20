@@ -1,9 +1,9 @@
 import serial
 
-ser = serial.Serial('/dev/ttyS0', 115200, timeout=2)
+ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
 print(ser)
 
-ser.write(b'ATZ\r\n')
+ser.write(unicode('ATZ\r\n'))
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
