@@ -1,57 +1,61 @@
 import serial
 
+def send_command(command):
+    send_command((command + ').encode('utf-8'))
+
+
 ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
 print(ser)
 
-ser.write(unicode('ATZ\r\n'))
+send_command('ATZ')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+CGATT=1\r\n')
+send_command('AT+CGATT=1')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+SAPBR=3,1,"CONTYPE","GPRS"\r\n')
+send_command('AT+SAPBR=3,1,"CONTYPE","GPRS"')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+SAPBR=3,1,"APN","jtm2m"\r\n')
+send_command('AT+SAPBR=3,1,"APN","jtm2m"')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+SAPBR=1,1\r\n')
+send_command('AT+SAPBR=1,1')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+SAPBR=2,1\r\n')
+send_command('AT+SAPBR=2,1')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+CIPGSMLOC=1,1\r\n')
+send_command('AT+CIPGSMLOC=1,1')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'AT+SAPBR=0,1\r\n')
+send_command('AT+SAPBR=0,1')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
-ser.write(b'ATZ\r\n')
+send_command('ATZ')
 s = ser.readline()
 print('got: ', s)
 s = ser.readline()
