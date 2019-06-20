@@ -8,6 +8,10 @@ def send_command(command):
 ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
 print(ser)
 
+def send_command(command):
+    with_return = str(command) + '\r\n'
+    ser.write(with_return.encode('utf-8'))
+
 send_command('ATZ')
 s = ser.readline()
 print('got: ', s)
