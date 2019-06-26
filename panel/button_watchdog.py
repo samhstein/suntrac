@@ -4,7 +4,8 @@ import time
 pushed = False
 
 def button_push(input_pin):
-    global pushed = not pushed
+    global pushed
+    pushed = not pushed
     print("button pushed on pin", input_pin, pushed)
 
 GPIO.setmode(GPIO.BCM)
