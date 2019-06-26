@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-def callback_function_print(input_pint):
+def callback_function_print(input_pin):
   print("Input on pin", input_pin)
 
 GPIO.setmode(GPIO.BCM)
