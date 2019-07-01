@@ -1,6 +1,5 @@
 import RPi.GPIO as GPIO
-import time
-from datetime import datetime
+import time, leds
 
 pushed = False
 down_time = None
