@@ -12,7 +12,7 @@ class leds:
     IO_EXP_DIR = 0x03
     IO_EXP_OUT = 0x01
 
-    LED_OFF_OFF  = 0xff
+    LED_OFF_OFF  = 0x00
     LED_MASK = 0x00
 
     # port
