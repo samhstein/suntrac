@@ -15,12 +15,11 @@ def button_push(input_pin):
     pushed = not pushed
     if pushed:
         down_time = time.time()
+        time.sleep(5)
+        print('still down')
+
+    if not pushed:
         push_count += 1
-
-    if not pushed and down_time - time.time() > 5:
-        print('long push')
-        leds.lights_off()
-
 
     print("button pushed on pin", input_pin, pushed)
 
