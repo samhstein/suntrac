@@ -18,7 +18,7 @@ def button_push(input_pin):
 
     print('27: ', GPIO.input(27))
 
-    while GPIO.input(27):
+    while not GPIO.input(27):
         time.sleep(.1)
         if time.time() - down_time > 5:
             print('long push')
