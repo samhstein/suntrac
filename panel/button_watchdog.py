@@ -3,6 +3,7 @@ import time, leds
 from datetime import datetime
 
 pushed = False
+last_time = datetime.now()
 # get the lights
 leds = leds.leds()
 
@@ -14,7 +15,7 @@ def button_push(input_pin):
     last_time = datetime.now()
     pushed = not pushed
     print("button pushed on pin", input_pin, pushed)
-    if time_diff > 5:
+    if not pushed and time_diff > 5:
         leds = leds.leds()
         leds.lights_off()
         print('long push')
