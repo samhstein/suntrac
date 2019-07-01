@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
-import datetime, time
-import leds
+import time, leds
+from datetime import datetime
 
 pushed = False
 # get the lights
