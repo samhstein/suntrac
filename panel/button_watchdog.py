@@ -3,7 +3,7 @@ import time, leds
 from datetime import datetime
 
 pushed = False
-down_time = NULL
+down_time = None
 push_count = 0
 # get the lights
 leds = leds.leds()
