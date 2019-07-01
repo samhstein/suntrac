@@ -16,8 +16,6 @@ def button_push(input_pin):
     if pushed:
         down_time = time.time()
 
-    print('27: ', GPIO.input(27))
-
     while not GPIO.input(27):
         time.sleep(.1)
         if time.time() - down_time > 5:
