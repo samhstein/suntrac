@@ -3,14 +3,26 @@ import time, leds
 from datetime import datetime
 
 pushed = False
-last_time = datetime.now()
+down_time = NULL
+push_count = 0
 # get the lights
 leds = leds.leds()
 
 def button_push(input_pin):
     global pushed
-    global last_time
+    global down_time
+    global push_count
+
     pushed = not pushed
+    if pushed:
+        down_time = datetime.now()
+        push_count += 1
+
+    if not pushed and down_time - datetime.now > 5:
+        print('long push')
+        leds.lights_off()
+
+
     print("button pushed on pin", input_pin, pushed)
 
 
