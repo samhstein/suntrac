@@ -17,9 +17,10 @@ def button_push(input_pin):
         down_time = time.time()
 
     while pushed:
-        time.sleep(.1)
+        time.sleep(.5)
         if time.time() - down_time > 5:
             print('long push')
+            break
 
     print("button pushed on pin", input_pin, pushed)
 
