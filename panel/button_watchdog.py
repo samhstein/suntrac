@@ -8,7 +8,6 @@ last_time = datetime.now()
 leds = leds.leds()
 
 def button_push(input_pin):
-    print("button pushed on pin", input_pin, pushed)
     global pushed
     global last_time
     pushed = not pushed
