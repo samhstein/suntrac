@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time, leds
+import time, leds, os
 
 pushed = False
 down_time = None
@@ -21,6 +21,7 @@ def button_push(input_pin):
         if time.time() - down_time > 5:
             print('long push')
             leds.lights_off()
+            os.system('sudo shutdown -r now')
             break
 
     print("button pushed on pin", input_pin, pushed)
