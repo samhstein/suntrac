@@ -20,6 +20,7 @@ def button_push(input_pin):
         time.sleep(.1)
         if time.time() - down_time > 5:
             print('long push')
+            leds.lights_off()
             break
 
     print("button pushed on pin", input_pin, pushed)
