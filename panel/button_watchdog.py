@@ -16,7 +16,7 @@ def button_push(input_pin):
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=500)
+GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=200)
 
 while True:
     time.sleep(100)
