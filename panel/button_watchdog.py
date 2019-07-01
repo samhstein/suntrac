@@ -18,7 +18,7 @@ def button_push(input_pin):
         down_time = datetime.now()
         push_count += 1
 
-    if not pushed and down_time - datetime.now > 5:
+    if not pushed and down_time - datetime.now() > 5:
         print('long push')
         leds.lights_off()
 
