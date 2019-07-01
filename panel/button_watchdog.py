@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time, leds
+import time
 from datetime import datetime
 
 pushed = False
@@ -15,10 +15,10 @@ def button_push(input_pin):
 
     pushed = not pushed
     if pushed:
-        down_time = datetime.now()
+        down_time = time.time()
         push_count += 1
 
-    if not pushed and down_time - datetime.now() > 5:
+    if not pushed and down_time - time.time() > 5:
         print('long push')
         leds.lights_off()
 
