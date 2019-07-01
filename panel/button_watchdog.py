@@ -8,17 +8,12 @@ last_time = datetime.now()
 leds = leds.leds()
 
 def button_push(input_pin):
+    print("button pushed on pin", input_pin, pushed)
     global pushed
     global last_time
-    now = datetime.now()
-    time_diff = last_time - now
-    last_time = datetime.now()
     pushed = not pushed
     print("button pushed on pin", input_pin, pushed)
-    if not pushed and time_diff > 5:
-        leds = leds.leds()
-        leds.lights_off()
-        print('long push')
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
