@@ -8,9 +8,10 @@ leds = leds.leds()
 
 def button_push(input_pin):
     global pushed
+    global last_time
     now = datetime.now()
     time_diff = last_time - now
-    global last_time = datetime.now()
+    last_time = datetime.now()
     pushed = not pushed
     print("button pushed on pin", input_pin, pushed)
     if time_diff > 5:
