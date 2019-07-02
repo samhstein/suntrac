@@ -9,13 +9,18 @@ leds = leds.leds()
 
 def button_push(input_pin):
     global pushed
-    global down_time
+    global down_time, up_time
     global push_count
 
     pushed = not pushed
+    print("button pushed on pin", input_pin, pushed)
+
     if pushed:
         down_time = time.time()
+    else:
+        up_time = time.time()
 
+    # long push
     while not GPIO.input(27):
         time.sleep(.1)
         if time.time() - down_time > 5:
@@ -24,7 +29,10 @@ def button_push(input_pin):
             os.system('sudo shutdown -r now')
             break
 
-    print("button pushed on pin", input_pin, pushed)
+    # double push
+    if down_time - up_time < .5:
+        print('double push')
+        leds.lights_on(leds.LED_BLUE_OFF, leds.LED_OFF_BLUE)
 
 
 GPIO.setmode(GPIO.BCM)

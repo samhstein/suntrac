@@ -47,6 +47,8 @@ cd suntrac/panel
 sudo cp suntracd.service /etc/systemd/system/suntracd.service
 sudo systemctl enable suntracd.service
 
+install node-red
+
 ### to flash board
 sudo systemctl stop suntracd.service
 cd /home/pi/suntrac/sequent/megaiosun-rpi/update
