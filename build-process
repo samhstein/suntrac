@@ -1,8 +1,15 @@
 format sd card
-flash using berrylan image
+flash using lite
 login to pi: pi / raspberry
 change password: 123st321
-use berrylan to connect to local wifi, note ip address
+
+update /etc/default/keyboard
+change "gb" to "us"
+reboot
+
+update /etc/wpa_suplicant/wpa_suplicant.conf
+add section with wireless
+
 ssh to pi
 sudo apt-get update
 sudo apt-get upgrade
@@ -10,6 +17,7 @@ raspi-config
   turn i2c on
   turn off serial remote
   turn on serial port
+  turn on ssh
   it will reboot on finish
 
 ssh to pi
@@ -53,3 +61,8 @@ clone
   sudo dd if=/dev/rdisk2 of=suntrac_clone.dmg bs=4194304
   diskutil unmountDisk disk2
   sudo dd of=/dev/rdisk2 if=suntrac_clone.dmg bs=4194304
+
+wifi
+  double click button
+  ssid: suntrac
+  pass phrase: suntrac-tech
