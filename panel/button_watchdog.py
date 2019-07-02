@@ -39,7 +39,7 @@ def button_push(input_pin):
             break
 
     # double push
-    if last_time and down_time - last_time < .5:
+    if last_time and pushed and down_time - last_time < .5:
         print('double push', push_count)
         leds.lights_on(leds.LED_BLUE_OFF, leds.LED_OFF_BLUE)
     else:
