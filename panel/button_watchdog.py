@@ -15,7 +15,6 @@ def handler_stop_signals(signum, frame):
 
 signal.signal(signal.SIGINT, handler_stop_signals)
 signal.signal(signal.SIGTERM, handler_stop_signals)
-signal.signal(signal.CTRL_C_EVENT, handler_stop_signals)
 
 def button_push(input_pin):
     global pushed
