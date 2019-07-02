@@ -29,19 +29,19 @@ def button_push(input_pin):
         last_time = down_time
         down_time = time.time()
 
-    # long push
+    # long push, reboot
     while not GPIO.input(27):
         time.sleep(.1)
         if time.time() - down_time > 5:
-            print('long push')
             leds.lights_off()
             os.system('sudo shutdown -r now')
             break
 
-    # double push
+    # double push, start node-red
     if last_time and pushed and down_time - last_time < .5:
-        print('double push', push_count)
         leds.lights_on(leds.LED_BLUE_OFF, leds.LED_OFF_BLUE)
+        push_count = 0
+        os.system('node-red-pi --max-old-space-size=256')
     else:
         push_count = 0
 
@@ -49,6 +49,7 @@ def button_push(input_pin):
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=50)
+leds.lights_off()
 
 while run:
     time.sleep(100)
