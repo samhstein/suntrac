@@ -1,0 +1,15 @@
+[Unit]
+Description=Suntrac Watchdog daemon
+After=multi-user.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+ExecStart=/usr/bin/python3 /home/pi/suntrac/panel/button_watchdog.py
+WorkingDirectory=/home/pi/suntrac/panel
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

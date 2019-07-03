@@ -45,6 +45,7 @@ python3 suntrac_test.py
 cd
 cd suntrac/panel
 sudo cp suntracd.service /etc/systemd/system/suntracd.service
+sudo cp watchdog.service /etc/systemd/system/watchdog.service
 sudo systemctl enable suntracd.service
 
 install node-red
@@ -67,4 +68,4 @@ clone
 wifi
   double click button
   ssid: suntrac
-  pass phrase: suntrac-tech
+  pass phrase: suntracTech
