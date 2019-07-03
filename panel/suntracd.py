@@ -6,6 +6,16 @@ from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math
 import leds, lsm303ctr
+import signal
+
+run = True
+
+def handler_stop_signals(signum, frame):
+    global run
+    run = False
+
+signal.signal(signal.SIGINT, handler_stop_signals)
+signal.signal(signal.SIGTERM, handler_stop_signals)
 
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
@@ -98,7 +108,7 @@ mag_ready = acc_mag.isMagReady()
 initial_heading = acc_mag.getHeading()
 initial_tilt_heading = acc_mag.getTiltHeading()
 
-while True:
+while run:
 
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
