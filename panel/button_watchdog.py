@@ -8,7 +8,6 @@ down_time = last_time = None
 push_count = 0
 # get the lights
 leds = leds.leds()
-leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 def handler_stop_signals(signum, frame):
     global run
@@ -50,7 +49,8 @@ def button_push(input_pin):
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=50)
-leds.lights_off()
+# both white during startup
+leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 while run:
     time.sleep(100)
