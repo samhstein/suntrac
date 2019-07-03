@@ -8,6 +8,7 @@ down_time = last_time = None
 push_count = 0
 # get the lights
 leds = leds.leds()
+leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 def handler_stop_signals(signum, frame):
     global run
