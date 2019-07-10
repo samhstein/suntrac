@@ -35,7 +35,7 @@ send_command('AT+SAPBR=2,1')
 s = ser.read(size=1024)
 print('ip: ', s)
 
-send_command('AT+CIPGSMLOC=1,3')
+send_command('AT+CIPGSMLOC=1,1')
 s = ser.read(size=1024)
 print('location: ', s)
 s = ser.read(size=1024)
