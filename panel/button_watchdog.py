@@ -11,6 +11,7 @@ leds = leds.leds()
 
 def handler_stop_signals(signum, frame):
     global run
+    leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
     run = False
 
 signal.signal(signal.SIGINT, handler_stop_signals)
@@ -53,4 +54,4 @@ GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=50)
 leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 while run:
-    time.sleep(100)
+    time.sleep(10)
