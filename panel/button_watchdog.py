@@ -11,7 +11,7 @@ leds = leds.leds()
 
 def handler_stop_signals(signum, frame):
     global run
-    leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
+    leds.lights_off()
     run = False
 
 signal.signal(signal.SIGINT, handler_stop_signals)
