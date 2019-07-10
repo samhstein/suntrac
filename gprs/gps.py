@@ -31,6 +31,12 @@ print('got: ', s)
 s = ser.readline()
 print('got: ', s)
 
+send_command('AT+SAPBR=0,1')
+s = ser.readline()
+print('got: ', s)
+s = ser.readline()
+print('got: ', s)
+
 send_command('AT+SAPBR=1,1')
 s = ser.readline()
 print('got: ', s)

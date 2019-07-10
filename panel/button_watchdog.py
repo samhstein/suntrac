@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time, leds, os
 import signal
+import megaiosun
 
 run = True
 pushed = False
@@ -24,7 +25,6 @@ def button_push(input_pin):
     global push_count
 
     pushed = not pushed
-    print("button pushed on pin", input_pin, pushed)
 
     if pushed:
         push_count += 1
@@ -53,6 +53,12 @@ GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=50)
 # both white during startup
 leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
+
+# get the config info from the board see if we have
+# connectivity that provides lat and long
+
+proc_id = megaiosun.get_proc_id()
+megaiosun_version = megaiosun.version()
 
 while run:
     time.sleep(10)
