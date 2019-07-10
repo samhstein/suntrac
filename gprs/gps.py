@@ -38,6 +38,8 @@ print('ip: ', s)
 send_command('AT+CIPGSMLOC=1,1')
 s = ser.read(size=1024)
 print('location: ', s)
+s = ser.read(size=1024)
+print('location: ', s)
 
 send_command('ATZ')
 s = ser.read(size=1024)
