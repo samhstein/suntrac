@@ -37,7 +37,7 @@ print(s)
 
 send_command('AT+CIPGSMLOC=1,1')
 s = ser.read(size=1024)
-print(s)
+print('location: ', s)
 
 send_command('AT+SAPBR=0,1')
 s = ser.read(size=1024)
