@@ -1,11 +1,11 @@
 import serial
 
-class grps:
+class sim868:
 
     ser = None
 
     def __init__(self,):
-        print("in itis")        
+        print("in itis")
         try:
             self.ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
         except Exception as e:

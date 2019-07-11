@@ -1,5 +1,5 @@
 import RPi.GPIO as GPIO
-import time, leds, os, gprs
+import time, leds, os, sim868
 import signal
 import megaiosun
 
@@ -9,7 +9,7 @@ down_time = last_time = None
 push_count = 0
 # get the lights, gprs
 leds = leds.leds()
-gprs = gprs.gprs()
+sim868 = sim868.sim868()
 
 def handler_stop_signals(signum, frame):
     print('in handler')
@@ -60,7 +60,7 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
-comms = gprs.get_status()
+comms = sim868.get_status()
 
 while run:
     time.sleep(10)
