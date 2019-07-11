@@ -12,7 +12,7 @@ class sim868:
             print("can't open serial device")
 
 
-    def self.send_command(self, command):
+    def send_command(self, command):
         with_return = str(command) + '\n'
         self.ser.write(with_return.encode('utf-8'))
 
