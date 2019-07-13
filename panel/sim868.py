@@ -46,6 +46,8 @@ class sim868:
         print('location b: ', s.decode())
         s = self.ser.read(size=1024)
         print('location c: ', s.decode())
+        s = self.ser.read(size=1024)
+        print('location d: ', s.decode())
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
