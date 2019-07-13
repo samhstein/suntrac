@@ -41,13 +41,13 @@ class sim868:
 
         self.send_command('AT+CIPGSMLOC=1,1')
         s = self.ser.read(size=1024)
-        print('location a: ', s.decode())
+        print('location a: ', s)
         s = self.ser.read(size=1024)
-        print('location b: ', s.decode())
+        print('location b: ', s)
         s = self.ser.read(size=1024)
-        print('location c: ', s.decode())
+        print('location c: ', s)
         s = self.ser.read(size=1024)
-        print('location d: ', s.decode())
+        print('location d: ', s)
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
