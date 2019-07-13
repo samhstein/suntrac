@@ -40,14 +40,10 @@ class sim868:
         ip = s.decode().split('"')[1]
 
         self.send_command('AT+CIPGSMLOC=1,1')
-        s = self.ser.read(size=1024)
-        print('location a: ', s)
-        s = self.ser.read(size=1024)
-        print('location b: ', s)
-        s = self.ser.read(size=1024)
-        print('location c: ', s)
-        s = self.ser.read(size=1024)
-        print('location d: ', s)
+        s = ''
+        while 'OK' not in s:
+            s = self.ser.read(size=1024).decode()
+        print('location: ', s)
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
