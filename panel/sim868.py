@@ -19,40 +19,35 @@ class sim868:
     def get_status(self):
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+CGATT=1')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+SAPBR=3,1,"CONTYPE","GPRS"')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+SAPBR=3,1,"APN","jtm2m"')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+SAPBR=0,1')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+SAPBR=1,1')
         s = self.ser.read(size=1024)
-        print(s)
 
         self.send_command('AT+SAPBR=2,1')
         s = self.ser.read(size=1024)
-        print('ip: ', s)
+        ip = s.decode().split('"')[1]
 
         self.send_command('AT+CIPGSMLOC=1,1')
         s = self.ser.read(size=1024)
-        print('location: ', s)
+        print('location a: ', s.decode())
         s = self.ser.read(size=1024)
-        print('location: ', s)
+        print('location b: ', s.decode())
+        s = self.ser.read(size=1024)
+        print('location c: ', s.decode())
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
-        print(s)
 
-        return({"ip": None, "lat": None, "lng": None})
+        return({"ip": ip, "lat": None, "lng": None})
