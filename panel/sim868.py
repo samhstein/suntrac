@@ -43,9 +43,11 @@ class sim868:
         s = ''
         while 'OK' not in s:
             s = self.ser.read(size=1024).decode()
-        print('location: ', s)
+        point = s.split(',')
+        lat = point[1]
+        lng = point[2]
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
 
-        return({"ip": ip, "lat": None, "lng": None})
+        return({"ip": ip, "lat": lat, "lng": lng})
