@@ -13,11 +13,11 @@ class aws_iot:
         r = requests.get(end_point)
         print('request json: ', r.json())
         certs = r.json()
-        with open(CERT_DIR + 'RootCA.pem', 'w') as f:
-            f.write(certs.get('RootCA')
-        with open(CERT_DIR + 'PrivaveKey.key', 'w') as f:
+        with open(self.CERT_DIR + 'RootCA.pem', 'w') as f:
+            f.write(self.certs.get('RootCA')
+        with open(self.CERT_DIR + 'PrivaveKey.key', 'w') as f:
             f.write(certs.get('PrivateKey')
-        with open(CERT_DIR + 'certificatePem.crt', 'w') as f:
+        with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
             f.write(certs.get('certificatePem')
 
     # Custom MQTT message callback
