@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time, leds, os, sim868
-import signal, json
+import signal, json, aws_iot
 import megaiosun
 
 run = True
@@ -10,6 +10,7 @@ push_count = 0
 # get the lights, gprs
 leds = leds.leds()
 sim868 = sim868.sim868()
+aws_iot = aws_iot.aws_iot()
 
 def handler_stop_signals(signum, frame):
     global run
@@ -67,6 +68,7 @@ with open('suntrac.config', 'r+') as json_data_file:
     json.dump(config, json_data_file)
 
 # check to see if we have a cert, if not and we have comms
+aws_iot.get_cert(proc_id)
 
 while run:
     time.sleep(10)
