@@ -5,7 +5,7 @@ class aws_iot:
 
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-west-2.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
-    CERT_DIR = '/home/suntrac/certs/'
+    CERT_DIR = '/home/pi/suntrac/certs/'
 
     def get_cert(self, proc_id):
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
@@ -21,7 +21,7 @@ class aws_iot:
 
         with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
             f.write(certs.get('certificatePem'))
-            
+
     # Custom MQTT message callback
     def customCallback(client, userdata, message):
         print("Received a new message: ")
