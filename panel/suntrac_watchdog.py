@@ -12,7 +12,6 @@ leds = leds.leds()
 sim868 = sim868.sim868()
 
 def handler_stop_signals(signum, frame):
-    print('in handler')
     global run
     leds.lights_off()
     run = False
@@ -57,17 +56,17 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 # get the config info from the board see if we have
 # connectivity that provides lat and long
-
 proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
 # write out config file
-print('comms: ', comms)
 with open('suntrac.config', 'r+') as json_data_file:
     config = json.load(json_data_file)
     config['proc_id'] = proc_id
     config['comms'] = comms
     json.dump(config, json_data_file)
+
+# check to see if we have a cert, if not and we have comms
 
 while run:
     time.sleep(10)
