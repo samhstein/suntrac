@@ -11,8 +11,7 @@ class aws_iot:
         print('in get cert: ', end_point)
         r = requests.get(end_point)
         print('request r: ', r)
-        print('request content: ', r.content)
-        print('request json: ', r.json)
+        print('request json: ', r.json())
 
     # Custom MQTT message callback
     def customCallback(client, userdata, message):
