@@ -15,8 +15,10 @@ class aws_iot:
         certs = r.json()
         with open(self.CERT_DIR + 'RootCA.pem', 'w') as f:
             f.write(self.certs.get('RootCA')
+
         with open(self.CERT_DIR + 'PrivaveKey.key', 'w') as f:
             f.write(certs.get('PrivateKey')
+            
         with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
             f.write(certs.get('certificatePem')
 
