@@ -5,7 +5,7 @@ class aws_iot:
 
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-west-2.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
-    CERT_FILE = '/home/suntrac/certs/bundle.json'
+    CERT_DIR = '/home/suntrac/certs/'
 
     def get_cert(self, proc_id):
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
@@ -13,8 +13,12 @@ class aws_iot:
         r = requests.get(end_point)
         print('request json: ', r.json())
         certs = r.json()
-        with open(CERT_FILE, 'w') as json_data_file:
-            json.dump(certs, json_data_file)
+        with open(CERT_DIR + 'RootCA.pem', 'w') as f:
+            f.write(certs.get('RootCA')
+        with open(CERT_DIR + 'PrivaveKey.key', 'w') as f:
+            f.write(certs.get('PrivateKey')
+        with open(CERT_DIR + 'certificatePem.crt', 'w') as f:
+            f.write(certs.get('certificatePem')
 
     # Custom MQTT message callback
     def customCallback(client, userdata, message):
