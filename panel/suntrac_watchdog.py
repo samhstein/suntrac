@@ -63,7 +63,7 @@ megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
 # write out config file
 print('comms: ', comms)
-with open('suntrac.config', 'rw') as json_data_file:
+with open('suntrac.config', 'r+') as json_data_file:
     config = json.load(json_data_file)
     config.proc_id = proc_id
     config.comms = comms
