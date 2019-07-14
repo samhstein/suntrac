@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time, leds, os, sim868
-import signal
+import signal, json
 import megaiosun
 
 run = True
@@ -61,7 +61,13 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
+# write out config file
 print('comms: ', comms)
+with open('suntrac.config', 'rw') as json_data_file:
+    config = json.load(json_data_file)
+    config.proc_id = proc_id
+    config.comms = comms
+    json.dumps(config, json_data_file)
 
 while run:
     time.sleep(10)
