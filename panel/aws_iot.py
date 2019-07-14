@@ -6,7 +6,7 @@ class aws_iot:
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
 
     def get_cert(self, proc_id):
-        end_point = CERT_ENDPOINT.replace('value1', proc_id).replace('value_2', 'intial_setup')
+        end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value_2', 'intial_setup')
         print('in get cert: ', end_point)
 
     # Custom MQTT message callback
