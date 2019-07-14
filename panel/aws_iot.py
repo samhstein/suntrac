@@ -7,7 +7,7 @@ class aws_iot:
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
     CERT_DIR = '/home/pi/suntrac/certs/'
 
-    def get_cert(self, proc_id):
+    def get_certs(self, proc_id):
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
         print('in get cert: ', end_point)
         r = requests.get(end_point)
@@ -17,7 +17,7 @@ class aws_iot:
             f.write(certs.get('RootCA'))
 
         with open(self.CERT_DIR + 'PrivaveKey.key', 'w') as f:
-            f.write(certs.get('PrivateKey'))
+            f.write(certs.get('keyPair').get('PrivateKey'))
 
         with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
             f.write(certs.get('certificatePem'))
