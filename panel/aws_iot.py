@@ -16,7 +16,7 @@ class aws_iot:
         with open(self.CERT_DIR + 'RootCA.pem', 'w') as f:
             f.write(certs.get('RootCA'))
 
-        with open(self.CERT_DIR + 'PrivaveKey.key', 'w') as f:
+        with open(self.CERT_DIR + 'PrivateKey.key', 'w') as f:
             f.write(certs.get('keyPair').get('PrivateKey'))
 
         with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
