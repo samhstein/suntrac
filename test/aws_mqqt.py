@@ -25,7 +25,7 @@ proc_id = '01000b000e43484734303420'
 myMQTTClient = AWSIoTMQTTClient(proc_id)
 myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
 myMQTTClient.configureCredentials(
-    "/home/pi/suntrac/certs/RootCA.pem",
+    "/home/pi/suntrac/certs/root/AmazonRootCA1.pem",
     "/home/pi/suntrac/certs/PrivateKey.key",
     "/home/pi/suntrac/certs/certificatePem.crt"
     )
