@@ -38,7 +38,7 @@ myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
 myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
 myMQTTClient.connect()
-myMQTTClient.publish("suntrac/data", '{"proc_id": proc_id, "raw_data": "hello from device"}', 1)
+myMQTTClient.publish("suntrac/data", {"proc_id": proc_id, "raw_data": "hello from device"}, 1)
 myMQTTClient.subscribe("suntrac/data", 1, customCallback)
 myMQTTClient.unsubscribe("suntrac/data")
 myMQTTClient.disconnect()
