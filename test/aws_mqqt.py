@@ -41,7 +41,7 @@ data = {"proc_id": proc_id, "raw_data": "hello from device"}
 pickled_data = pickle.dumps(data)
 
 myMQTTClient.connect()
-myMQTTClient.publish("suntrac/data", pickled_data, 1)
+myMQTTClient.publish("suntrac/data", bytearray(pickled_data), 1)
 myMQTTClient.subscribe("suntrac/data", 1, customCallback)
 myMQTTClient.unsubscribe("suntrac/data")
 myMQTTClient.disconnect()
