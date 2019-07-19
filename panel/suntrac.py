@@ -19,7 +19,7 @@ def send_to_cloud(data_points):
 
 for msg in pub_sub.listen():
     print('got message')
-    data_points.append(msg)
+    data_points.append(msg['data'])
     if len(data_points) >= 10:
         send_to_cloud(data_points)
 
