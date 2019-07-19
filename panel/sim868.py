@@ -17,6 +17,7 @@ class sim868:
         self.ser.write(with_return.encode('utf-8'))
 
     def get_status(self):
+        print('in get_status')
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
 
@@ -46,6 +47,12 @@ class sim868:
         point = s.split(',')
         lat = point[1]
         lng = point[2]
+
+        self.send_command('ATH')
+        s = self.ser.read(size=1024)
+
+        self.send_command('ATH')
+        s = self.ser.read(size=1024)
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
