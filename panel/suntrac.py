@@ -20,7 +20,7 @@ def send_to_cloud(data_points):
             )
         ).decode('ascii')
     }
-    print('j_zipped: ', len(j_zipped))
+    print('j_zipped: ', j_zipped, len(j_zipped.get('j_zipped')))
     data_points.clear()
     # aws_iot.send(compressed_points)
 
