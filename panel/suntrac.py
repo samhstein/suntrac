@@ -23,7 +23,7 @@ def send_to_cloud(proc_id, data_points):
     }
     data_points.clear()
 
-    aws_iot.send(proc_id, {"proc_id": proc_id, "topic": "suntrac/data " "j_zipped": j_zipped)
+    aws_iot.send(proc_id, {"proc_id": proc_id, "topic": "suntrac/data", "j_zipped": j_zipped)
 
 # eat the first message
 pub_sub.get_message()
