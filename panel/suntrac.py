@@ -25,6 +25,7 @@ def send_to_cloud(proc_id, data_points):
 
     aws_iot.sendData(
         proc_id,
+        'suntrac/data',
         json.dumps({ "proc_id": proc_id, "topic": "suntrac/data", "j_zipped": j_zipped })
     )
 
