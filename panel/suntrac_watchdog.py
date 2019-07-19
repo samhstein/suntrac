@@ -63,6 +63,7 @@ comms = sim868.get_status()
 # write out config file
 with open('suntrac.config', 'r+') as json_data_file:
     config = json.load(json_data_file)
+    json_data_file.seek(0)
     config['proc_id'] = proc_id
     config['comms'] = comms
     json.dump(config, json_data_file)
