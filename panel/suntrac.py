@@ -17,6 +17,8 @@ def send_to_cloud(data_points):
     data_points.clear()
     # aws_iot.send(compressed_points)
 
+# eat the first message
+pub_sub.getmessage()
 for msg in pub_sub.listen():
     print('got message: ', msg)
     data_points.append(json.loads(msg['data']))
