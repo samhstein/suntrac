@@ -168,23 +168,23 @@ while run:
     #print('heading: ', acc_mag.getHeading())
     #print('tilt heading: ', acc_mag.getTiltHeading())
 
-    # just print every x for now, need a timer, check to make sure its not dark
-    if count * POLL_TIME == 60:
-        date = datetime.datetime.now(pytz.timezone(time_zone))
-        sun_altitude = get_altitude(latitude, longitude, date)
-        sun_azimuth = get_azimuth(latitude, longitude, date)
-        reading = { 'temp_outlet': round(temp_outlet, 1), 'temp_inlet': round(temp_inlet, 1),
-            'volt_outlet': volt_outlet, 'volt_inlet': volt_inlet,
-            'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
-            'timestamp': time.time(), 'sun_altitude': sun_altitude,
-            'sun_azimuth': sun_azimuth, 'last_moved': (date - last_moved).total_seconds() }
-        print(reading)
-        redis_pub.publish('suntrac-reading', json.dumps(reading))
-        count = 0
-        if (date - last_moved).total_seconds() > THREE_HOURS:
-            megaiosun.set_motor(RELAY_EAST, 1)
-            time.sleep(30)
-            megaiosun.set_motor(RELAY_EAST, 0)
+    # pub every sample
+    date = datetime.datetime.now(pytz.timezone(time_zone))
+    sun_altitude = get_altitude(latitude, longitude, date)
+    sun_azimuth = get_azimuth(latitude, longitude, date)
+    reading = { 't_o': round(temp_outlet, 1), 't_i': round(temp_inlet, 1),
+        'v_o': volt_outlet, 'v_i': volt_inlet,
+        'l_e': light_east, 'l_w': light_west, 'photo_diff': photo_diff,
+        'ts': round(time.time(), 1), 's_alt': round(sun_altitude,1)
+        's_az': rount(sun_azimuth, 1), 'last_moved': (date - last_moved).total_seconds(),
+        'roll': round(acc_mag.getRoll(), 1) }
+
+    redis_pub.publish('suntrac-reading', json.dumps(reading))
+    count = 0
+    if (date - last_moved).total_seconds() > THREE_HOURS:
+        megaiosun.set_motor(RELAY_EAST, 1)
+        time.sleep(30)
+        megaiosun.set_motor(RELAY_EAST, 0)
 
     count += 1
     time.sleep(POLL_TIME)
