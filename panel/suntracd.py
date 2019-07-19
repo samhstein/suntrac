@@ -174,9 +174,9 @@ while run:
     sun_azimuth = get_azimuth(latitude, longitude, date)
     reading = { 't_o': round(temp_outlet, 1), 't_i': round(temp_inlet, 1),
         'v_o': volt_outlet, 'v_i': volt_inlet,
-        'l_e': light_east, 'l_w': light_west, 'photo_diff': photo_diff,
-        'ts': round(time.time(), 1), 's_alt': round(sun_altitude,1)
-        's_az': rount(sun_azimuth, 1), 'last_moved': (date - last_moved).total_seconds(),
+        'l_e': light_east, 'l_w': light_west, 'pd': photo_diff,
+        'ts': round(time.time(), 1), 's_alt': round(sun_altitude,1),
+        's_az': rount(sun_azimuth, 1), 'lm': (date - last_moved).total_seconds(),
         'roll': round(acc_mag.getRoll(), 1) }
 
     redis_pub.publish('suntrac-reading', json.dumps(reading))

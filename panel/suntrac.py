@@ -12,15 +12,14 @@ data_points = []
 
 def send_to_cloud(data_points):
     print(data_points)
-    print(sys.sizeof(data_points))
     compressed_points = picke.dumps(data_points)
-    print(len(data_points))    
+    print(len(data_points))
     # aws_iot.send(compressed_points)
 
 for msg in pub_sub.listen():
     print('got message')
     data_points.append(msg)
-    if len(data_points) >= 5:
+    if len(data_points) >= 100:
         send_to_cloud(data_points)
 
     time.sleep(0.1)
