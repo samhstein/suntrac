@@ -1,5 +1,5 @@
 import redis
-import sys, json
+import sys, json, time
 
 # get connection to redis
 redis_pub = redis.Redis(host='localhost', port=6379, db=0)
