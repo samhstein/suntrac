@@ -23,7 +23,7 @@ class aws_iot:
             f.write(certs.get('certificatePem'))
 
     # Custom MQTT message callback
-    def customCallback(client, userdata, message):
+    def customCallback(self, client, userdata, message):
         print("Received a new message: ")
         print(message.payload)
         print("from topic: ")
@@ -31,7 +31,7 @@ class aws_iot:
         print("--------------\n\n")
 
 
-    def sendData(proc_id, topic, data):
+    def sendData(self, proc_id, topic, data):
         myMQTTClient = AWSIoTMQTTClient(proc_id)
         myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
         myMQTTClient.configureCredentials(
