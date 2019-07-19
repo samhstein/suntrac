@@ -12,7 +12,6 @@ pub_sub.subscribe('suntrac-reading')
 data_points = []
 
 def send_to_cloud(data_points):
-    print(data_points)
     j_zipped = {
         "j_zipped": base64.b64encode(
             zlib.compress(
@@ -20,9 +19,8 @@ def send_to_cloud(data_points):
             )
         ).decode('ascii')
     }
-    print('j_zipped: ', j_zipped, len(j_zipped.get('j_zipped')))
     data_points.clear()
-    # aws_iot.send(compressed_points)
+    aws_iot.send(proc_id, {"proc_id": proc_id, "topic": "suntrac/data" "j_zipped": j_zipped)
 
 # eat the first message
 pub_sub.get_message()
