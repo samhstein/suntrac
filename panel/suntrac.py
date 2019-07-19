@@ -13,7 +13,7 @@ data_points = []
 def send_to_cloud(data_points):
     print(data_points)
     compressed_points = pickle.dumps(data_points)
-    print(len(data_points))
+    print(len(compressed_points))
     data_points.clear()
     # aws_iot.send(compressed_points)
 
