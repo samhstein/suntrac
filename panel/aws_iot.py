@@ -33,7 +33,7 @@ class aws_iot:
 
     def sendData(proc_id, topic, data):
         myMQTTClient = AWSIoTMQTTClient(proc_id)
-        myMQTTClient.configureEndpoint(IOT_ENDPOINT, 8883)
+        myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
         myMQTTClient.configureCredentials(
             self.CERT_DIR + "AmazonRootCA1.pem",
             self.CERT_DIR + "PrivateKey.key",
