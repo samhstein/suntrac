@@ -48,6 +48,7 @@ class aws_iot:
         myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
         myMQTTClient.connect()
+        print('sendData: ',topic, data)
         myMQTTClient.publish(topic, data, 1)
         myMQTTClient.subscribe(topic, 1, customCallback)
         myMQTTClient.unsubscribe(topic)
