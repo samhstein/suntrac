@@ -18,7 +18,7 @@ def send_to_cloud(data_points):
     # aws_iot.send(compressed_points)
 
 for msg in pub_sub.listen():
-    print('got message')
+    print('got message: ', msg)
     data_points.append(json.loads(msg['data']))
     if len(data_points) >= 10:
         send_to_cloud(data_points)
