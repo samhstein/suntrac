@@ -14,12 +14,13 @@ def send_to_cloud(data_points):
     print(data_points)
     compressed_points = pickle.dumps(data_points)
     print(len(data_points))
+    data_points.clear()
     # aws_iot.send(compressed_points)
 
 for msg in pub_sub.listen():
     print('got message')
     data_points.append(msg)
-    if len(data_points) >= 100:
+    if len(data_points) >= 10:
         send_to_cloud(data_points)
 
     time.sleep(0.1)
