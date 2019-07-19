@@ -180,6 +180,7 @@ while run:
         'lm': round((date - last_moved).total_seconds(), 1),
         'roll': round(acc_mag.getRoll(), 1) }
 
+    # pub the string
     redis_pub.publish('suntrac-reading', json.dumps(reading))
     count = 0
     if (date - last_moved).total_seconds() > THREE_HOURS:
