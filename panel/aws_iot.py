@@ -50,6 +50,6 @@ class aws_iot:
         myMQTTClient.connect()
         print('sendData: ',topic, data)
         myMQTTClient.publish(topic, data, 1)
-        myMQTTClient.subscribe(topic, 1, customCallback)
+        myMQTTClient.subscribe(topic, 1, self.customCallback)
         myMQTTClient.unsubscribe(topic)
         myMQTTClient.disconnect()
