@@ -1,12 +1,10 @@
 import megaiosun, pytz
 import time, sys, datetime, json
-from pymemcache.client.base import Client
-from pymemcache import serde
+import redis
 from pysolar.solar import *
 from timezonefinder import TimezoneFinder
-import math
+import math, signal
 import leds, lsm303ctr
-import signal
 
 run = True
 
@@ -63,11 +61,6 @@ def handle_over_temp(temp_inlet, temp_outlet, max_temp, leds):
 
     leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
-
-client = Client(('localhost', 11211),
-    serializer=serde.python_memcache_serializer,
-    deserializer=serde.python_memcache_deserializer)
-
 with open('suntrac.config') as json_data_file:
     config = json.load(json_data_file)
 
@@ -107,6 +100,9 @@ initial_roll = acc_mag.getRoll()
 mag_ready = acc_mag.isMagReady()
 initial_heading = acc_mag.getHeading()
 initial_tilt_heading = acc_mag.getTiltHeading()
+
+# get connection to redis
+redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 
 while run:
 
@@ -182,7 +178,7 @@ while run:
             'time_zone': time_zone, 'timestamp': time.time(), 'sun_altitude': sun_altitude,
             'sun_azimuth': sun_azimuth, 'last_moved': (date - last_moved).total_seconds() }
         print(reading)
-        client.set('suntrac_reading', reading)
+        redis_pub.publish('suntrac-reading', json.dumps(reading))
         count = 0
         if (date - last_moved).total_seconds() > THREE_HOURS:
             megaiosun.set_motor(RELAY_EAST, 1)

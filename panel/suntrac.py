@@ -1,10 +1,11 @@
-from pymemcache.client.base import Client
-from pymemcache import serde
-import sys
+import redis
+import sys, json
 
-client = Client(('localhost', 11211),
-    serializer=serde.python_memcache_serializer,
-    deserializer=serde.python_memcache_deserializer)
+# get connection to redis
+redis_pub = redis.Redis(host='localhost', port=6379, db=0)
+pub_sub = redus_pubsub()
+pub_sub.subscribe('suntrac-reading')
 
-result = str(client.get('suntrac_reading'))
-sys.stdout.write(result.replace("'", '"'))
+for msg in pub_sub.listen():
+    print(json.loads(msg))
+    time.sleep(0.1)
