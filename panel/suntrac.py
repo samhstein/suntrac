@@ -7,5 +7,5 @@ pub_sub = redis_pub.pubsub()
 pub_sub.subscribe('suntrac-reading')
 
 for msg in pub_sub.listen():
-    print(json.loads(msg))
+    print(msg)
     time.sleep(0.1)
