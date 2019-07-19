@@ -16,7 +16,7 @@ def send_to_cloud(data_points):
     j_zip = {
         "zipped_data": base64.b64encode(
             zlib.compress(
-                data_points.encode('utf-8')
+                data_points
             )
         ).decode('ascii')
     }
