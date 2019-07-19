@@ -1,6 +1,6 @@
 import redis, pickle
 import sys, json, time
-import aws_iot, zlib
+import aws_iot, zlib, base64
 
 # get aws_iot
 aws_iot = aws_iot.aws_iot()
