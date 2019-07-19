@@ -173,7 +173,7 @@ while run:
         date = datetime.datetime.now(pytz.timezone(time_zone))
         sun_altitude = get_altitude(latitude, longitude, date)
         sun_azimuth = get_azimuth(latitude, longitude, date)
-        reading = { 'temp_outlet': round(temp_outlet, 1), 'temp_inlet': rount(temp_inlet, 1),
+        reading = { 'temp_outlet': round(temp_outlet, 1), 'temp_inlet': round(temp_inlet, 1),
             'volt_outlet': volt_outlet, 'volt_inlet': volt_inlet,
             'light_east': light_east, 'light_west': light_west, 'photo_diff': photo_diff,
             'timestamp': time.time(), 'sun_altitude': sun_altitude,
