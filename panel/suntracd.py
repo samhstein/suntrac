@@ -176,7 +176,7 @@ while run:
         'v_o': volt_outlet, 'v_i': volt_inlet,
         'l_e': light_east, 'l_w': light_west, 'pd': round(photo_diff, 4),
         'ts': round(time.time(), 1), 's_alt': round(sun_altitude,1),
-        's_az': round(sun_azimuth, 1), 'lm': (date - last_moved).total_seconds(),
+        's_az': round(sun_azimuth, 1), 'lm': round((date - last_moved).total_seconds(), 1),
         'roll': round(acc_mag.getRoll(), 1) }
 
     redis_pub.publish('suntrac-reading', json.dumps(reading))
