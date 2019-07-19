@@ -28,7 +28,7 @@ def send_to_cloud(data_points):
 pub_sub.get_message()
 for msg in pub_sub.listen():
     data_points.append(json.loads(msg['data']))
-    if len(data_points) >= 100:
+    if len(data_points) >= 30:
         send_to_cloud(data_points)
 
     time.sleep(0.1)
