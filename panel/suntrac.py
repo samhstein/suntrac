@@ -38,7 +38,7 @@ def send_to_cloud(proc_id, data_points):
 pub_sub.get_message()
 count = 0
 for msg in pub_sub.listen():
-    print('got message: ', count)
+    print('got message: ', len(data_points), count)
     # just keep one every minute
     if (count == SECONDS_TO_SAMPLE):
         data_points.append(json.loads(msg['data']))
