@@ -46,4 +46,5 @@ for msg in pub_sub.listen():
     if len(data_points) >= 30:
         send_to_cloud(proc_id, data_points)
 
+    count += 1
     time.sleep(0.1)
