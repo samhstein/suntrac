@@ -5,6 +5,7 @@ import base64, zlib
 import megaiosun
 
 SECONDS_TO_SAMPLE = 60
+SAMPLES_PER_PACKET = 25
 
 # get aws_iot
 aws_iot = aws_iot.aws_iot()
@@ -33,11 +34,7 @@ def send_to_cloud(proc_id, data_points):
 pub_sub.get_message()
 count = 0
 
-while True:
-    message = pub_sub.get_message()
-    if not message:
-        continue
-
+for message in pub_sub.listen():
     print('got message: ', len(data_points), count)
     # just keep one every minute
     if (count >= SECONDS_TO_SAMPLE):
@@ -45,7 +42,7 @@ while True:
         count = 0
 
     # send them up when its just under 1k
-    if len(data_points) >= SECONDS_TO_SAMPLE:
+    if len(data_points) >= SAMPLES_PER_PACKET:
         send_to_cloud(proc_id, data_points)
 
     count += 1
