@@ -37,11 +37,11 @@ while True:
     message = pub_sub.get_message()
     if not message:
         continue
-        
+
     print('got message: ', len(data_points), count)
     # just keep one every minute
     if (count == SECONDS_TO_SAMPLE):
-        data_points.append(json.loads(msg['data']))
+        data_points.append(json.loads(message['data']))
         count = 0
 
     # send them up when its just under 1k
