@@ -8,9 +8,12 @@ class sim868:
         print("in itis")
         try:
             self.ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
+            self.ser.close()
         except Exception as e:
             print("can't open serial device")
 
+    def open(self):
+            self.ser = serial.Serial('/dev/ttyS0', 115200, timeout=1)
 
     def send_command(self, command):
         with_return = str(command) + '\n'
@@ -18,6 +21,7 @@ class sim868:
 
     def get_status(self):
         print('in get_status')
+        self.ser.open()
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
 
@@ -56,5 +60,8 @@ class sim868:
 
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
+
+        self.ser.close()
+        print('end of get status')
 
         return({"ip": ip, "lat": lat, "lng": lng})
