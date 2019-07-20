@@ -4,7 +4,7 @@ import aws_iot
 import base64, zlib
 import megaiosun
 
-SECONDS_TO_SAMPLE = 2
+SECONDS_TO_SAMPLE = 1
 
 # get aws_iot
 aws_iot = aws_iot.aws_iot()
