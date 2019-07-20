@@ -5,7 +5,7 @@ class aws_iot:
 
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-east-1.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
-    CERT_ROOT = '/home/pi/suntrac/certs/RootCA.crt'
+    CERT_ROOT = '/home/pi/suntrac/certs/AmazonRootCA1.pem
     CERT_PRIVATE = '/home/pi/suntrac/certs/PrivateKey.crt'
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
@@ -19,13 +19,14 @@ class aws_iot:
         r = requests.get(end_point)
         print('request json: ', r.json())
         certs = r.json()
-        with open(self.CERT_DIR + 'RootCA.pem', 'w') as f:
-            f.write(certs.get('RootCA'))
+        # update to use the right one
+        #with open(CERT_ROOT, 'w') as f:
+        #    f.write(certs.get('AmazonRootCA1'))
 
-        with open(self.CERT_DIR + 'PrivateKey.key', 'w') as f:
+        with open(CERT_PRIVATE, 'w') as f:
             f.write(certs.get('keyPair').get('PrivateKey'))
 
-        with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
+        with open(CERT_CERT, 'w') as f:
             f.write(certs.get('certificatePem'))
 
         return ({ "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT })
@@ -42,12 +43,7 @@ class aws_iot:
     def sendData(self, proc_id, topic, data):
         myMQTTClient = AWSIoTMQTTClient(proc_id)
         myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
-        myMQTTClient.configureCredentials(
-            self.CERT_DIR + "AmazonRootCA1.pem",
-            self.CERT_DIR + "PrivateKey.key",
-            self.CERT_DIR + "certificatePem.crt"
-            )
-
+        myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
         # AWSIoTMQTTClient connection configuration
         myMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
         myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
