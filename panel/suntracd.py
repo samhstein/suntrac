@@ -75,7 +75,6 @@ volt_outlet = ohms_outlet = temp_outlet = 0
 volt_inlet = ohms_inlet = temp_inlet = 0
 light_east = light_west = 0
 light_error = False
-count = 0
 over_temp = False
 
 # lets get the sun
@@ -182,13 +181,11 @@ while run:
 
     # pub the string
     redis_pub.publish('suntrac-reading', json.dumps(reading))
-    count = 0
     if (date - last_moved).total_seconds() > THREE_HOURS:
         megaiosun.set_motor(RELAY_EAST, 1)
         time.sleep(30)
         megaiosun.set_motor(RELAY_EAST, 0)
 
-    count += 1
     time.sleep(POLL_TIME)
 
 # stop the motors if they are moving

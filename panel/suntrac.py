@@ -34,10 +34,16 @@ def send_to_cloud(proc_id, data_points):
 
 # eat the first message
 pub_sub.get_message()
+count = 0
 for msg in pub_sub.listen():
-    data_points.append(json.loads(msg['data']))
-    print('got message')
-    if len(data_points) >= 10:
+    print('got message: ', count)
+    # just keep one every minute
+    if (count == 60):
+        data_points.append(json.loads(msg['data']))
+        count = 0
+
+    # send them up when its just under 1k
+    if len(data_points) >= 30:
         send_to_cloud(proc_id, data_points)
 
     time.sleep(0.1)
