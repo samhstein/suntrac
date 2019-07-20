@@ -33,7 +33,11 @@ def send_to_cloud(proc_id, data_points):
 pub_sub.get_message()
 count = 0
 
-for msg in pub_sub.listen():
+while True:
+    message = pub_sub.get_message()
+    if not message:
+        continue
+        
     print('got message: ', len(data_points), count)
     # just keep one every minute
     if (count == SECONDS_TO_SAMPLE):
@@ -45,4 +49,4 @@ for msg in pub_sub.listen():
         send_to_cloud(proc_id, data_points)
 
     count += 1
-    time.sleep(0.1)
+    time.sleep(0.25)
