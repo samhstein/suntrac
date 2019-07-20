@@ -13,7 +13,7 @@ class aws_iot:
         private, cert, root = None
         # if we have one we have em all
         if os.path.exists(self.CERT_CERT):
-            return ({ "certs": { "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root:" self.CERT_ROOT }})
+            return ({ "certs": { "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT }})
 
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
         print('in get cert: ', end_point)
@@ -32,7 +32,7 @@ class aws_iot:
             f.write(certs.get('certificatePem'))
             cert = f.name
 
-        return ({ "certs": { "private": private, "cert": cert, "root:" root}})
+        return ({ "certs": { "private": private, "cert": cert, "root": root}})
 
     # Custom MQTT message callback
     def customCallback(self, client, userdata, message):
