@@ -6,7 +6,7 @@ class aws_iot:
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-east-1.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
     CERT_ROOT = '/home/pi/suntrac/certs/AmazonRootCA1.pem'
-    CERT_PRIVATE = '/home/pi/suntrac/certs/PrivateKey.crt'
+    CERT_PRIVATE = '/home/pi/suntrac/certs/PrivateKey.key'
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
     def get_certs(self, proc_id):
