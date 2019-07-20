@@ -68,6 +68,7 @@ with open('suntrac.config', 'r') as json_data_file:
 with open('suntrac.config', 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
+    config['certs'] = certs
     json.dump(config, json_data_file)
 
 while run:
