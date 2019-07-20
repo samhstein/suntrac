@@ -46,4 +46,3 @@ for message in pub_sub.listen():
         send_to_cloud(proc_id, data_points)
 
     count += 1
-    time.sleep(0.01)
