@@ -5,9 +5,16 @@ class aws_iot:
 
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-east-1.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
-    CERT_DIR = '/home/pi/suntrac/certs/'
+    CERT_ROOT + '/home/pi/suntrac/certs/RootCA.crt'
+    CERT_PRIVATE + '/home/pi/suntrac/certs/PrivateKey.crt'
+    CERT_CERT + '/home/pi/suntrac/certs/certificatePem.crt'
 
     def get_certs(self, proc_id):
+        private, cert, root = None
+        # if we have one we have em all
+        if os.path.exists(self.CERT_CERT):
+            return ({ "certs": { "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root:" self.CERT_ROOT }})
+
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
         print('in get cert: ', end_point)
         r = requests.get(end_point)
@@ -15,12 +22,17 @@ class aws_iot:
         certs = r.json()
         with open(self.CERT_DIR + 'RootCA.pem', 'w') as f:
             f.write(certs.get('RootCA'))
+            root = f.name
 
         with open(self.CERT_DIR + 'PrivateKey.key', 'w') as f:
             f.write(certs.get('keyPair').get('PrivateKey'))
+            private = f.name
 
         with open(self.CERT_DIR + 'certificatePem.crt', 'w') as f:
             f.write(certs.get('certificatePem'))
+            cert = f.name
+
+        return ({ "certs": { "private": private, "cert": cert, "root:" root}})
 
     # Custom MQTT message callback
     def customCallback(self, client, userdata, message):

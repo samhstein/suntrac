@@ -60,6 +60,7 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
+certs = aws_iot.get_certs(proc_id)
 # write out config file
 with open('suntrac.config', 'r') as json_data_file:
     config = json.load(json_data_file)
@@ -68,9 +69,6 @@ with open('suntrac.config', 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
     json.dump(config, json_data_file)
-
-# check to see if we have a cert, if not and we have comms
-aws_iot.get_certs(proc_id)
 
 while run:
     time.sleep(10)
