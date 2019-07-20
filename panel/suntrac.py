@@ -38,7 +38,7 @@ for msg in pub_sub.listen():
     print(msg['data'])
     data_points.append(msg['data'].decode())
     print('got message')
-    if len(data_points) >= 10:
+    if len(data_points) >= 30:
         send_to_cloud(proc_id, data_points)
 
     time.sleep(0.1)
