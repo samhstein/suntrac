@@ -24,11 +24,13 @@ def send_to_cloud(proc_id, data_points):
     }
     data_points.clear()
 
+    j_data = json.dumps(j_zipped)
     aws_iot.sendData(
         proc_id,
         'suntrac/data',
-        json.dumps(j_zipped)
+        j_data
     )
+    print('sending: ', len(j_data), ' bytes to aws')
 
 # eat the first message
 pub_sub.get_message()
