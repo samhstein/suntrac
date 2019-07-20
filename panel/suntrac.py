@@ -17,7 +17,7 @@ def send_to_cloud(proc_id, data_points):
     j_zipped = {
         "j_zipped": base64.b64encode(
             zlib.compress(
-                json.dumps(data_points).encode('utf-8')
+                json.dumps({ "prod_id": proc_id, "data_points": data_points }).encode('utf-8')
             )
         ).decode('ascii')
     }
@@ -26,7 +26,7 @@ def send_to_cloud(proc_id, data_points):
     aws_iot.sendData(
         proc_id,
         'suntrac/data',
-        json.dumps({ "proc_id": proc_id, "j_zipped": j_zipped })
+        j_zipped
     )
 
 # eat the first message
