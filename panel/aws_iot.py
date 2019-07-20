@@ -10,7 +10,6 @@ class aws_iot:
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
     def get_certs(self, proc_id):
-        private, cert, root = None
         # if we have one we have em all
         if os.path.exists(self.CERT_CERT):
             return ({ "certs": { "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT }})
