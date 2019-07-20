@@ -4,6 +4,8 @@ import aws_iot
 import base64, zlib
 import megaiosun
 
+SECONDS_TO_SAMPLE = 2
+
 # get aws_iot
 aws_iot = aws_iot.aws_iot()
 # get connection to redis
@@ -38,7 +40,7 @@ count = 0
 for msg in pub_sub.listen():
     print('got message: ', count)
     # just keep one every minute
-    if (count == 60):
+    if (count == SECONDS_TO_SAMPLE):
         data_points.append(json.loads(msg['data']))
         count = 0
 
