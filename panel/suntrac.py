@@ -18,7 +18,7 @@ def send_to_cloud(proc_id, data_points):
         "proc_id": proc_id,
         "j_zipped": base64.b64encode(
             zlib.compress(
-                json.dumps(data_points).encode('utf-8')
+                data_points.encode('utf-8')
             )
         ).decode('ascii')
     }
@@ -36,7 +36,7 @@ def send_to_cloud(proc_id, data_points):
 pub_sub.get_message()
 for msg in pub_sub.listen():
     print(msg['data'])
-    data_points.append(json.loads(msg['data']))
+    data_points.append(msg['data'].decode())
     print('got message')
     if len(data_points) >= 10:
         send_to_cloud(proc_id, data_points)
