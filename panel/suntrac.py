@@ -45,7 +45,7 @@ while True:
         count = 0
 
     # send them up when its just under 1k
-    if len(data_points) >= 30:
+    if len(data_points) >= SECONDS_TO_SAMPLE:
         send_to_cloud(proc_id, data_points)
 
     count += 1
