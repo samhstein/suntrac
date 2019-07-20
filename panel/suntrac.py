@@ -40,7 +40,7 @@ while True:
 
     print('got message: ', len(data_points), count)
     # just keep one every minute
-    if (count == SECONDS_TO_SAMPLE):
+    if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
         count = 0
 
