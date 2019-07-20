@@ -27,16 +27,12 @@ def send_to_cloud(proc_id, data_points):
     data_points.clear()
 
     j_data = json.dumps(j_zipped)
-    aws_iot.sendData(
-        proc_id,
-        'suntrac/data',
-        j_data
-    )
-    print('sending: ', len(j_data), ' bytes to aws')
+    aws_iot.sendData(proc_id, 'suntrac/data', j_data)
 
 # eat the first message
 pub_sub.get_message()
 count = 0
+
 for msg in pub_sub.listen():
     print('got message: ', len(data_points), count)
     # just keep one every minute

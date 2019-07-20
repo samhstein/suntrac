@@ -70,7 +70,7 @@ with open('suntrac.config', 'w') as json_data_file:
     json.dump(config, json_data_file)
 
 # check to see if we have a cert, if not and we have comms
-aws_iot.get_cert(proc_id)
+aws_iot.get_certs(proc_id)
 
 while run:
     time.sleep(10)
