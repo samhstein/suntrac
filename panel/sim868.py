@@ -25,9 +25,9 @@ class sim868:
         self.send_command('ATZ')
         s = self.ser.read(size=1024)
 
-        self.send_command('AT+GSN')
+        self.send_command('AT+CCID')
         s = self.ser.read(size=1024)
-        imei = s.decode().split('\r\n')[1]
+        iccid = s.decode().split('\r\n')[1]
 
         self.send_command('AT+CGATT=1')
         s = self.ser.read(size=1024)
@@ -68,4 +68,4 @@ class sim868:
         self.ser.close()
         print('end of get status')
 
-        return({"imei": imei, "ip": ip, "lat": lat, "lng": lng})
+        return({"iccid": iccid, "ip": ip, "lat": lat, "lng": lng})
