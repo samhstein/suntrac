@@ -67,7 +67,6 @@ pitch = acc_mag.getPitch()
 roll = acc_mag.getRoll()
 
 # read the config file
-config = None
 with open('suntrac.config', 'r') as json_data_file:
     config = json.load(json_data_file)
 
