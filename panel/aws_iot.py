@@ -41,6 +41,16 @@ class aws_iot:
 
 
     def sendData(self, proc_id, topic, data):
+        # zip it up
+        j_zipped = {
+            "proc_id": proc_id,
+            "j_zipped": base64.b64encode(
+                zlib.compress(
+                    json.dumps(data).encode('utf-8')
+                )
+            ).decode('ascii')
+        }
+
         myMQTTClient = AWSIoTMQTTClient(proc_id)
         myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
         myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
@@ -52,8 +62,7 @@ class aws_iot:
         myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
 
         myMQTTClient.connect()
-        print('sendData: ', topic, data, len(data))
-        myMQTTClient.publish(topic, data, 1)
+        myMQTTClient.publish(topic, json.dumps(j_zipped), 1)
         myMQTTClient.subscribe(topic, 1, self.customCallback)
         myMQTTClient.unsubscribe(topic)
         myMQTTClient.disconnect()

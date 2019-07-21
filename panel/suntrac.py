@@ -16,20 +16,6 @@ pub_sub.subscribe('suntrac-reading')
 data_points = []
 proc_id = megaiosun.get_proc_id()
 
-def send_to_cloud(proc_id, data_points):
-    j_zipped = {
-        "proc_id": proc_id,
-        "j_zipped": base64.b64encode(
-            zlib.compress(
-                json.dumps(data_points).encode('utf-8')
-            )
-        ).decode('ascii')
-    }
-    data_points.clear()
-
-    j_data = json.dumps(j_zipped)
-    aws_iot.sendData(proc_id, 'suntrac/data', j_data)
-
 # eat the first message
 pub_sub.get_message()
 count = 0
@@ -43,6 +29,7 @@ for message in pub_sub.listen():
 
     # send them up when its just under 1k
     if len(data_points) >= SAMPLES_PER_PACKET:
-        send_to_cloud(proc_id, data_points)
+        aws_iot.sendData(proc_id, 'suntrac/data', data_points)
+        data_points.clear()
 
     count += 1

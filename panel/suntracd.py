@@ -94,7 +94,6 @@ leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
 # get the accel
 acc_mag = lsm303ctr.lsm303ctr()
-initial_pitch = acc_mag.getPitch()
 initial_roll = acc_mag.getRoll()
 mag_ready = acc_mag.isMagReady()
 initial_heading = acc_mag.getHeading()
@@ -160,12 +159,6 @@ while run:
         megaiosun.set_motor(relay, 0)
         last_moved = datetime.datetime.now(pytz.timezone(time_zone))
         time.sleep(.1)
-
-    # print the accel
-    #print('pitch: ', -acc_mag.getPitch())
-    #print('roll: ', acc_mag.getRoll())
-    #print('heading: ', acc_mag.getHeading())
-    #print('tilt heading: ', acc_mag.getTiltHeading())
 
     # pub every sample
     date = datetime.datetime.now(pytz.timezone(time_zone))
