@@ -1,5 +1,6 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import requests, json, os, base64
+import requests, json, os,
+import base64, zlib
 
 class aws_iot:
 
