@@ -76,7 +76,7 @@ with open('suntrac.config', 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
     config['certs'] = certs
-    config['pitch'] = pitch
+    config['pitch'] = round(pitch, 1)
     json.dump(config, json_data_file)
 
 # send it to the cloud
