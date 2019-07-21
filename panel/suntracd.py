@@ -172,7 +172,6 @@ while run:
     sun_altitude = get_altitude(latitude, longitude, date)
     sun_azimuth = get_azimuth(latitude, longitude, date)
     reading = { 't_o': round(temp_outlet, 1), 't_i': round(temp_inlet, 1),
-        'v_o': volt_outlet, 'v_i': volt_inlet,
         'l_e': light_east, 'l_w': light_west, 'pd': round(photo_diff, 4),
         's_alt': round(sun_altitude,1),'s_az': round(sun_azimuth, 1),
         'ts': round(time.time(), 1),
