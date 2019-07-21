@@ -26,9 +26,9 @@ class sim868:
         s = self.ser.read(size=1024)
 
 
-        self.send_command('AT+GSN )
+        self.send_command('AT+GSN')
         s = self.ser.read(size=1024)
-        print('imei', s)        
+        print('imei', s)
 
         self.send_command('AT+CGATT=1')
         s = self.ser.read(size=1024)
