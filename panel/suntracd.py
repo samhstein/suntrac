@@ -66,6 +66,7 @@ with open('suntrac.config') as json_data_file:
 
 latitude = float(config.get('comms').get('lat'))
 longitude = float(config.get('comms').get('lng'))
+print(latitude, longitude)
 max_temp = config.get('max_temp')
 
 tf = TimezoneFinder()
