@@ -64,13 +64,14 @@ def handle_over_temp(temp_inlet, temp_outlet, max_temp, leds):
 with open('suntrac.config') as json_data_file:
     config = json.load(json_data_file)
 
-latitude = float(config.get('comms').get('lat'))
-longitude = float(config.get('comms').get('lng'))
-print(latitude, longitude)
+latitude = config.get('comms').get('lat')
+longitude = config.get('comms').get('lng')
 max_temp = config.get('max_temp')
 
+print(latitude, longitude)
+
 tf = TimezoneFinder()
-time_zone = tf.timezone_at(lng=longitude, lat=latitude)
+time_zone = tf.timezone_at(lng=float(longitude), lat=float(latitude))
 
 volt_outlet = ohms_outlet = temp_outlet = 0
 volt_inlet = ohms_inlet = temp_inlet = 0
