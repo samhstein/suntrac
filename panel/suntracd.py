@@ -68,7 +68,7 @@ latitude = config.get('comms').get('lat')
 longitude = config.get('comms').get('lng')
 max_temp = config.get('max_temp')
 
-print('lat: ', latitude, 'lng: ' longitude)
+print('lat: ', latitude, 'lng: ', longitude)
 
 tf = TimezoneFinder()
 time_zone = tf.timezone_at(lng=float(longitude), lat=float(latitude))
