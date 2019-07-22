@@ -21,8 +21,7 @@ pub_sub.get_message()
 count = 0
 
 for message in pub_sub.listen():
-    print('got message: ', len(data_points), count)
-    # just keep one every minute
+    # just keep one every ???
     if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
         count = 0

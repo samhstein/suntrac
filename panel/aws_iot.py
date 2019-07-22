@@ -1,5 +1,5 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
-import requests, json, os
+import requests, json, os, datetime
 import base64, zlib
 
 class aws_iot:
@@ -67,3 +67,4 @@ class aws_iot:
         myMQTTClient.subscribe(topic, 1, self.customCallback)
         myMQTTClient.unsubscribe(topic)
         myMQTTClient.disconnect()
+        print('sendData: ', datetime.datetime.now(), topic, proc_id, len(json.dumps(j_zipped)))
