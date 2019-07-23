@@ -181,8 +181,8 @@ class SuntracPanel:
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
 
-    tl._add_job(interval=timedelta(seconds=10), execute=publish_panel_data)
-    tl._add_job(interval=timedelta(seconds=1), execute=get_panel_data)    
+    tl._add_job(publish_panel_data, interval=timedelta(seconds=10))
+    tl._add_job(get_panel_data, interval=timedelta(seconds=1))
 
 if __name__ == "__main__":
     sp = SuntracPanel()
