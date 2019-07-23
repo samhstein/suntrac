@@ -80,7 +80,7 @@ class SuntracPanel:
         return steinhart
 
     def handle_over_temp(self):
-        if temp_inlet < max_temp and temp_outlet < max_temp:
+        if self.temp_inlet < self.max_temp and self.temp_outlet < self.max_temp:
             return
 
         if self.temp_inlet > self.max_temp:
@@ -91,13 +91,13 @@ class SuntracPanel:
         megaiosun.set_motor(self.RELAY_EAST, 1)
         time.sleep(20)
         megaiosun.set_motor(self.RELAY_EAST, 0)
-        _temp_inlet = temp_inlet
-        _temp_outlet = temp_outlet
-        while _temp_inlet > max_temp or _temp_outlet > max_temp:
-            volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
-            _temp_inlet = get_temp_c(volt_inlet)
-            volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
-            _temp_outlet = get_temp_c(volt_outlet)
+        _temp_inlet = self.acc_magtemp_inlet
+        _temp_outlet = self.temp_outlet
+        while _temp_inlet > self.max_temp or _temp_outlet > self.max_temp:
+            self.volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
+            _temp_inlet = self.get_temp_c(self.volt_inlet)
+            self.volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
+            _temp_outlet = self.get_temp_c(self.volt_outlet)
             time.sleep(10)
 
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
@@ -175,7 +175,7 @@ class SuntracPanel:
             time.sleep(.1)
 
         # turn it east if its dark
-        if (date - last_moved).total_seconds() > self.THREE_HOURS:
+        if (date - self.last_moved).total_seconds() > self.THREE_HOURS:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
