@@ -25,6 +25,8 @@ class SuntracPanel:
     POLL_TIME = 1.0
     MOVE_TIME = 0.0005
     THREE_HOURS = 3 * 60 * 60
+    leds = leds.leds()
+    acc_mag = lsm303ctr.lsm303ctr()
 
     def __init__(self,):
         with open('suntrac.config') as json_data_file:
@@ -54,16 +56,14 @@ class SuntracPanel:
         megaiosun.set_motors(0)
 
         # get the lights
-        leds = leds.leds()
-        leds.test()
-        leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+        self.leds.test()
+        self.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
         # get the accel
-        acc_mag = lsm303ctr.lsm303ctr()
-        initial_roll = acc_mag.getRoll()
-        mag_ready = acc_mag.isMagReady()
-        initial_heading = acc_mag.getHeading()
-        initial_tilt_heading = acc_mag.getTiltHeading()
+        self.initial_roll = acc_mag.getRoll()
+        self.mag_ready = acc_mag.isMagReady()
+        self.initial_heading = acc_mag.getHeading()
+        self.initial_tilt_heading = acc_mag.getTiltHeading()
 
         # get connection to redis
         redis_pub = redis.Redis(host='localhost', port=6379, db=0)
