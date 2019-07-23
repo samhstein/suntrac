@@ -120,14 +120,14 @@ class SuntracPanel:
 
         try:
             self.volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
-            self.temp_outlet = get_temp_c(volt_outlet)
+            self.temp_outlet = self.get_temp_c(volt_outlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_GREEN)
             print('v1 error: ', e)
 
         try:
             self.volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
-            self.temp_inlet = get_temp_c(volt_inlet)
+            self.temp_inlet = self.get_temp_c(volt_inlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_RED)
             print('v2 error: ', e)
