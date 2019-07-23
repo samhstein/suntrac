@@ -57,7 +57,7 @@ class SuntracPanel:
 
         # get the lights
         self.leds.test()
-        self.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
+        self.leds.lights_on(leds.LED_GREEN_OFF, leds.LED_MASK)
 
         # get the accel
         self.initial_roll = acc_mag.getRoll()
