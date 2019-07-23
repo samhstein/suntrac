@@ -21,7 +21,9 @@ tl = Timeloop()
 
 # time loop for job handler
 @tl.job(interval=timedelta(seconds=3600))
-aws_job.check_for_jobs()
+def check_every_hour():
+    print "current time : {}".format(time.ctime())
+    aws_job.check_for_jobs()
 
 def handler_stop_signals(signum, frame):
     global run
