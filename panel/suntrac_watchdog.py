@@ -21,7 +21,7 @@ tl = Timeloop()
 
 
 # time loop for job handler
-@tl.job(interval=timedelta(seconds=3600))
+@tl.job(interval=timedelta(seconds=60))
 def check_every_hour():
     print ("current time : ", time.ctime())
     aws_job.check_for_jobs()
