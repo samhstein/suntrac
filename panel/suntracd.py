@@ -42,7 +42,7 @@ class SuntracPanel:
         self.max_temp = config.get('max_temp')
 
         tf = TimezoneFinder()
-        self.time_zone = tf.timezone_at(lng=longitude, lat=latitude)
+        self.time_zone = tf.timezone_at(lng=self.longitude, lat=self.latitude)
 
         self.volt_outlet = self.ohms_outlet = self.temp_outlet = 0
         self.volt_inlet = self.ohms_inlet = self.temp_inlet = 0
@@ -104,9 +104,9 @@ class SuntracPanel:
 
     # pub the string
     def publish_panel_data(self):
-        date = datetime.datetime.now(pytz.timezone(time_zone))
-        sun_altitude = get_altitude(latitude, longitude, date)
-        sun_azimuth = get_azimuth(latitude, longitude, date)
+        date = datetime.datetime.now(pytz.timezone(self.time_zone))
+        sun_altitude = get_altitude(self.latitude, self.longitude, date)
+        sun_azimuth = get_azimuth(self.latitude, self.longitude, date)
         reading = { 't_o': round(self.temp_outlet, 1), 't_i': round(self.temp_inlet, 1),
             'l_e': self.light_east, 'l_w': self.light_west, 'pd': round(self.photo_diff, 4),
             's_alt': round(self.sun_altitude,1),'s_az': round(self.sun_azimuth, 1),
