@@ -71,11 +71,11 @@ pitch = acc_mag.getPitch()
 roll = acc_mag.getRoll()
 
 # read the config file
-with open('suntrac.config', 'r') as json_data_file:
+with open('suntrac.config.json', 'r') as json_data_file:
     config = json.load(json_data_file)
 
 # update and write the config file
-with open('suntrac.config', 'w') as json_data_file:
+with open('suntrac.config.json', 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
     config['certs'] = certs
