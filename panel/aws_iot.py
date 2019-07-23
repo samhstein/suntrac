@@ -10,6 +10,20 @@ class aws_iot:
     CERT_PRIVATE = '/home/pi/suntrac/certs/PrivateKey.key'
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
+    def __init__(self, proc_id):
+        self.myMQTTClient = AWSIoTMQTTClient(proc_id)
+        self.myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
+        self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
+        # AWSIoTMQTTClient connection configuration
+        self.myMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
+        self.myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
+        self.myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
+        self.myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
+        self.myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
+
+    def get_mqqt_client(self):
+        return self.myMQTTClient
+
     def get_certs(self, proc_id):
         # if we have one we have em all
         if os.path.exists(self.CERT_CERT):
@@ -41,30 +55,19 @@ class aws_iot:
         print("--------------\n\n")
 
 
-    def sendData(self, proc_id, topic, data):
+    def sendData(self, topic, data):
         # zip it up
         j_zipped = {
-            "proc_id": proc_id,
+            "proc_id": self.proc_id,
             "j_zipped": base64.b64encode(
                 zlib.compress(
                     json.dumps(data).encode('utf-8')
                 )
             ).decode('ascii')
         }
-
-        myMQTTClient = AWSIoTMQTTClient(proc_id)
-        myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
-        myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
-        # AWSIoTMQTTClient connection configuration
-        myMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
-        myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
-        myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
-        myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
-        myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
-
-        myMQTTClient.connect()
-        myMQTTClient.publish(topic, json.dumps(j_zipped), 1)
-        myMQTTClient.subscribe(topic, 1, self.customCallback)
-        myMQTTClient.unsubscribe(topic)
-        myMQTTClient.disconnect()
-        print('sendData: ', datetime.datetime.now(), topic, proc_id, len(json.dumps(j_zipped)))
+        self.myMQTTClient.connect()
+        self.myMQTTClient.publish(topic, json.dumps(j_zipped), 1)
+        self.myMQTTClient.subscribe(topic, 1, self.customCallback)
+        self.myMQTTClient.unsubscribe(topic)
+        self.myMQTTClient.disconnect()
+        print('sendData: ', datetime.datetime.now(), topic, self.proc_id, len(json.dumps(j_zipped)))

@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time, leds, os, sim868, lsm303ctr
-import signal, json, aws_iot
+import signal, json, aws_iot, aws_job
 import megaiosun
 
 run = True
@@ -10,9 +10,14 @@ push_count = 0
 # get the lights, gprs, and acc
 leds = leds.leds()
 sim868 = sim868.sim868()
-aws_iot = aws_iot.aws_iot()
+proc_id = megaiosun.get_proc_id()
+aws_iot = aws_iot.aws_iot(proc_id)
+aws_job = aws_job.aws_job(aws_iot.get_mqqt_client())
 acc_mag = lsm303ctr.lsm303ctr()
 
+# time loop for job handler
+aws_job.check_for_jobs()
+return
 
 def handler_stop_signals(signum, frame):
     global run
@@ -79,7 +84,7 @@ with open('suntrac.config', 'w') as json_data_file:
     json.dump(config, json_data_file)
 
 # send it to the cloud
-aws_iot.sendData(proc_id, 'suntrac/config', config)
+aws_iot.sendData('suntrac/config', config)
 
 while run:
     time.sleep(10)
