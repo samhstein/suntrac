@@ -120,14 +120,14 @@ class SuntracPanel:
 
         try:
             self.volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
-            self.temp_outlet = self.get_temp_c(volt_outlet)
+            self.temp_outlet = self.get_temp_c(self.volt_outlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_GREEN)
             print('v1 error: ', e)
 
         try:
             self.volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
-            self.temp_inlet = self.get_temp_c(volt_inlet)
+            self.temp_inlet = self.get_temp_c(self.volt_inlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_RED)
             print('v2 error: ', e)
@@ -175,6 +175,7 @@ class SuntracPanel:
             time.sleep(.1)
 
         # turn it east if its dark
+        date = datetime.datetime.now(pytz.timezone(self.time_zone))
         if (date - self.last_moved).total_seconds() > self.THREE_HOURS:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
