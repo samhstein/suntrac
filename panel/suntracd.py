@@ -101,11 +101,11 @@ class SuntracPanel:
 
     # pub the string
     @tl.job(interval=timedelta(seconds=5))
-    def publish_panel_data():
+    def publish_panel_data(self):
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
     @tl.job(interval=timedelta(seconds=5))
-    def get_panel_data():
+    def get_panel_data(self):
         print("get_panel_data: ", time.ctime())
 
         try:
