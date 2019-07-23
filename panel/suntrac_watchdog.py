@@ -2,7 +2,8 @@ import RPi.GPIO as GPIO
 import time, leds, os, sim868, lsm303ctr
 import signal, json, aws_iot, aws_job
 import megaiosun
-import timeloop
+from timeloop import Timeloop
+from datetime import timedelta
 
 run = True
 pushed = False
