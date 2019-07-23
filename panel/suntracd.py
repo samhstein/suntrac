@@ -114,10 +114,9 @@ class SuntracPanel:
             'lm': round((date - self.last_moved).total_seconds(), 1),
             'roll': round(self.acc_mag.getRoll(), 1) }
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
+        print(reading)
 
     def get_panel_data(self):
-        print("get_panel_data: ", time.ctime())
-
         try:
             self.volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
             self.temp_outlet = self.get_temp_c(self.volt_outlet)
