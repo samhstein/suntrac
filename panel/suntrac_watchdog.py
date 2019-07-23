@@ -17,7 +17,6 @@ acc_mag = lsm303ctr.lsm303ctr()
 
 # time loop for job handler
 aws_job.check_for_jobs()
-return
 
 def handler_stop_signals(signum, frame):
     global run
