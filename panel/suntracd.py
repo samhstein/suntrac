@@ -101,6 +101,7 @@ redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 @tl.job(interval=timedelta(seconds=1))
 def get_panel_data():
     print("get_panel_data: ", time.ctime())
+    global last_moved
 
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
