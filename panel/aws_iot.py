@@ -30,7 +30,7 @@ class aws_iot:
         if os.path.exists(self.CERT_CERT):
             return ({ "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT })
 
-        end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[-4:])
+        end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[:6])
         print('in get cert: ', end_point)
         r = requests.get(end_point)
         print('request json: ', r.json())
