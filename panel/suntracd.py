@@ -104,21 +104,30 @@ class SuntracPanel:
 
     # pub the string
     def publish_panel_data(self):
-        self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
+        date = datetime.datetime.now(pytz.timezone(time_zone))
+        sun_altitude = get_altitude(latitude, longitude, date)
+        sun_azimuth = get_azimuth(latitude, longitude, date)
+        reading = { 't_o': round(self.temp_outlet, 1), 't_i': round(self.temp_inlet, 1),
+            'l_e': self.light_east, 'l_w': self.light_west, 'pd': round(self.photo_diff, 4),
+            's_alt': round(self.sun_altitude,1),'s_az': round(self.sun_azimuth, 1),
+            'ts': round(time.time(), 1),
+            'lm': round((date - self.last_moved).total_seconds(), 1),
+            'roll': round(self.acc_mag.getRoll(), 1) }
+        self.redis_pub.publish('suntrac-reading', json.dumps(reading))
 
     def get_panel_data(self):
         print("get_panel_data: ", time.ctime())
 
         try:
-            volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
-            temp_outlet = get_temp_c(volt_outlet)
+            self.volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
+            self.temp_outlet = get_temp_c(volt_outlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_GREEN)
             print('v1 error: ', e)
 
         try:
-            volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
-            temp_inlet = get_temp_c(volt_inlet)
+            self.volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
+            self.temp_inlet = get_temp_c(volt_inlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_RED)
             print('v2 error: ', e)
@@ -126,32 +135,32 @@ class SuntracPanel:
         self.handle_over_temp(temp_inlet, temp_outlet, max_temp)
 
         try:
-            light_east = megaiosun.get_adc_volt(LIGHT_EAST)
+            self.light_east = megaiosun.get_adc_volt(LIGHT_EAST)
         except Exception as e:
-            light_error = True
+            self.light_error = True
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_RED_OFF)
             print('v3 error: ', e)
 
         try:
-            light_west = megaiosun.get_adc_volt(LIGHT_WEST)
+            self.light_west = megaiosun.get_adc_volt(LIGHT_WEST)
         except Exception as e:
-            light_error = True
+            self.light_error = True
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_OFF_GREEN)
             print('v4 error: ', e)
 
-        photo_diff = light_east - light_west
+        self.photo_diff = self.light_east - self.light_west
 
         # if the diff is too big lets move it
         # lets keep it tight
-        if abs(photo_diff) > self.DIFF_VOLTS and light_error != True:
-            if photo_diff < 0:
+        if abs(self.photo_diff) > self.DIFF_VOLTS and self.light_error != True:
+            if self.photo_diff < 0:
                 relay = self.RELAY_WEST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_GREEN)
             else:
                 relay =  self.RELAY_EAST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_RED)
 
-            moving_diff = photo_diff
+            moving_diff = self.photo_diff
             megaiosun.set_motor(relay, 1)
             print('start moving... ', relay)
             while abs(moving_diff) > .05:
@@ -165,17 +174,7 @@ class SuntracPanel:
             self.last_moved = datetime.datetime.now(pytz.timezone(time_zone))
             time.sleep(.1)
 
-        # pub every sample
-        date = datetime.datetime.now(pytz.timezone(time_zone))
-        sun_altitude = get_altitude(latitude, longitude, date)
-        sun_azimuth = get_azimuth(latitude, longitude, date)
-        self.reading = { 't_o': round(temp_outlet, 1), 't_i': round(temp_inlet, 1),
-            'l_e': light_east, 'l_w': light_west, 'pd': round(photo_diff, 4),
-            's_alt': round(sun_altitude,1),'s_az': round(sun_azimuth, 1),
-            'ts': round(time.time(), 1),
-            'lm': round((date - last_moved).total_seconds(), 1),
-            'roll': round(self.acc_mag.getRoll(), 1) }
-
+        # turn it east if its dark
         if (date - last_moved).total_seconds() > self.THREE_HOURS:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
