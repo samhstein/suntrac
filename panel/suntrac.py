@@ -36,4 +36,4 @@ while True:
         data_points.clear()
 
     count += 1
-    time.sleep(.001)
+    time.sleep(.01)
