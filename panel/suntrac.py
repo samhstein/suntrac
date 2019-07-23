@@ -24,6 +24,7 @@ while True:
     message = pub_sub.get_message()
     if not message:
         continue
+    print('m: ', count, message, len(data_points))
     # just keep one every ???
     if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
