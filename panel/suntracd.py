@@ -30,8 +30,8 @@ class SuntracPanel:
     redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 
     tl = Timeloop()
-    tl._add_job(self.publish_panel_data, 10)
-    tl._add_job(self.get_panel_data, 1)
+    tl._add_job(publish_panel_data, 10)
+    tl._add_job(get_panel_data, 1)
 
 
     def __init__(self,):
