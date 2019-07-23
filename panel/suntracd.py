@@ -10,20 +10,6 @@ from datetime import timedelta
 
 tl = Timeloop()
 
-@tl.job(interval=timedelta(seconds=2))
-def sample_job_every_2s():
-    print "2s job current time : {}".format(time.ctime())
-
-
-run = True
-
-def handler_stop_signals(signum, frame):
-    global run
-    run = False
-
-signal.signal(signal.SIGINT, handler_stop_signals)
-signal.signal(signal.SIGTERM, handler_stop_signals)
-
 THERMISTOR_TO = 25
 THERMISTOR_RO = 86000
 THERMISTOR_BALANCE = 100000
