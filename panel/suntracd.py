@@ -60,10 +60,10 @@ class SuntracPanel:
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
 
         # get the accel
-        self.initial_roll = acc_mag.getRoll()
-        self.mag_ready = acc_mag.isMagReady()
-        self.initial_heading = acc_mag.getHeading()
-        self.initial_tilt_heading = acc_mag.getTiltHeading()
+        self.initial_roll = self.acc_mag.getRoll()
+        self.mag_ready = self.acc_mag.isMagReady()
+        self.initial_heading = self.acc_mag.getHeading()
+        self.initial_tilt_heading = self.acc_mag.getTiltHeading()
 
         # get connection to redis
         redis_pub = redis.Redis(host='localhost', port=6379, db=0)
@@ -174,7 +174,7 @@ class SuntracPanel:
             's_alt': round(sun_altitude,1),'s_az': round(sun_azimuth, 1),
             'ts': round(time.time(), 1),
             'lm': round((date - last_moved).total_seconds(), 1),
-            'roll': round(acc_mag.getRoll(), 1) }
+            'roll': round(self.acc_mag.getRoll(), 1) }
 
         if (date - last_moved).total_seconds() > self.THREE_HOURS:
             megaiosun.set_motor(self.RELAY_EAST, 1)
