@@ -27,6 +27,7 @@ import time
 import datetime
 import argparse
 import json
+import os
 
 class aws_job:
     def __init__(self, client_id, proc_id, aws_iot_client):
@@ -62,8 +63,22 @@ class aws_job:
             self.done = True
 
     def executeJob(self, execution):
+        job = execution['jobDocument']
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
-        print('With jobDocument: ' + json.dumps(execution['jobDocument']))
+        print('With jobDocument: ' + json.dumps(job)
+        # lets support refesh, reboot, git update
+        if job.get('operation') == 'reboot':
+            os.system('sync')
+            os.system('halt')
+            os.system('sudo reboot')
+        elif job.get('operation') == 'refresh':
+            os.system('sudo systemctl stop suntracd.service')
+            time.sleep(5)
+            os.system('sudo systemctl start suntracd.service')
+        elif job.get('operation') == 'git-update':
+            os.system('sudo systemctl stop suntracd.service')
+            os.system('cd /home/pi/suntrac/panel; git pull')
+            os.system('sudo systemctl start suntracd.service')
 
     def newJobReceived(self, client, userdata, message):
         payload = json.loads(message.payload.decode('utf-8'))
