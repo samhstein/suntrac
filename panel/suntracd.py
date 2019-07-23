@@ -103,7 +103,7 @@ class suntracPanel:
 
 
     # pub the string
-    @tl.job(interval=timedelta(seconds=10))
+    @self.tl.job(interval=timedelta(seconds=10))
     def publish_panel_data():
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
