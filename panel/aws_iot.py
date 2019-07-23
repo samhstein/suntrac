@@ -13,7 +13,8 @@ class aws_iot:
     def __init__(self, proc_id):
         self.myMQTTClient = AWSIoTMQTTClient(proc_id)
         self.myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
-        # self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
+        if os.path.exists(self.CERT_CERT):
+            self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
         # AWSIoTMQTTClient connection configuration
         self.myMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
         self.myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
