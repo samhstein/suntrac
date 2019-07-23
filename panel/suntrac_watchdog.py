@@ -92,7 +92,7 @@ with open('suntrac_config.json', 'w') as json_data_file:
 
 # send it to the cloud
 aws_iot.sendData('suntrac/config', config)
-time.sleep(10)
+tl.start()
 
 while run:
-    tl.start()
+    time.sleep(1)
