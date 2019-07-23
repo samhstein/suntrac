@@ -67,7 +67,7 @@ class aws_job:
         operation = job.get('operation')
         print(operation)
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
-        print('With jobDocument: ' + json.dumps(job)
+        print('With jobDocument: ' + json.dumps(job))
         # lets support refesh, reboot, git update
         if operation == 'git-update':
             os.system('sudo systemctl stop suntracd.service')
