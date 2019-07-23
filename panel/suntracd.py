@@ -104,7 +104,7 @@ class SuntracPanel:
 
     # pub the string
     def publish_panel_data(self):
-        print('pub: ', reading)
+        print('pub top...')
         date = datetime.datetime.now(pytz.timezone(self.time_zone))
         sun_altitude = get_altitude(self.latitude, self.longitude, date)
         sun_azimuth = get_azimuth(self.latitude, self.longitude, date)
@@ -114,6 +114,7 @@ class SuntracPanel:
             'ts': round(time.time(), 1),
             'lm': round((date - self.last_moved).total_seconds(), 1),
             'roll': round(self.acc_mag.getRoll(), 1) }
+        print(reading)
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
         print('pub end')
 
