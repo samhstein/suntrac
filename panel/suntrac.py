@@ -4,8 +4,8 @@ import aws_iot
 import base64, zlib
 import megaiosun
 
-SECONDS_TO_SAMPLE = 10
-SAMPLES_PER_PACKET = 2
+SECONDS_TO_SAMPLE = 2
+SAMPLES_PER_PACKET = 20
 
 # get aws_iot
 aws_iot = aws_iot.aws_iot()
@@ -20,11 +20,7 @@ proc_id = megaiosun.get_proc_id()
 pub_sub.get_message()
 count = 0
 
-while True:
-    message = pub_sub.get_message()
-    if not message:
-        continue
-    print('m: ', count, len(data_points))
+for message in pub_sub.listen():
     # just keep one every ???
     if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
@@ -36,4 +32,3 @@ while True:
         data_points.clear()
 
     count += 1
-    time.sleep(.01)

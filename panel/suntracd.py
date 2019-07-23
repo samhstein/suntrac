@@ -5,6 +5,15 @@ from pysolar.solar import *
 from timezonefinder import TimezoneFinder
 import math, signal
 import leds, lsm303ctr
+from timeloop import Timeloop
+from datetime import timedelta
+
+tl = Timeloop()
+
+@tl.job(interval=timedelta(seconds=2))
+def sample_job_every_2s():
+    print "2s job current time : {}".format(time.ctime())
+
 
 run = True
 
@@ -102,7 +111,10 @@ initial_tilt_heading = acc_mag.getTiltHeading()
 # get connection to redis
 redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 
-while run:
+
+@tl.job(interval=timedelta(seconds=1))
+def get_panel_data():
+    print "get_panel_data: {}".format(time.ctime())
 
     try:
         volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
@@ -178,8 +190,7 @@ while run:
         time.sleep(30)
         megaiosun.set_motor(RELAY_EAST, 0)
 
-    time.sleep(POLL_TIME)
 
-# stop the motors if they are moving
+tl.start(block=True)
 leds.lights_off()
 megaiosun.set_motors(0)

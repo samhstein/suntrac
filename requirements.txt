@@ -6,3 +6,4 @@ AWSIoTPythonSDK
 timezonefinder
 redis
 pyserial
+timeloop
