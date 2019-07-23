@@ -69,8 +69,8 @@ class SuntracPanel:
         self.initial_heading = self.acc_mag.getHeading()
         self.initial_tilt_heading = self.acc_mag.getTiltHeading()
         # time loop
-        self.tl._add_job(publish_panel_data(self), interval=timedelta(seconds=10))
-        self.tl._add_job(get_panel_data(self), interval=timedelta(seconds=1))
+        self.tl._add_job(self.publish_panel_data(self), interval=timedelta(seconds=10))
+        self.tl._add_job(self.get_panel_data(self), interval=timedelta(seconds=1))
 
     def get_temp_c(self, v):
         ohms = self.THERMISTOR_BALANCE / (self.INPUT_VOLTS / v - 1)
