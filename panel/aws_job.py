@@ -110,6 +110,6 @@ class aws_job:
             time.sleep(2)
 
             print('Done processing jobs')
-            print('Stats: ' + json.dumps(jobsMsgProc.getStats()))
+            print('Stats: ' + json.dumps(self.getStats()))
 
         self.awsIoTMQTTThingJobsClient.disconnect()
