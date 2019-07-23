@@ -4,7 +4,7 @@ import aws_iot
 import base64, zlib
 import megaiosun
 
-SECONDS_TO_SAMPLE = 60
+SECONDS_TO_SAMPLE = 10
 SAMPLES_PER_PACKET = 2
 
 # get aws_iot
@@ -24,7 +24,7 @@ while True:
     message = pub_sub.get_message()
     if not message:
         continue
-    print('m: ', count, message, len(data_points))
+    print('m: ', count, len(data_points))
     # just keep one every ???
     if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
