@@ -46,7 +46,7 @@ class SuntracPanel:
 
         self.volt_outlet = self.ohms_outlet = self.temp_outlet = 0
         self.volt_inlet = self.ohms_inlet = self.temp_inlet = 0
-        self.light_east = light_west = 0
+        self.light_east = self.light_west = 0
         self.light_error = False
         self.over_temp = False
 
