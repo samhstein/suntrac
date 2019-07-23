@@ -28,6 +28,7 @@ class SuntracPanel:
     leds = leds.leds()
     acc_mag = lsm303ctr.lsm303ctr()
     tl = Timeloop()
+    redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 
     def __init__(self,):
         with open('suntrac.config') as json_data_file:
@@ -59,15 +60,11 @@ class SuntracPanel:
         # get the lights
         self.leds.test()
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
-
         # get the accel
         self.initial_roll = self.acc_mag.getRoll()
         self.mag_ready = self.acc_mag.isMagReady()
         self.initial_heading = self.acc_mag.getHeading()
         self.initial_tilt_heading = self.acc_mag.getTiltHeading()
-
-        # get connection to redis
-        redis_pub = redis.Redis(host='localhost', port=6379, db=0)
         # time loop
         self.tl._add_job(self.publish_panel_data, 10)
         self.tl._add_job(self.get_panel_data, 1)
@@ -103,7 +100,6 @@ class SuntracPanel:
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
 
     # pub the string
-    @tl.job(interval=timedelta(seconds=5))
     def publish_panel_data():
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
