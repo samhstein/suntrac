@@ -86,24 +86,22 @@ class suntracPanel:
         elif temp_outlet > max_temp:
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_OFF_RED)
 
-        megaiosun.set_motor(RELAY_EAST, 1)
+        megaiosun.set_motor(self.RELAY_EAST, 1)
         time.sleep(20)
-        megaiosun.set_motor(RELAY_EAST, 0)
+        megaiosun.set_motor(self.RELAY_EAST, 0)
         _temp_inlet = temp_inlet
         _temp_outlet = temp_outlet
         while _temp_inlet > max_temp or _temp_outlet > max_temp:
-            volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
+            volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
             _temp_inlet = get_temp_c(volt_inlet)
-            volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
+            volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
             _temp_outlet = get_temp_c(volt_outlet)
             time.sleep(10)
 
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
 
-
-
     # pub the string
-    @self.tl.job(interval=timedelta(seconds=10))
+    @tl.job(interval=timedelta(seconds=10))
     def publish_panel_data():
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
@@ -113,14 +111,14 @@ class suntracPanel:
         print("get_panel_data: ", time.ctime())
 
         try:
-            volt_outlet = megaiosun.get_adc_volt(TEMP_OUTLET)
+            volt_outlet = megaiosun.get_adc_volt(self.TEMP_OUTLET)
             temp_outlet = get_temp_c(volt_outlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_GREEN)
             print('v1 error: ', e)
 
         try:
-            volt_inlet = megaiosun.get_adc_volt(TEMP_INLET)
+            volt_inlet = megaiosun.get_adc_volt(self.TEMP_INLET)
             temp_inlet = get_temp_c(volt_inlet)
         except Exception as e:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_RED)
@@ -146,20 +144,20 @@ class suntracPanel:
 
         # if the diff is too big lets move it
         # lets keep it tight
-        if abs(photo_diff) > DIFF_VOLTS and light_error != True:
+        if abs(photo_diff) > self.DIFF_VOLTS and light_error != True:
             if photo_diff < 0:
-                relay = RELAY_WEST
+                relay = self.RELAY_WEST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_GREEN)
             else:
-                relay = RELAY_EAST
+                relay =  self.RELAY_EAST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_RED)
 
             moving_diff = photo_diff
             megaiosun.set_motor(relay, 1)
             print('start moving... ', relay)
             while abs(moving_diff) > .05:
-                moving_diff = megaiosun.get_adc_volt(LIGHT_EAST) - megaiosun.get_adc_volt(LIGHT_WEST)
-                time.sleep(MOVE_TIME)
+                moving_diff = megaiosun.get_adc_volt(self.LIGHT_EAST) - megaiosun.get_adc_volt(self.LIGHT_WEST)
+                time.sleep(self.MOVE_TIME)
 
             # turn it off
             print('stop moving...')
@@ -179,13 +177,13 @@ class suntracPanel:
             'lm': round((date - last_moved).total_seconds(), 1),
             'roll': round(acc_mag.getRoll(), 1) }
 
-        if (date - last_moved).total_seconds() > THREE_HOURS:
-            megaiosun.set_motor(RELAY_EAST, 1)
+        if (date - last_moved).total_seconds() > self.THREE_HOURS:
+            megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
-            megaiosun.set_motor(RELAY_EAST, 0)
+            megaiosun.set_motor(self.RELAY_EAST, 0)
 
 if __name__ == "__main__":
     sp = SuntracPanel()
-    sp.tl.start(block=True)
+    #sp.tl.start(block=True)
     sp.leds.lights_off()
     megaiosun.set_motors(0)
