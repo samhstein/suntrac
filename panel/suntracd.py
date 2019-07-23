@@ -69,6 +69,8 @@ class suntracPanel:
         redis_pub = redis.Redis(host='localhost', port=6379, db=0)
         # time loop
         tl = Timeloop()
+        tl._add_job(self.publish_panel_data, 10)
+        tl._add_job(self.get_panel_data, 1)
 
     def get_temp_c(v):
         ohms = self.THERMISTOR_BALANCE / (self.INPUT_VOLTS / v - 1)
@@ -101,12 +103,9 @@ class suntracPanel:
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
 
     # pub the string
-    @tl.job(interval=timedelta(seconds=10))
     def publish_panel_data():
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
-
-    @tl.job(interval=timedelta(seconds=1))
     def get_panel_data():
         print("get_panel_data: ", time.ctime())
 
@@ -184,6 +183,6 @@ class suntracPanel:
 
 if __name__ == "__main__":
     sp = SuntracPanel()
-    #sp.tl.start(block=True)
+    sp.tl.start(block=True)
     sp.leds.lights_off()
     megaiosun.set_motors(0)
