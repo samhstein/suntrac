@@ -52,7 +52,7 @@ def acc():
         ret+=1
     try:
         me = bus.read_byte_data( MAG_ADDRESS, WHO_AM_I)
-        print('acc: ', me)        
+        print('acc: ', me)
         if me != 0x3d:
             print ("Fail to read Magnetometer! read: " + str(me))
             ret+=1
@@ -151,10 +151,10 @@ def motor():
     m.set_motor(1, 0)
     m.set_motor(2, 0)
     time.sleep(0.2)
-    print('turning on west motor 2')
+    print('turning on west motor')
     m.set_motor(2, 1)	# turn motor 1 on and motor 2 off
     time.sleep(20)
-    print('turning on west motor')
+    print('turning off west motor')
     m.set_motors(0)	# turn motor 1 on and motor 2 off
     time.sleep(1)
     print('turning on  east motor')
