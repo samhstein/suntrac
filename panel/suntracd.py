@@ -51,7 +51,7 @@ class SuntracPanel:
         self.over_temp = False
 
         # lets get the sun
-        self.date = datetime.datetime.now(pytz.timezone(self.time_zone))
+        date = datetime.datetime.now(pytz.timezone(self.time_zone))
         self.sun_altitude = get_altitude(self.latitude, self.longitude, date)
         self.sun_azimuth = get_azimuth(self.latitude, self.longitude, date)
 
