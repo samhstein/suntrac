@@ -21,6 +21,7 @@ pub_sub.get_message()
 count = 0
 
 for message in pub_sub.listen():
+    print(message)
     # just keep one every ???
     if (count >= SECONDS_TO_SAMPLE):
         data_points.append(json.loads(message['data']))
