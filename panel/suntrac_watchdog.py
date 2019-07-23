@@ -12,7 +12,7 @@ leds = leds.leds()
 sim868 = sim868.sim868()
 proc_id = megaiosun.get_proc_id()
 aws_iot = aws_iot.aws_iot(proc_id)
-aws_job = aws_job.aws_job(proc_id, aws_iot.get_mqqt_client())
+aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 acc_mag = lsm303ctr.lsm303ctr()
 
 # time loop for job handler
