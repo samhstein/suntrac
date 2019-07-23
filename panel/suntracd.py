@@ -34,7 +34,7 @@ class SuntracPanel:
 
 
     def __init__(self,):
-        with open('suntrac.config') as json_data_file:
+        with open('suntrac_config.json') as json_data_file:
             config = json.load(json_data_file)
 
         self.latitude = float(config.get('comms').get('lat'))
