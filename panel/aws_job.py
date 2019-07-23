@@ -32,7 +32,7 @@ class aws_job:
     def __init__(self, aws_iot_client):
         #keep track of this to correlate request/responses
         #self.clientToken = client_token
-        self.awsIoTMQTTThingJobsClient = aws_iot_client
+        self.awsIoTMQTTThingJobsClient = AWSIoTMQTT.AWSIoTMQTTThingJobsClient(aws_iot_client)
         self.done = False
         self.jobsStarted = 0
         self.jobsSucceeded = 0
