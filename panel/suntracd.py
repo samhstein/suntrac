@@ -114,7 +114,6 @@ class SuntracPanel:
             'lm': round((date - self.last_moved).total_seconds(), 1),
             'roll': round(self.acc_mag.getRoll(), 1) }
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
-        print(reading)
 
     def get_panel_data(self):
         try:
