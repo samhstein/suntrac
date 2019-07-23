@@ -5,7 +5,7 @@ import base64, zlib
 import megaiosun
 
 SAMPLES_PER_MINUTE = 10
-SAMPLES_PER_PACKET = 20
+SAMPLES_PER_PACKET = 2
 
 # get connection to redis
 redis_pub = redis.Redis(host='localhost', port=6379, db=0)
