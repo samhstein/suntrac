@@ -135,14 +135,14 @@ class SuntracPanel:
         self.handle_over_temp()
 
         try:
-            self.light_east = megaiosun.get_adc_volt(LIGHT_EAST)
+            self.light_east = megaiosun.get_adc_volt(self.LIGHT_EAST)
         except Exception as e:
             self.light_error = True
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_RED_OFF)
             print('v3 error: ', e)
 
         try:
-            self.light_west = megaiosun.get_adc_volt(LIGHT_WEST)
+            self.light_west = megaiosun.get_adc_volt(self.LIGHT_WEST)
         except Exception as e:
             self.light_error = True
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_OFF_GREEN)
