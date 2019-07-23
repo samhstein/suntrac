@@ -37,25 +37,25 @@ class SuntracPanel:
         with open('suntrac.config') as json_data_file:
             config = json.load(json_data_file)
 
-        latitude = float(config.get('comms').get('lat'))
-        longitude = float(config.get('comms').get('lng'))
-        max_temp = config.get('max_temp')
+        self.latitude = float(config.get('comms').get('lat'))
+        self.longitude = float(config.get('comms').get('lng'))
+        self.max_temp = config.get('max_temp')
 
         tf = TimezoneFinder()
-        time_zone = tf.timezone_at(lng=longitude, lat=latitude)
+        self.time_zone = tf.timezone_at(lng=longitude, lat=latitude)
 
-        volt_outlet = ohms_outlet = temp_outlet = 0
-        volt_inlet = ohms_inlet = temp_inlet = 0
-        light_east = light_west = 0
-        light_error = False
-        over_temp = False
+        self.volt_outlet = self.ohms_outlet = self.temp_outlet = 0
+        self.volt_inlet = self.ohms_inlet = self.temp_inlet = 0
+        self.light_east = light_west = 0
+        self.light_error = False
+        self.over_temp = False
 
         # lets get the sun
-        date = datetime.datetime.now(pytz.timezone(time_zone))
-        sun_altitude = get_altitude(latitude, longitude, date)
-        sun_azimuth = get_azimuth(latitude, longitude, date)
+        self.date = datetime.datetime.now(pytz.timezone(time_zone))
+        self.sun_altitude = get_altitude(latitude, longitude, date)
+        self.sun_azimuth = get_azimuth(latitude, longitude, date)
 
-        last_moved = date
+        self.last_moved = date
 
         # stop the motors if they are moving
         megaiosun.set_motors(0)
@@ -79,13 +79,13 @@ class SuntracPanel:
         steinhart = (1.0 / steinhart) - 273.15
         return steinhart
 
-    def handle_over_temp(self, temp_inlet, temp_outlet, max_temp):
+    def handle_over_temp(self):
         if temp_inlet < max_temp and temp_outlet < max_temp:
             return
 
-        if temp_inlet > max_temp:
+        if self.temp_inlet > self.max_temp:
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_OFF_GREEN)
-        elif temp_outlet > max_temp:
+        elif self.temp_outlet > self.max_temp:
             self.leds.lights_on(self.leds.LED_WHITE_OFF, self.leds.LED_OFF_RED)
 
         megaiosun.set_motor(self.RELAY_EAST, 1)
@@ -132,7 +132,7 @@ class SuntracPanel:
             self.leds.lights_on(self.leds.LED_RED_OFF, self.leds.LED_OFF_RED)
             print('v2 error: ', e)
 
-        self.handle_over_temp(temp_inlet, temp_outlet, max_temp)
+        self.handle_over_temp()
 
         try:
             self.light_east = megaiosun.get_adc_volt(LIGHT_EAST)
