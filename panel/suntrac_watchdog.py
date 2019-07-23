@@ -95,4 +95,3 @@ aws_iot.sendData('suntrac/config', config)
 
 while run:
     tl.start()
-    time.sleep(10)
