@@ -66,17 +66,17 @@ class SuntracPanel:
         self.initial_heading = self.acc_mag.getHeading()
         self.initial_tilt_heading = self.acc_mag.getTiltHeading()
         # time loop
-        self.tl._add_job(self.publish_panel_data, 10)
-        self.tl._add_job(self.get_panel_data, 1)
+        #self.tl._add_job(self.publish_panel_data, 10)
+        #self.tl._add_job(self.get_panel_data, 1)
 
-    def get_temp_c(v):
+    def get_temp_c(self, v):
         ohms = self.THERMISTOR_BALANCE / (self.INPUT_VOLTS / v - 1)
         steinhart = math.log(ohms / self.THERMISTOR_RO) / self.THERMISTOR_BETA
         steinhart += 1.0 / (self.THERMISTOR_TO + 273.15)
         steinhart = (1.0 / steinhart) - 273.15
         return steinhart
 
-    def handle_over_temp(temp_inlet, temp_outlet, max_temp):
+    def handle_over_temp(self, temp_inlet, temp_outlet, max_temp):
         if temp_inlet < max_temp and temp_outlet < max_temp:
             return
 
@@ -100,11 +100,11 @@ class SuntracPanel:
         self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
 
     # pub the string
-    #@tl.job(interval=timedelta(seconds=5))
+    @tl.job(interval=timedelta(seconds=5))
     def publish_panel_data(self):
         self.redis_pub.publish('suntrac-reading', json.dumps(self.reading))
 
-    #@tl.job(interval=timedelta(seconds=5))
+    @tl.job(interval=timedelta(seconds=5))
     def get_panel_data(self):
         print("get_panel_data: ", time.ctime())
 
