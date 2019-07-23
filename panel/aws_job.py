@@ -65,6 +65,7 @@ class aws_job:
     def executeJob(self, execution):
         job = execution['jobDocument']
         operation = job.get('operation')
+        print(operation)
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
         print('With jobDocument: ' + json.dumps(job)
         # lets support refesh, reboot, git update
