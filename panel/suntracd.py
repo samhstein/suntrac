@@ -69,7 +69,7 @@ class SuntracPanel:
         self.initial_heading = self.acc_mag.getHeading()
         self.initial_tilt_heading = self.acc_mag.getTiltHeading()
         # time loop
-        self.tl._add_job(self.publish_panel_data, interval=timedelta(seconds=10))
+        self.tl._add_job(self.publish_panel_data, interval=timedelta(seconds=6))
         self.tl._add_job(self.get_panel_data, interval=timedelta(seconds=1))
 
     def get_temp_c(self, v):
@@ -104,7 +104,6 @@ class SuntracPanel:
 
     # pub the string
     def publish_panel_data(self):
-        print('pub top...')
         date = datetime.datetime.now(pytz.timezone(self.time_zone))
         sun_altitude = get_altitude(self.latitude, self.longitude, date)
         sun_azimuth = get_azimuth(self.latitude, self.longitude, date)
@@ -114,9 +113,7 @@ class SuntracPanel:
             'ts': round(time.time(), 1),
             'lm': round((date - self.last_moved).total_seconds(), 1),
             'roll': round(self.acc_mag.getRoll(), 1) }
-        print(reading)
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
-        print('pub end')
 
     def get_panel_data(self):
         try:
