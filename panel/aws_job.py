@@ -69,9 +69,9 @@ class aws_job:
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
         print('With jobDocument: ' + json.dumps(job))
         # lets support refesh, reboot, git update
-        if operation == 'git-update':
+        if operation == 'gitUpdate':
             os.system('sudo systemctl stop suntracd.service')
-            os.system('cd /home/pi/suntrac/panel; git pull')
+            os.system('cd /home/pi/suntrac; git pull')
             os.system('sudo systemctl start suntracd.service')
         elif operation == 'refresh':
             os.system('sudo systemctl stop suntracd.service')
