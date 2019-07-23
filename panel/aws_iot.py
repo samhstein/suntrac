@@ -61,7 +61,6 @@ class aws_iot:
 
 
     def sendData(self, topic, data):
-        print('sendData: ', data)
         # zip it up
         j_zipped = {
             "proc_id": self.proc_id,
