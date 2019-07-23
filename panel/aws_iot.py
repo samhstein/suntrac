@@ -39,10 +39,10 @@ class aws_iot:
         #with open(CERT_ROOT, 'w') as f:
         #    f.write(certs.get('AmazonRootCA1'))
 
-        with open(CERT_PRIVATE, 'w') as f:
+        with open(self.CERT_PRIVATE, 'w') as f:
             f.write(certs.get('keyPair').get('PrivateKey'))
 
-        with open(CERT_CERT, 'w') as f:
+        with open(self.CERT_CERT, 'w') as f:
             f.write(certs.get('certificatePem'))
 
         # can't set in init, set it now we have it
