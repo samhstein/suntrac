@@ -8,7 +8,7 @@ import leds, lsm303ctr
 from timeloop import Timeloop
 from datetime import timedelta
 
-class suntracPanel:
+class SuntracPanel:
 
     THERMISTOR_TO = 25
     THERMISTOR_RO = 86000
