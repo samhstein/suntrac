@@ -51,9 +51,9 @@ class SuntracPanel:
         self.over_temp = False
 
         # lets get the sun
-        self.date = datetime.datetime.now(pytz.timezone(time_zone))
-        self.sun_altitude = get_altitude(latitude, longitude, date)
-        self.sun_azimuth = get_azimuth(latitude, longitude, date)
+        self.date = datetime.datetime.now(pytz.timezone(self.time_zone))
+        self.sun_altitude = get_altitude(self.latitude, self.longitude, date)
+        self.sun_azimuth = get_azimuth(self.latitude, self.longitude, date)
 
         self.last_moved = date
 
@@ -171,7 +171,7 @@ class SuntracPanel:
             print('stop moving...')
             self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
             megaiosun.set_motor(relay, 0)
-            self.last_moved = datetime.datetime.now(pytz.timezone(time_zone))
+            self.last_moved = datetime.datetime.now(pytz.timezone(self.time_zone))
             time.sleep(.1)
 
         # turn it east if its dark
