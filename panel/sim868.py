@@ -57,8 +57,8 @@ class sim868:
             lat = point[2]
             lng = point[1]
         except:
-            lat = 'n/a'
-            lng = 'n/a'
+            lat = '33.44'
+            lng = '-112.0'
 
         self.send_command('ATH')
         s = self.ser.read(size=1024)
