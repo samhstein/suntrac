@@ -115,6 +115,7 @@ class SuntracPanel:
             'lm': round((date - self.last_moved).total_seconds(), 1),
             'roll': round(self.acc_mag.getRoll(), 1) }
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
+        print(reading)
 
     def get_panel_data(self):
         try:
@@ -179,8 +180,6 @@ class SuntracPanel:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
-
-        print(self)
 
 if __name__ == "__main__":
     sp = SuntracPanel()
