@@ -53,8 +53,12 @@ class sim868:
         while 'OK' not in s:
             s = self.ser.read(size=1024).decode()
         point = s.split(',')
-        lat = point[2]
-        lng = point[1]
+        try:
+            lat = point[2]
+            lng = point[1]
+        execept:
+            lat = 'n/a'
+            lng = 'n/a'
 
         self.send_command('ATH')
         s = self.ser.read(size=1024)
