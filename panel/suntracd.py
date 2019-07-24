@@ -31,8 +31,6 @@ class SuntracPanel:
 
     tl = Timeloop()
 
-
-
     def __init__(self,):
         with open('suntrac_config.json') as json_data_file:
             config = json.load(json_data_file)
@@ -181,6 +179,8 @@ class SuntracPanel:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
+
+        print(self)
 
 if __name__ == "__main__":
     sp = SuntracPanel()
