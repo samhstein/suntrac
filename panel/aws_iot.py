@@ -11,7 +11,7 @@ class aws_iot:
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
     def __init__(self, proc_id):
-        self.proc_id = proc_id        
+        self.proc_id = proc_id
         self.myMQTTClient = AWSIoTMQTTClient(proc_id)
         self.myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
         certs = self.get_certs()
@@ -33,14 +33,9 @@ class aws_iot:
             return
 
         end_point = self.CERT_ENDPOINT.replace('value1', self.proc_id).replace('value2', self.proc_id[:6])
-        print('in get cert: ', end_point)
         r = requests.get(end_point)
-        print('request json: ', r.json())
         certs = r.json()
-        # update to use the right one
-        #with open(CERT_ROOT, 'w') as f:
-        #    f.write(certs.get('AmazonRootCA1'))
-
+        # update to use the right root cert in the cvm
         with open(self.CERT_PRIVATE, 'w') as f:
             f.write(certs.get('keyPair').get('PrivateKey'))
 
@@ -72,6 +67,4 @@ class aws_iot:
         self.myMQTTClient.publish(topic, json.dumps(j_zipped), 1)
         self.myMQTTClient.subscribe(topic, 1, self.customCallback)
         self.myMQTTClient.unsubscribe(topic)
-        self.myMQTTClient.disconnect()
-        print('sendData: ', datetime.datetime.now(), topic, self.proc_id, len(json.dumps(j_zipped)))
-        print('sendData: ', json.dumps(j_zipped))
+        self.myMQTTClient.disconnect()    

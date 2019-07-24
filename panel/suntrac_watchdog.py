@@ -29,7 +29,6 @@ tl = Timeloop()
 # time loop for job handler
 @tl.job(interval=timedelta(days=1))
 def check_every_day():
-    print ("current time : ", time.ctime())
     aws_job.check_for_jobs()
 
 def handler_stop_signals(signum, frame):
@@ -55,7 +54,7 @@ def button_push(input_pin):
     # long push, reboot
     while not GPIO.input(27):
         time.sleep(.1)
-        if time.time() - down_time > 5:
+        if time.time() - down_time > 6:
             leds.lights_off()
             os.system('sudo reboot')
             break
@@ -82,8 +81,8 @@ with open(CONFIG_FILE, 'r') as json_data_file:
 
 # start ppp, send it to the cloud, start the redis middle man
 if connected:
-    #    os.system('sudo pppd call gprs')
-    #    time.sleep(15)
+    os.system('sudo pppd call gprs')
+    time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start connected.service')

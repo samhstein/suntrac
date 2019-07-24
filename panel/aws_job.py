@@ -65,21 +65,17 @@ class aws_job:
     def executeJob(self, execution):
         job = execution['jobDocument']
         operation = job.get('operation')
-        print(operation)
         print('Executing job ID, version, number: {}, {}, {}'.format(execution['jobId'], execution['versionNumber'], execution['executionNumber']))
         print('With jobDocument: ' + json.dumps(job))
         # lets support refesh, reboot, git update
         if operation == 'gitUpdate':
             os.system('sudo systemctl stop suntracd.service')
+            os.system('sudo systemctl stop connect.service')
             os.system('cd /home/pi/suntrac; git pull')
             os.system('sudo systemctl start suntracd.service')
-        elif operation == 'refresh':
-            os.system('sudo systemctl stop suntracd.service')
-            time.sleep(5)
-            os.system('sudo systemctl start suntracd.service')
+            os.system('sudo systemctl start connect.service')
         elif operation == 'reboot':
             os.system('sync')
-            os.system('halt')
             os.system('sudo reboot')
 
     def newJobReceived(self, client, userdata, message):
