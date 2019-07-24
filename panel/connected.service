@@ -1,12 +1,12 @@
 [Unit]
-Description=Suntrac Panel daemon
+Description=Suntrac Connected daemon
 After=multi-user.target
 
 [Service]
 Type=simple
 User=pi
 Group=pi
-ExecStart=/usr/bin/python3 /home/pi/suntrac/panel/suntracd.py
+ExecStart=/usr/bin/python3 /home/pi/suntrac/panel/suntrac_connected.py
 WorkingDirectory=/home/pi/suntrac/panel
 Restart=always
 RestartSec=2

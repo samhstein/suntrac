@@ -97,10 +97,20 @@ with open('suntrac_config.json', 'w') as json_data_file:
     config['pitch'] = round(pitch, 1)
     json.dump(config, json_data_file)
 
-# send it to the cloud
+# start the panel daemon
+os.system('sudo systemctl start suntracd.service')
+
+# start ppp, send it to the cloud
 if connected:
+    os.system('sudo pppd call grps')
+    time.sleep(5)
     aws_iot.sendData('suntrac/config', config)
+    os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
+
+os.system('sudo systemctl start suntracd.service')
+
+# start suntrac
 
 while run:
     time.sleep(1)
