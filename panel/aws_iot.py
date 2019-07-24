@@ -11,6 +11,7 @@ class aws_iot:
     CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
 
     def __init__(self, proc_id):
+        self.proc_id = proc_id        
         self.myMQTTClient = AWSIoTMQTTClient(proc_id)
         self.myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
         certs = self.get_certs()
@@ -21,7 +22,7 @@ class aws_iot:
         self.myMQTTClient.configureDrainingFrequency(2)  # Draining: 2 Hz
         self.myMQTTClient.configureConnectDisconnectTimeout(10)  # 10 sec
         self.myMQTTClient.configureMQTTOperationTimeout(5)  # 5 sec
-        self.proc_id = proc_id
+
 
     def get_mqqt_client(self):
         return self.myMQTTClient
