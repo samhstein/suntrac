@@ -76,3 +76,4 @@ class aws_iot:
         self.myMQTTClient.unsubscribe(topic)
         self.myMQTTClient.disconnect()
         print('sendData: ', datetime.datetime.now(), topic, self.proc_id, len(json.dumps(j_zipped)))
+        print('sendData: ', data)
