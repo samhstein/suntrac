@@ -1,0 +1,31 @@
+format sd card
+flash using berrylan image
+login to pi: pi / raspberry
+change password: 123st321
+use berrylan to connect to local wifi, note ip address
+ssh to pi
+sudo apt-get update
+sudo apt-get upgrade
+sudo reboot
+ssh to pi
+raspi-config
+  turn i2c on
+sudo apt-get install build-essential python3-pip python3-dev python3-smbus git-core
+cd
+git clone git://git.drogon.net/wiringPi
+cd wiringPi
+./build
+  gpio -v
+  gpio readall
+
+cd
+git clone https://github.com/samhstein/suntrac.git
+cd suntrac
+pip3 install -r requirements.txt -U
+cd sequent
+unzip megaiosun.zip
+cd megaiosun-rpi/python
+cd /home/pi/megaiosun-rpi/python/megaiosun/
+sudo python3 setup.py install
+cd
+cd suntrac/test

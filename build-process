@@ -72,3 +72,7 @@ wifi
   double click button
   ssid: suntrac
   pass phrase: suntracTech
+
+reset
+  dynodb, remove cert data from procid
+  iot core, remote thing, policy, cert
