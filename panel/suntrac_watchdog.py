@@ -96,7 +96,7 @@ with open(CONFIG_FILE, 'w') as json_data_file:
     config['comms'] = comms
     config['certs'] = certs
     config['pitch'] = round(pitch, 1)
-    json.dump(config, json_data_file)
+    json.dump(config, json_data_file, indent=4)
 
 # start the panel daemon
 os.system('sudo systemctl start suntracd.service')
