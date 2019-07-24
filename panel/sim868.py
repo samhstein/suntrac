@@ -56,7 +56,7 @@ class sim868:
         try:
             lat = point[2]
             lng = point[1]
-        execept:
+        except:
             lat = 'n/a'
             lng = 'n/a'
 
