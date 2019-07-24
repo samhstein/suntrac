@@ -27,9 +27,8 @@ certs = {''}
 if connected:
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
-    tl = Timeloop()
 
-
+tl = Timeloop()
 # time loop for job handler
 @tl.job(interval=timedelta(seconds=60))
 def check_every_hour():
