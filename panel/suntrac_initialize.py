@@ -19,7 +19,7 @@ with open(CONFIG_FILE, 'w') as json_data_file:
 print('wrote config.')
 
 aws_iot.sendData('suntrac/config', config)
-print('sent config to aws'.)
+print('sent config to aws.')
 
 print('turning of node-red load at boot.')
 os.system('sudo systemctl disable nodered.service')
