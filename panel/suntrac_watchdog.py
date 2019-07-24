@@ -23,14 +23,15 @@ comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
-certs = {''}
+print('connected: ', connected)
+certs = {}
 if connected:
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 
 tl = Timeloop()
 # time loop for job handler
-@tl.job(interval=timedelta(seconds=60))
+@tl.job(interval=timedelta(days=1))
 def check_every_hour():
     print ("current time : ", time.ctime())
     aws_job.check_for_jobs()
@@ -87,6 +88,7 @@ with open('suntrac_config.json', 'r') as json_data_file:
 
 certs = config['certs']
 if connected:
+    os.system('sudo pppd call gprs')
     certs = aws_iot.get_certs(proc_id)
 
 # update and write the config file
@@ -102,8 +104,6 @@ os.system('sudo systemctl start suntracd.service')
 
 # start ppp, send it to the cloud
 if connected:
-    os.system('sudo pppd call grps')
-    time.sleep(5)
     aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
