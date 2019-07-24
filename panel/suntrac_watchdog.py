@@ -7,16 +7,27 @@ from datetime import timedelta
 
 run = True
 pushed = False
+connected = True
 down_time = last_time = None
 push_count = 0
 # get the lights, gprs, and acc
 leds = leds.leds()
 sim868 = sim868.sim868()
-proc_id = megaiosun.get_proc_id()
-aws_iot = aws_iot.aws_iot(proc_id)
-aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 acc_mag = lsm303ctr.lsm303ctr()
-tl = Timeloop()
+proc_id = megaiosun.get_proc_id()
+megaiosun_version = megaiosun.version()
+pitch = acc_mag.getPitch()
+
+# lets see if were connected
+comms = sim868.get_status()
+if comms.get('ip') == '0.0.0.0':
+    connected = False
+
+certs = {''}
+if connected:
+    aws_iot = aws_iot.aws_iot(proc_id)
+    aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
+    tl = Timeloop()
 
 
 # time loop for job handler
@@ -70,21 +81,14 @@ GPIO.add_event_detect(27, GPIO.BOTH, callback=button_push, bouncetime=50)
 # both white during startup
 leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
-# get the config info from the board see if we have
-# connectivity that provides lat and long
-proc_id = megaiosun.get_proc_id()
-megaiosun_version = megaiosun.version()
-comms = sim868.get_status()
-
-print('comms: ', comms)
-
-certs = aws_iot.get_certs(proc_id)
-pitch = acc_mag.getPitch()
-roll = acc_mag.getRoll()
 
 # read the config file
 with open('suntrac_config.json', 'r') as json_data_file:
     config = json.load(json_data_file)
+
+certs = config['certs']
+if connected:
+    certs = aws_iot.get_certs(proc_id)
 
 # update and write the config file
 with open('suntrac_config.json', 'w') as json_data_file:
@@ -95,8 +99,9 @@ with open('suntrac_config.json', 'w') as json_data_file:
     json.dump(config, json_data_file)
 
 # send it to the cloud
-aws_iot.sendData('suntrac/config', config)
-tl.start()
+if connected:
+    aws_iot.sendData('suntrac/config', config)
+    tl.start()
 
 while run:
     time.sleep(1)
