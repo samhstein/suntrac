@@ -40,6 +40,8 @@ class SuntracPanel:
         self.latitude = float(config.get('comms').get('lat'))
         self.longitude = float(config.get('comms').get('lng'))
         self.max_temp = config.get('max_temp')
+        self.connected = False if config.get('comms').get('ip') == '0.0.0.0' else True
+        self.connected_color = self.leds.LED_GREEN_OFF if self.connected else self.leds.LED_BLUE_OFF
 
         tf = TimezoneFinder()
         self.time_zone = tf.timezone_at(lng=self.longitude, lat=self.latitude)
@@ -62,7 +64,8 @@ class SuntracPanel:
 
         # get the lights
         self.leds.test()
-        self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_MASK)
+        self.leds.lights_on(self.connected_color, self.leds.LED_MASK)
+
         # get the accel
         self.initial_roll = self.acc_mag.getRoll()
         self.mag_ready = self.acc_mag.isMagReady()
