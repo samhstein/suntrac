@@ -13,8 +13,8 @@ class aws_iot:
     def __init__(self, proc_id):
         self.myMQTTClient = AWSIoTMQTTClient(proc_id)
         self.myMQTTClient.configureEndpoint(self.IOT_ENDPOINT, 8883)
-        if os.path.exists(self.CERT_CERT):
-            self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
+        certs = self.get_certs()
+        self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
         # AWSIoTMQTTClient connection configuration
         self.myMQTTClient.configureAutoReconnectBackoffTime(1, 32, 20)
         self.myMQTTClient.configureOfflinePublishQueueing(-1)  # Infinite offline Publish queueing
@@ -29,7 +29,7 @@ class aws_iot:
     def get_certs(self, proc_id):
         # if we have one we have em all
         if os.path.exists(self.CERT_CERT):
-            return ({ "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT })
+            return
 
         end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[:6])
         print('in get cert: ', end_point)
@@ -46,10 +46,7 @@ class aws_iot:
         with open(self.CERT_CERT, 'w') as f:
             f.write(certs.get('certificatePem'))
 
-        # can't set in init, set it now we have it
-        self.myMQTTClient.configureCredentials(self.CERT_ROOT, self.CERT_PRIVATE, self.CERT_CERT)
-
-        return ({ "private": self.CERT_PRIVATE, "cert": self.CERT_CERT, "root": self.CERT_ROOT })
+        return
 
     # Custom MQTT message callback
     def customCallback(self, client, userdata, message):

@@ -25,12 +25,6 @@ comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
-if connected:
-#    os.system('sudo pppd call gprs')
-#    time.sleep(15)
-    aws_iot = aws_iot.aws_iot(proc_id)
-    aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
-
 tl = Timeloop()
 # time loop for job handler
 @tl.job(interval=timedelta(days=1))
@@ -86,26 +80,24 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 with open(CONFIG_FILE, 'r') as json_data_file:
     config = json.load(json_data_file)
 
-certs = config['certs']
+# start ppp, send it to the cloud, start the redis middle man
 if connected:
-    certs = aws_iot.get_certs(proc_id)
+    #    os.system('sudo pppd call gprs')
+    #    time.sleep(15)
+    aws_iot = aws_iot.aws_iot(proc_id)
+    aws_iot.sendData('suntrac/config', config)
+    os.system('sudo systemctl start connected.service')
+    tl.start()
 
 # update and write the config file
 with open(CONFIG_FILE, 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
-    config['certs'] = certs
     config['pitch'] = round(pitch, 1)
     json.dump(config, json_data_file, indent=4)
 
 # start the panel daemon
 os.system('sudo systemctl start suntracd.service')
-
-# start ppp, send it to the cloud, start the redis middle man
-if connected:
-    aws_iot.sendData('suntrac/config', config)
-    os.system('sudo systemctl start connected.service')
-    tl.start()
 
 while run:
     time.sleep(1)
