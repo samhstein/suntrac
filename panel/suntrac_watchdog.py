@@ -104,7 +104,7 @@ os.system('sudo systemctl start suntracd.service')
 
 # start ppp, send it to the cloud, start the redis middle man
 if connected:
-    os.system('sudo pppd call grps')
+    os.system('sudo pppd call gprs')
     time.sleep(5)
     aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start suntrac_connected.service')
