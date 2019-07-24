@@ -23,7 +23,9 @@ comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
-certs = {''}
+print('connected: ', connected)
+
+certs = {}
 if connected:
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
