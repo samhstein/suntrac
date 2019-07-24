@@ -23,10 +23,9 @@ comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
-print('connected: ', connected)
-
-certs = {}
 if connected:
+    os.system('sudo pppd call gprs')
+    time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 
@@ -104,12 +103,9 @@ os.system('sudo systemctl start suntracd.service')
 
 # start ppp, send it to the cloud, start the redis middle man
 if connected:
-    os.system('sudo pppd call gprs')
-    time.sleep(5)
     aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
-
 
 while run:
     time.sleep(1)
