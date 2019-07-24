@@ -102,15 +102,12 @@ with open('suntrac_config.json', 'w') as json_data_file:
 # start the panel daemon
 os.system('sudo systemctl start suntracd.service')
 
-# start ppp, send it to the cloud
+# start ppp, send it to the cloud, start the redis middle man
 if connected:
     aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
 
-os.system('sudo systemctl start suntracd.service')
-
-# start suntrac
 
 while run:
     time.sleep(1)

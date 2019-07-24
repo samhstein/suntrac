@@ -46,6 +46,7 @@ cd
 cd suntrac/panel
 sudo cp suntracd.service /etc/systemd/system/suntracd.service
 sudo cp watchdog.service /etc/systemd/system/watchdog.service
+sudo cp connected.service /etc/systemd/system/connected.service
 sudo systemctl enable watchdog.service
 
 install node-red
