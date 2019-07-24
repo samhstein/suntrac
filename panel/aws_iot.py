@@ -26,12 +26,12 @@ class aws_iot:
     def get_mqqt_client(self):
         return self.myMQTTClient
 
-    def get_certs(self, proc_id):
+    def get_certs(self):
         # if we have one we have em all
         if os.path.exists(self.CERT_CERT):
             return
 
-        end_point = self.CERT_ENDPOINT.replace('value1', proc_id).replace('value2', proc_id[:6])
+        end_point = self.CERT_ENDPOINT.replace('value1', self.proc_id).replace('value2', self.proc_id[:6])
         print('in get cert: ', end_point)
         r = requests.get(end_point)
         print('request json: ', r.json())
