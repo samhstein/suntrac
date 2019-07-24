@@ -5,6 +5,8 @@ import megaiosun
 from timeloop import Timeloop
 from datetime import timedelta
 
+CONFIG_FILE = '/home/pi/suntrac/panel/suntrac_config.json'
+
 run = True
 pushed = False
 connected = True
@@ -24,15 +26,15 @@ if comms.get('ip') == '0.0.0.0':
     connected = False
 
 if connected:
-    os.system('sudo pppd call gprs')
-    time.sleep(15)
+#    os.system('sudo pppd call gprs')
+#    time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 
 tl = Timeloop()
 # time loop for job handler
 @tl.job(interval=timedelta(days=1))
-def check_every_hour():
+def check_every_day():
     print ("current time : ", time.ctime())
     aws_job.check_for_jobs()
 
@@ -69,8 +71,6 @@ def button_push(input_pin):
         leds.lights_on(leds.LED_BLUE_OFF, leds.LED_OFF_BLUE)
         push_count = 0
         os.system('node-red-pi --max-old-space-size=256')
-        os.system('sudo killall pppd')
-        os.system('sudo hotspot start')
     else:
         push_count = 0
 
@@ -83,7 +83,7 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 
 
 # read the config file
-with open('suntrac_config.json', 'r') as json_data_file:
+with open(CONFIG_FILE, 'r') as json_data_file:
     config = json.load(json_data_file)
 
 certs = config['certs']
@@ -91,7 +91,7 @@ if connected:
     certs = aws_iot.get_certs(proc_id)
 
 # update and write the config file
-with open('suntrac_config.json', 'w') as json_data_file:
+with open(CONFIG_FILE, 'w') as json_data_file:
     config['proc_id'] = proc_id
     config['comms'] = comms
     config['certs'] = certs
