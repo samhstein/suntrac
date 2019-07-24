@@ -26,6 +26,8 @@ if comms.get('ip') == '0.0.0.0':
 print('connected: ', connected)
 certs = {}
 if connected:
+    os.system('sudo pppd call gprs')
+    time.sleep(5)
     aws_iot = aws_iot.aws_iot(proc_id)
     aws_job = aws_job.aws_job('suntracJobClient', proc_id, aws_iot.get_mqqt_client())
 
@@ -88,7 +90,6 @@ with open('suntrac_config.json', 'r') as json_data_file:
 
 certs = config['certs']
 if connected:
-    os.system('sudo pppd call gprs')
     certs = aws_iot.get_certs(proc_id)
 
 # update and write the config file

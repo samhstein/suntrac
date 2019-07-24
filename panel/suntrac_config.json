@@ -1,17 +1,1 @@
-{ "proc_id": "n/a",
-  "refrigerant": "R-410a",
-  "max_temp": 115,
-  "temp_units": "F",
-  "comms": {
-    "iccid": "n/a",
-    "ip": "n/a",
-    "lat": "n/a",
-    "lng": "n/a"
-  },
-  "certs": {
-    "private": "n/a",
-    "cert": "n/a",
-    "root": "/home/pi/suntrac/certs/AmazonRootCA1.pem"
-  },
-    "pitch": "n/a"
-}
+{"proc_id": "170003001043484734303420", "refrigerant": "R-410a", "max_temp": 115, "temp_units": "F", "comms": {"iccid": "8944502407183552513f", "ip": "10.178.204.204", "lat": "33.721470", "lng": "-111.856750"}, "certs": {"private": "/home/pi/suntrac/certs/PrivateKey.key", "cert": "/home/pi/suntrac/certs/certificatePem.crt", "root": "/home/pi/suntrac/certs/AmazonRootCA1.pem"}, "pitch": 33.3}
