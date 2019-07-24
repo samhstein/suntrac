@@ -19,7 +19,6 @@ acc_mag = lsm303ctr.lsm303ctr()
 tl = Timeloop()
 
 
-
 # time loop for job handler
 @tl.job(interval=timedelta(seconds=60))
 def check_every_hour():
@@ -51,7 +50,7 @@ def button_push(input_pin):
         time.sleep(.1)
         if time.time() - down_time > 5:
             leds.lights_off()
-            os.system('sudo shutdown -r now')
+            os.system('sudo reboot')
             break
 
     # double push, start node-red
@@ -59,6 +58,8 @@ def button_push(input_pin):
         leds.lights_on(leds.LED_BLUE_OFF, leds.LED_OFF_BLUE)
         push_count = 0
         os.system('node-red-pi --max-old-space-size=256')
+        os.system('sudo killall pppd')
+        os.system('sudo hotspot start')
     else:
         push_count = 0
 
@@ -74,6 +75,9 @@ leds.lights_on(leds.LED_WHITE_OFF, leds.LED_OFF_WHITE)
 proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
+
+console.log(comms)
+
 certs = aws_iot.get_certs(proc_id)
 pitch = acc_mag.getPitch()
 roll = acc_mag.getRoll()
