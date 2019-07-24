@@ -30,7 +30,7 @@ if connected:
 
 tl = Timeloop()
 # time loop for job handler
-@tl.job(interval=timedelta(seconds=60))
+@tl.job(interval=timedelta(days=1))
 def check_every_hour():
     print ("current time : ", time.ctime())
     aws_job.check_for_jobs()
@@ -100,7 +100,7 @@ with open('suntrac_config.json', 'w') as json_data_file:
 # start the panel daemon
 os.system('sudo systemctl start suntracd.service')
 
-# start ppp, send it to the cloud
+# start ppp, send it to the cloud, start the redis middle man
 if connected:
     os.system('sudo pppd call grps')
     time.sleep(5)
@@ -108,9 +108,6 @@ if connected:
     os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
 
-os.system('sudo systemctl start suntracd.service')
-
-# start suntrac
 
 while run:
     time.sleep(1)
