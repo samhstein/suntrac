@@ -76,7 +76,7 @@ proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 comms = sim868.get_status()
 
-console.log(comms)
+print('comms: ', comms)
 
 certs = aws_iot.get_certs(proc_id)
 pitch = acc_mag.getPitch()
