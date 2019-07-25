@@ -3,7 +3,7 @@ import megaiosun
 
 CONFIG_FILE = '/home/pi/suntrac/panel/suntrac_config.json'
 
-panel_serial = json.loads(sys.argv[1]).get('panel_serial')
+panel_serial = sys.argv[1]
 print('panel_serial: ', panel_serial)
 
 proc_id = megaiosun.get_proc_id()
