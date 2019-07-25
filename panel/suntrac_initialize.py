@@ -1,4 +1,4 @@
-import json, aws_iot, os
+import json, aws_iot, os, sys
 import megaiosun
 
 CONFIG_FILE = '/home/pi/suntrac/panel/suntrac_config.json'
@@ -9,6 +9,8 @@ print('proc_id: ', proc_id)
 with open(CONFIG_FILE, 'r') as json_data_file:
     config = json.load(json_data_file)
 
+# this gets the certs
+print('getting certs')
 aws_iot = aws_iot.aws_iot(proc_id)
 config['proc_id'] = proc_id
 
@@ -26,3 +28,10 @@ os.system('sudo systemctl disable nodered.service')
 
 print('enabling suntrac watchdog')
 os.system('sudo systemctl enable watchdog.service')
+
+print('setting hotspot values')
+os.system('sudo hotspot modpar self autostart no')
+ssid = 'suntrac-' + proc_id[:6]
+os.system('sudo hotspot modpar ssid autostart no')
+
+print('args: ', sys.argv[1:])
