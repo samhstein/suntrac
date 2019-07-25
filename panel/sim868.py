@@ -28,6 +28,7 @@ class sim868:
         self.send_command('AT+CCID')
         s = self.ser.read(size=1024)
         iccid = s.decode().split('\r\n')[1]
+        print('iccid: ', iccid)
 
         self.send_command('AT+CGATT=1')
         s = self.ser.read(size=1024)
@@ -46,7 +47,9 @@ class sim868:
 
         self.send_command('AT+SAPBR=2,1')
         s = self.ser.read(size=1024)
+        print('ip s: ', s)
         ip = s.decode().split('"')[1]
+        print('ip: ', ip)
 
         self.send_command('AT+CIPGSMLOC=1,1')
         s = ''
