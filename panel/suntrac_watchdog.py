@@ -25,6 +25,8 @@ comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
+print('connected: ', connected)
+
 tl = Timeloop()
 # time loop for job handler
 @tl.job(interval=timedelta(days=1))
@@ -84,8 +86,9 @@ if connected:
     os.system('sudo pppd call gprs')
     time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
-    #print('sending config to aw')
-    #aws_iot.sendData('suntrac/config', config)
+    print('sending config to aw')
+    aws_iot.sendData('suntrac/config', config)
+    print('starting connected service...')
     os.system('sudo systemctl start connected.service')
     tl.start()
 
@@ -97,6 +100,7 @@ with open(CONFIG_FILE, 'w') as json_data_file:
     json.dump(config, json_data_file, indent=4)
 
 # start the panel daemon
+print('starting suntracd...')
 os.system('sudo systemctl start suntracd.service')
 
 while run:
