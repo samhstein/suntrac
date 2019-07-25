@@ -32,7 +32,7 @@ os.system('sudo systemctl enable watchdog.service')
 print('setting hotspot values')
 os.system('sudo hotspot modpar self autostart no')
 ssid = 'suntrac-' + str(proc_id[:6])
-os.system('sudo hotspot modpar ssid autostart no')
+os.system('sudo hotspot modpar ssid ' + ssid)
 
 print ('Number of arguments:', len(sys.argv), 'arguments.')
 print ('Argument List:', str(sys.argv))
