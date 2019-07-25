@@ -34,4 +34,5 @@ os.system('sudo hotspot modpar self autostart no')
 ssid = 'suntrac-' + proc_id[:6]
 os.system('sudo hotspot modpar ssid autostart no')
 
-print('args: ', sys.argv[1:])
+print ('Number of arguments:', len(sys.argv), 'arguments.')
+print ('Argument List:', str(sys.argv))
