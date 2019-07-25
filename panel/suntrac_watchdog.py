@@ -84,7 +84,8 @@ if connected:
     os.system('sudo pppd call gprs')
     time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
-    aws_iot.sendData('suntrac/config', config)
+    #print('sending config to aw')
+    #aws_iot.sendData('suntrac/config', config)
     os.system('sudo systemctl start connected.service')
     tl.start()
 

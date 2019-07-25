@@ -4,6 +4,7 @@ import aws_iot
 import base64, zlib
 import megaiosun
 
+# samples come every 6 seconds
 SAMPLES_PER_MINUTE = 10
 SAMPLES_PER_PACKET = 20
 
