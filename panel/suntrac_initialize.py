@@ -36,7 +36,3 @@ os.system('sudo hotspot modpar hostapd ssid ' + ssid)
 
 print ('Number of arguments:', len(sys.argv), 'arguments.')
 print ('Argument List:', str(sys.argv))
-print (sys.argv[1])
-print (sys.argv[2])
-print (json.loads(sys.argv[1]))
-print (json.loads(sys.argv[2]))
