@@ -37,3 +37,5 @@ print('setting hotspot values')
 os.system('sudo hotspot modpar self autostart no')
 ssid = 'suntrac-' + str(proc_id[:6])
 os.system('sudo hotspot modpar hostapd ssid ' + ssid)
+
+print('done.')
