@@ -76,3 +76,6 @@ wifi
 reset
   dynodb, remove cert data from procid
   iot core, remote thing, policy, cert
+
+cleanup
+  find . -name \*.pyc -print -exec rm -rf {} \;
