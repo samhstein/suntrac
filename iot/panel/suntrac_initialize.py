@@ -30,8 +30,8 @@ print('sent config to aws.')
 print('turning of node-red load at boot.')
 os.system('sudo systemctl disable nodered.service')
 
-print('enabling suntrac watchdog')
-os.system('sudo systemctl enable watchdog.service')
+print('enabling suntrac_watchdog')
+os.system('sudo systemctl enable suntrac_watchdog.service')
 
 print('setting hotspot values')
 os.system('sudo hotspot modpar self autostart no')
