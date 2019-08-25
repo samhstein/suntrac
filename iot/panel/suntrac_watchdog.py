@@ -5,7 +5,7 @@ import megaiosun
 from timeloop import Timeloop
 from datetime import timedelta
 
-CONFIG_FILE = '/home/pi/suntrac/panel/suntrac_config.json'
+CONFIG_FILE = '/home/pi/suntrac/iot/panel/suntrac_config.json'
 
 run = True
 pushed = False

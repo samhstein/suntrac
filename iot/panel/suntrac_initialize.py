@@ -1,7 +1,7 @@
 import json, aws_iot, os, sys
 import megaiosun
 
-CONFIG_FILE = '/home/pi/suntrac/panel/suntrac_config.json'
+CONFIG_FILE = '/home/pi/suntrac/iot/panel/suntrac_config.json'
 
 panel_serial = sys.argv[1]
 print('panel_serial: ', panel_serial)

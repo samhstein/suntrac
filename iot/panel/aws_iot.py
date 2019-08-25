@@ -6,9 +6,9 @@ class aws_iot:
 
     IOT_ENDPOINT = 'a2z6jgzt0eip8f-ats.iot.us-east-1.amazonaws.com'
     CERT_ENDPOINT = 'https://5r874yg6bf.execute-api.us-east-1.amazonaws.com/LATEST/getcert?serialNumber=value1&deviceToken=value2'
-    CERT_ROOT = '/home/pi/suntrac/certs/AmazonRootCA1.pem'
-    CERT_PRIVATE = '/home/pi/suntrac/certs/PrivateKey.key'
-    CERT_CERT = '/home/pi/suntrac/certs/certificatePem.crt'
+    CERT_ROOT = '/home/pi/suntrac/iot/certs/AmazonRootCA1.pem'
+    CERT_PRIVATE = '/home/pi/suntrac/iot/certs/PrivateKey.key'
+    CERT_CERT = '/home/pi/suntrac/iot/certs/certificatePem.crt'
 
     def __init__(self, proc_id):
         self.proc_id = proc_id
@@ -67,4 +67,4 @@ class aws_iot:
         self.myMQTTClient.publish(topic, json.dumps(j_zipped), 1)
         self.myMQTTClient.subscribe(topic, 1, self.customCallback)
         self.myMQTTClient.unsubscribe(topic)
-        self.myMQTTClient.disconnect()    
+        self.myMQTTClient.disconnect()
