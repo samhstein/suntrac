@@ -88,8 +88,8 @@ if connected:
     aws_iot = aws_iot.aws_iot(proc_id)
     print('sending config to aw')
     aws_iot.sendData('suntrac/config', config)
-    print('starting connected service...')
-    os.system('sudo systemctl start connected.service')
+    print('starting suntrac_connected service...')
+    os.system('sudo systemctl start suntrac_connected.service')
     tl.start()
 
 # update and write the config file

@@ -39,11 +39,11 @@ unzip megaiosun.zip
 cd megaiosun-rpi/python/megaiosun
 sudo python3 setup.py install
 cd
-cd suntrac/test
+cd suntrac/iot/test
 python3 suntrac_test.py
 
 cd
-cd suntrac/panel
+cd suntrac/iot/panel
 sudo cp suntracd.service /etc/systemd/system/suntracd.service
 sudo cp watchdog.service /etc/systemd/system/watchdog.service
 sudo cp connected.service /etc/systemd/system/connected.service
@@ -53,7 +53,7 @@ install node-red
 
 ### to flash board
 sudo systemctl stop suntracd.service
-cd /home/pi/suntrac/sequent/megaiosun-rpi/update
+cd /home/pi/suntrac/iot/sequent/megaiosun-rpi/update
 ./update
 
 suntrac
