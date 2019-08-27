@@ -52,7 +52,7 @@ else:
 
 # update and write the config file
 with open(CONFIG_FILE, 'w') as json_data_file:
-    print('writing config file: ', proc_id, comms, pitch)
+    print('writing config file...')
     config['proc_id'] = proc_id
     config['comms'] = comms
     config['pitch'] = round(pitch, 1)
