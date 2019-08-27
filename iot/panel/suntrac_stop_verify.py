@@ -1,7 +1,7 @@
 import time, os
 
 print('stopping verify....')
-os.system('sudo killall suntrac_verify')
+os.system('sudo killall suntrac_verify.py')
 time.sleep(3)
 
 print('stopping ppp.')
