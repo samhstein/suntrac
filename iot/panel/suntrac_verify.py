@@ -78,6 +78,7 @@ for message in pub_sub.listen():
 
     # send them up when its just under 1k
     if len(data_points) >= SAMPLES_PER_PACKET:
+        print('Sending data to the cloud.')
         aws_iot.sendData('suntrac/data', data_points)
         data_points.clear()
 
