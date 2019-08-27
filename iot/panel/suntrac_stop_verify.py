@@ -1,4 +1,4 @@
-import time, os,
+import time, os
 
 print('stopping verify....')
 os.system('sudo killall suntrac_verify')
