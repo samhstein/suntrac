@@ -40,11 +40,13 @@ with open(CONFIG_FILE, 'r') as json_data_file:
 # start ppp, send it to the cloud
 aws_iot = None
 if connected:
+    print('staring ppp.')
     os.system('sudo pppd call gprs')
     time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
     print('sending config to aw')
     aws_iot.sendData('suntrac/config', config)
+    time.sleep(3)
 else:
     print('NOT CONNECTED!!!')
     sys.exit()
