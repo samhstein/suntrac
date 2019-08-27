@@ -43,7 +43,7 @@ if connected:
     os.system('sudo pppd call gprs')
     time.sleep(15)
     aws_iot = aws_iot.aws_iot(proc_id)
-    print('sending config to aw')
+    print('sending config to aws')
     aws_iot.sendData('suntrac/config', config)
     time.sleep(3)
 else:
@@ -75,6 +75,7 @@ redis_pub = redis.Redis(host='localhost', port=6379, db=0)
 pub_sub = redis_pub.pubsub()
 pub_sub.subscribe('suntrac-reading')
 data_points = []
+count = 0
 
 for message in pub_sub.listen():
     # just keep one every ???
