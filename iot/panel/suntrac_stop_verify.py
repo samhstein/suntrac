@@ -11,3 +11,5 @@ time.sleep(3)
 print('stopping suntracd...')
 os.system('sudo systemctl stop suntracd.service')
 time.sleep(3)
+
+print('verify stopped, done...')
