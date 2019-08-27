@@ -14,23 +14,13 @@ proc_id = megaiosun.get_proc_id()
 megaiosun_version = megaiosun.version()
 pitch = acc_mag.getPitch()
 
-# for the data test, just 10 samples per packet, use
-# every sample, samples come every 6 seconds
-SAMPLES_PER_MINUTE = 1
-SAMPLES_PER_PACKET = 10
-
-# get connection to redis
-redis_pub = redis.Redis(host='localhost', port=6379, db=0)
-pub_sub = redis_pub.pubsub()
-pub_sub.subscribe('suntrac-reading')
-data_points = []
-
 # lets see if were connected
 comms = sim868.get_status()
 if comms.get('ip') == '0.0.0.0':
     connected = False
 
-print('connected: ', connected)
+print('connected', connected)
+time.sleep(3)
 
 def handler_stop_signals(signum, frame):
     print("Stopping Verification")
@@ -61,14 +51,29 @@ else:
 
 # update and write the config file
 with open(CONFIG_FILE, 'w') as json_data_file:
+    print('writing config file: ', proc_id, comms, pitch)
     config['proc_id'] = proc_id
     config['comms'] = comms
     config['pitch'] = round(pitch, 1)
     json.dump(config, json_data_file, indent=4)
 
+time.sleep(3)
+
 # start the panel daemon
 print('starting suntracd...')
 os.system('sudo systemctl start suntracd.service')
+time.sleep(10)
+
+# for the data test, just 10 samples per packet, use
+# every sample, samples come every 6 seconds
+SAMPLES_PER_MINUTE = 1
+SAMPLES_PER_PACKET = 10
+
+# get connection to redis
+redis_pub = redis.Redis(host='localhost', port=6379, db=0)
+pub_sub = redis_pub.pubsub()
+pub_sub.subscribe('suntrac-reading')
+data_points = []
 
 for message in pub_sub.listen():
     # just keep one every ???
