@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+import redis
 import time, leds, os, sim868, lsm303ctr
 import signal, json, aws_iot, sys
 import megaiosun

@@ -1,4 +1,4 @@
-import redis, pickle
+import redis
 import sys, json, time
 import aws_iot
 import base64, zlib
