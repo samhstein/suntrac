@@ -79,6 +79,7 @@ data_points = []
 for message in pub_sub.listen():
     # just keep one every ???
     if (count >= SAMPLES_PER_MINUTE):
+        print('Got sample from panel.')
         data_points.append(json.loads(message['data']))
         count = 0
 
