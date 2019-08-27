@@ -1,9 +1,4 @@
-import redis
-import time, leds, os, sim868, lsm303ctr
-import signal, json, aws_iot, sys
-import megaiosun
-
-CONFIG_FILE = '/home/pi/suntrac/iot/panel/suntrac_config.json'
+import time, os,
 
 print('stopping verify....')
 os.system('sudo killall suntrac_verify')
