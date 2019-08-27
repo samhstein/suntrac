@@ -38,7 +38,6 @@ with open(CONFIG_FILE, 'r') as json_data_file:
     config = json.load(json_data_file)
 
 # start ppp, send it to the cloud
-aws_iot = None
 if connected:
     print('staring ppp.')
     os.system('sudo pppd call gprs')
