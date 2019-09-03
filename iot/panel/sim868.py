@@ -32,18 +32,23 @@ class sim868:
 
         self.send_command('AT+CGATT=1')
         s = self.ser.read(size=1024)
+        print('att: ', s)
 
         self.send_command('AT+SAPBR=3,1,"CONTYPE","GPRS"')
         s = self.ser.read(size=1024)
+        print('gprs: ', s)
 
         self.send_command('AT+SAPBR=3,1,"APN","jtm2m"')
         s = self.ser.read(size=1024)
+        print('apn: ', s)
 
         self.send_command('AT+SAPBR=0,1')
         s = self.ser.read(size=1024)
+        print('sapbr 01: ', s)
 
         self.send_command('AT+SAPBR=1,1')
         s = self.ser.read(size=1024)
+        print('sapbr 11: ', s)
 
         self.send_command('AT+SAPBR=2,1')
         s = self.ser.read(size=1024)
