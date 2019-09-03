@@ -53,8 +53,11 @@ class sim868:
         self.send_command('AT+SAPBR=2,1')
         s = self.ser.read(size=1024)
         print('ip s: ', s)
-        ip = s.decode().split('"')[1]
-        print('ip: ', ip)
+        try:
+            ip = s.decode().split('"')[1]
+            print('ip: ', ip)
+        except:
+            ip = '0.0.0.0'
 
         self.send_command('AT+CIPGSMLOC=1,1')
         s = ''
