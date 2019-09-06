@@ -49,6 +49,7 @@ class SuntracPanel:
         self.light_east = self.light_west = 0
         self.light_error = False
         self.over_temp = False
+        self.nite_mode = False
 
         # lets get the sun
         date = datetime.datetime.now(pytz.timezone(self.time_zone))
@@ -113,7 +114,9 @@ class SuntracPanel:
             's_alt': round(self.sun_altitude,1),'s_az': round(self.sun_azimuth, 1),
             'ts': round(time.time(), 1),
             'lm': round((date - self.last_moved).total_seconds(), 1),
-            'roll': round(self.acc_mag.getRoll(), 1) }
+            'roll': round(self.acc_mag.getRoll(), 1),
+            'nm': self.nite_mode
+        }
         self.redis_pub.publish('suntrac-reading', json.dumps(reading))
 
     def get_panel_data(self):
@@ -156,7 +159,7 @@ class SuntracPanel:
                 relay = self.RELAY_WEST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_GREEN)
             else:
-                relay =  self.RELAY_EAST
+                relay = self.RELAY_EAST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_RED)
 
             moving_diff = self.photo_diff
@@ -179,6 +182,8 @@ class SuntracPanel:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
+            self.nite_mode = True
+
 
 if __name__ == "__main__":
     sp = SuntracPanel()
