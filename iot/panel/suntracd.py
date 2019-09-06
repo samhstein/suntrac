@@ -162,7 +162,7 @@ class SuntracPanel:
                 relay = self.RELAY_EAST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_RED)
 
-            if self.nite_mode and relay = self.RELAY_EAST:
+            if self.nite_mode and relay == self.RELAY_EAST:
                 return
 
             self.nite_mode = False
