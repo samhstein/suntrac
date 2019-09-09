@@ -188,6 +188,7 @@ class SuntracPanel:
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
             self.nite_mode = True
+            self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_BLUE)
 
 
 if __name__ == "__main__":
