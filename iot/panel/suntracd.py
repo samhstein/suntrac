@@ -158,14 +158,12 @@ class SuntracPanel:
             if self.photo_diff < 0:
                 relay = self.RELAY_WEST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_GREEN)
+                self.nite_mode = False
+            elif self.nite_mode:
+                return
             else:
                 relay = self.RELAY_EAST
                 self.leds.lights_on(self.leds.LED_GREEN_OFF, self.leds.LED_OFF_RED)
-
-            if self.nite_mode and relay == self.RELAY_EAST:
-                return
-
-            self.nite_mode = False
 
             moving_diff = self.photo_diff
             megaiosun.set_motor(relay, 1)
