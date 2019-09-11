@@ -181,8 +181,7 @@ class SuntracPanel:
 
         # turn it east if its dark
         date = datetime.datetime.now(pytz.timezone(self.time_zone))
-#        if (date - self.last_moved).total_seconds() > self.THREE_HOURS:
-        if (date - self.last_moved).total_seconds() > 60:
+        if (date - self.last_moved).total_seconds() > self.THREE_HOURS:
             megaiosun.set_motor(self.RELAY_EAST, 1)
             time.sleep(30)
             megaiosun.set_motor(self.RELAY_EAST, 0)
